@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:swd_project/Nav_bar/event_detail.dart';
+import 'package:swd_project/Nav_bar/notification_page.dart';
 
 import '../widgets/badge.dart';
 // import 'package:restaurant_ui_kit/screens/notifications.dart';
@@ -38,15 +39,15 @@ class _BlogPageState extends State<BlogPage> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        leading: IconButton(
-          icon: Icon(
-            Icons.keyboard_backspace,
-          ),
-          onPressed: () => Navigator.pop(context),
-        ),
+        // leading: IconButton(
+        //   icon: Icon(
+        //     Icons.keyboard_backspace,
+        //   ),
+        //   onPressed: () => Navigator.pop(context),
+        // ),
         centerTitle: true,
         title: Text(
-          "Item Details",
+          "Blog Page",
         ),
         elevation: 0.0,
         actions: <Widget>[
@@ -59,8 +60,7 @@ class _BlogPageState extends State<BlogPage> {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (BuildContext context) {
-                    // return Notifications();
-                    return EventDetail();
+                    return NotificationPage();
                   },
                 ),
               );

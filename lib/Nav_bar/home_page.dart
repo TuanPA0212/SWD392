@@ -3,9 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:swd_project/Nav_bar/notification_page.dart';
 import 'package:swd_project/login.dart';
 import 'package:swd_project/services/firebase_services.dart';
-import 'package:swd_project/widgets/grid_product.dart';
+import 'package:swd_project/widgets/badge.dart';
+import 'package:swd_project/widgets/grid_event.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -40,14 +42,23 @@ class _HomePageState extends State<HomePage> {
         automaticallyImplyLeading: false,
         title: Text("Home Page"),
         centerTitle: true,
-      ),
-      endDrawer: Drawer(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: Text("Ok"),
-        ),
+        actions: <Widget>[
+          IconButton(
+            icon: IconBadge(
+              icon: Icons.notifications,
+              size: 22.0,
+            ),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return NotificationPage();
+                  },
+                ),
+              );
+            },
+          ),
+        ],
       ),
       body: ListView(
         children: [

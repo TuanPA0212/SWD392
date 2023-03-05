@@ -9,8 +9,10 @@ import 'package:swd_project/Nav_bar/notification_page.dart';
 import 'package:swd_project/Nav_bar/home_page.dart';
 import 'package:swd_project/Nav_bar/blog_page.dart';
 import 'package:swd_project/Nav_bar/profile_page.dart';
+import 'package:swd_project/Nav_bar/club_page.dart';
 
 import '../widgets/badge.dart';
+import 'club_page.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -112,7 +114,7 @@ class _MainPageState extends State<MainPage> {
   }
 
 // Nav-bar here
-  List pages = [HomePage(), NotificationPage(), BlogPage(), ProfilePage()];
+  List pages = [HomePage(), ClubPage(), BlogPage(), ProfilePage()];
   int currentIndex = 0;
 
   @override
@@ -131,11 +133,8 @@ class _MainPageState extends State<MainPage> {
                 label: 'Home',
                 backgroundColor: Colors.blue),
             BottomNavigationBarItem(
-                icon: IconBadge(
-                  icon: Icons.notifications,
-                  size: 25.0,
-                ),
-                label: 'Notification',
+                icon: Icon(Icons.copyright_outlined),
+                label: 'Club',
                 backgroundColor: Colors.blue),
             BottomNavigationBarItem(
                 icon: Icon(Icons.article),

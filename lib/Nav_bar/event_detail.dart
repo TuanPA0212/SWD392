@@ -35,7 +35,7 @@ class _EventDetailState extends State<EventDetail> {
         ),
         centerTitle: true,
         title: Text(
-          "Item Details",
+          "Event Details",
         ),
         elevation: 0.0,
         actions: <Widget>[
