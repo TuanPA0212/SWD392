@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:swd_project/Nav_bar/event_detail.dart';
 // import 'package:restaurant_ui_kit/screens/details.dart';
 // import 'package:restaurant_ui_kit/util/const.dart';
 // import 'package:restaurant_ui_kit/widgets/smooth_star_rating.dart';
@@ -91,14 +92,13 @@ class GridEvents extends StatelessWidget {
         ],
       ),
       onTap: () {
-        // Navigator.of(context).push(
-        //   MaterialPageRoute(
-        //     builder: (BuildContext context) {
-        //       // return ProductDetails();
-        //       return 0;
-        //     },
-        //   ),
-        // );
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (BuildContext context) {
+              return EventDetail();
+            },
+          ),
+        );
       },
     );
   }
