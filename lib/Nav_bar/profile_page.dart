@@ -1,35 +1,127 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:swd_project/services/firebase_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:swd_project/login.dart';
+import 'package:flutter/material.dart';
+import 'package:swd_project/widgets/upload.dart';
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
-
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Image.network("${FirebaseAuth.instance.currentUser!.photoURL}"),
-          Text("${FirebaseAuth.instance.currentUser!.displayName}"),
-          Text("${FirebaseAuth.instance.currentUser!.email}"),
-          ElevatedButton(
-              onPressed: () async {
-                await FirebaseServices().signOut();
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (BuildContext context) {
-                      return LoginScreen();
-                    },
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Profile'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: CircleAvatar(
+                radius: 50.0,
+                // backgroundImage: AssetImage('assets/images/profile.jpg'),
+              ),
+            ),
+            SizedBox(height: 16.0),
+            Text(
+              'Name',
+              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 8.0),
+            Text("${FirebaseAuth.instance.currentUser!.displayName}"),
+            SizedBox(height: 16.0),
+            Text(
+              'Account Information',
+              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 16.0),
+            Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Username',
+                        style:
+                            TextStyle(fontSize: 16.0, color: Colors.grey[600]),
+                      ),
+                      SizedBox(height: 8.0),
+                      Text("${FirebaseAuth.instance.currentUser!.email}",
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            color: Colors.grey[600],
+                          )),
+                    ],
                   ),
-                );
-              },
-              child: Text('Logout')),
-        ]),
+                ),
+                // Expanded(
+                //   child: Column(
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     children: [
+                //       Text(
+                //         'Phone',
+                //         style:
+                //             TextStyle(fontSize: 16.0, color: Colors.grey[600]),
+                //       ),
+                //       SizedBox(height: 8.0),
+                //       Text(
+                //         '+1 123-456-7890',
+                //         style: TextStyle(fontSize: 16.0),
+                //       ),
+                //     ],
+                //   ),
+                // ),
+              ],
+            ),
+            SizedBox(height: 16.0),
+            Text(
+              'Settings',
+              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 16.0),
+            ListTile(
+              leading: Icon(Icons.image),
+              title: Text('Upload Image'),
+              onTap: () {},
+            ),
+            Divider(),
+            ListTile(
+              leading: Icon(Icons.logout),
+              title: Text('Logout'),
+              onTap: () {},
+            ),
+            Upload()
+          ],
+        ),
       ),
     );
   }
 }
+
+// class ProfilePage extends StatelessWidget {
+//   const ProfilePage({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       child: Center(
+//         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+//           Image.network("${FirebaseAuth.instance.currentUser!.photoURL}"),
+//           Text("${FirebaseAuth.instance.currentUser!.displayName}"),
+//           Text("${FirebaseAuth.instance.currentUser!.email}"),
+//           ElevatedButton(
+//               onPressed: () async {
+//                 await FirebaseServices().signOut();
+//                 Navigator.of(context).push(
+//                   MaterialPageRoute(
+//                     builder: (BuildContext context) {
+//                       return LoginScreen();
+//                     },
+//                   ),
+//                 );
+//               },
+//               child: Text('Logout')),
+//         ]),
+//       ),
+//     );
+//   }
+// }
