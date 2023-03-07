@@ -40,15 +40,7 @@ class _MainPageState extends State<MainPage> {
     // var iosInitialize = const IOSInitializationSettings();
     var initializationSettings =
         InitializationSettings(android: androidInitialize);
-    flutterLocalNotificationsPlugin.initialize(initializationSettings
-        //     onSelectNotification: (String? payload) async {
-        //   try {
-        //     if (payload != null && payload.isNotEmpty) {
-        //     } else {}
-        //   } catch (e) {}
-        //   return;
-        // }
-        );
+    flutterLocalNotificationsPlugin.initialize(initializationSettings);
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       print("Message: ${message.notification?.title}");
       print("Message body: ${message.notification?.body}");

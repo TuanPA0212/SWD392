@@ -1,9 +1,25 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:http/http.dart' as http;
 
-class NotificationPage extends StatelessWidget {
+import '../model/notification.dart';
+
+class NotificationPage extends StatefulWidget {
   const NotificationPage({super.key});
+
+  @override
+  State<NotificationPage> createState() => _NotificationPageState();
+}
+
+class _NotificationPageState extends State<NotificationPage> {
+  @override
+  void initState() {
+    super.initState();
+    fetchNoti();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,5 +59,17 @@ class NotificationPage extends StatelessWidget {
         trailing: Icon(Icons.arrow_forward_ios),
       ),
     );
+  }
+
+  Future<void> fetchNoti() async {
+    final url = "https://event-project.herokuapp.com/notifications";
+    final uri = Uri.parse(url);
+    final response = await http.get(uri);
+    print(response.statusCode);
+    // final body = response.body;
+    // final json = jsonDecode(body);
+    // setState(() {
+    //   notifications = json['']
+    // });
   }
 }

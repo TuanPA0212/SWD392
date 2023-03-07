@@ -6,6 +6,8 @@ import 'package:swd_project/Nav_bar/notification_page.dart';
 import 'package:swd_project/widgets/badge.dart';
 import 'package:swd_project/widgets/grid_clubs.dart';
 
+import 'package:flutter/material.dart';
+
 class ClubPage extends StatefulWidget {
   const ClubPage({super.key});
 
@@ -29,6 +31,9 @@ class _ClubPageState extends State<ClubPage> {
     },
   ];
 
+  List<String> listCampus = ["HCM", "HN", "DN"];
+  String? selectedVal = "HCM";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,41 +41,49 @@ class _ClubPageState extends State<ClubPage> {
         automaticallyImplyLeading: false,
         title: Text("Club Page"),
         centerTitle: true,
-        actions: <Widget>[
-          IconButton(
-            icon: IconBadge(
-              icon: Icons.notifications,
-              size: 22.0,
+      ),
+      body: Column(
+        children: [
+          SizedBox(height: 10),
+          SizedBox(
+            width: 240,
+            child: DropdownButtonFormField<String>(
+              decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(width: 3, color: Colors.blue))),
+              value: selectedVal,
+              items: listCampus
+                  .map((campus) => DropdownMenuItem<String>(
+                        child: Text(campus),
+                        value: campus,
+                      ))
+                  .toList(),
+              onChanged: (campus) {
+                setState(() {
+                  selectedVal = campus;
+                });
+              },
             ),
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (BuildContext context) {
-                    return NotificationPage();
-                  },
-                ),
-              );
-            },
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
+              child: ListView.builder(
+                itemCount: clubs == null ? 0 : clubs.length,
+                itemBuilder: (BuildContext context, int index) {
+                  Map club = clubs[index];
+                  return GridClubs(
+                    img: club['img'],
+                    name: club['name'],
+                    member: club['member'],
+                    location: club['location'],
+                  );
+                },
+              ),
+            ),
           ),
         ],
-      ),
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
-        child: ListView.builder(
-          itemCount: clubs == null ? 0 : clubs.length,
-          itemBuilder: (BuildContext context, int index) {
-//                Food food = Food.fromJson(foods[index]);
-            Map club = clubs[index];
-//                print(foods);
-//                print(foods.length);
-            return GridClubs(
-              img: club['img'],
-              name: club['name'],
-              member: club['member'],
-              location: club['location'],
-            );
-          },
-        ),
       ),
     );
   }

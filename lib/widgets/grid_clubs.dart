@@ -19,15 +19,15 @@ class GridClubs extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.fromLTRB(0, 4, 0, 4),
       child: InkWell(
-        onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (BuildContext context) {
-                return HomePage();
-              },
-            ),
-          );
-        },
+        // onTap: () {
+        //   Navigator.of(context).push(
+        //     MaterialPageRoute(
+        //       builder: (BuildContext context) {
+        //         return HomePage();
+        //       },
+        //     ),
+        //   );
+        // },
         child: Row(
           children: <Widget>[
             Padding(
@@ -76,7 +76,6 @@ class GridClubs extends StatelessWidget {
                     ),
                   ],
                 ),
-
                 Row(
                   children: <Widget>[
                     Text(
@@ -97,14 +96,6 @@ class GridClubs extends StatelessWidget {
                     ),
                   ],
                 )
-                // SizedBox(height: 10.0),
-                // Text(
-
-                //   style: TextStyle(
-                //     fontSize: 11.0,
-                //     fontWeight: FontWeight.w300,
-                //   ),
-                // ),
               ],
             ),
           ],
