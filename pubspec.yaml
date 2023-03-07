@@ -62,7 +62,7 @@ dependencies:
   # State management
   # provider: ^6.0.1
 
-  flutter_secure_storage: ^8.0.0
+  
 
 dev_dependencies:
   flutter_test:
@@ -77,8 +77,7 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
 
-  # http request
-  http: ^0.13.5
+  
 
   # app icon (biểu tượng của app)
   flutter_launcher_icons: ^0.12.0
