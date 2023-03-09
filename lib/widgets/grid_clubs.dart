@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:swd_project/Nav_bar/home_page.dart';
 
 class GridClubs extends StatelessWidget {
   final String name;
-  final String img;
-  final int member;
-  final String location;
+  // final String img;
+  int clubId;
+  int campusId;
+  String abbreviation;
+  DateTime establishedDate;
+  int totalMembers;
 
   GridClubs({
     Key? key,
     required this.name,
-    required this.img,
-    required this.member,
-    required this.location,
+    // required this.img,
+    required this.clubId,
+    required this.campusId,
+    required this.abbreviation,
+    required this.establishedDate,
+    required this.totalMembers,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -37,67 +44,69 @@ class GridClubs extends StatelessWidget {
                 width: MediaQuery.of(context).size.width / 3,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
-                  child: Image.asset(
-                    "$img",
-                    fit: BoxFit.cover,
-                  ),
+                  // child: Image.asset(
+                  //   "$img",
+                  //   fit: BoxFit.cover,
+                  // ),
                 ),
               ),
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text(
-                  "$name",
-                  style: TextStyle(
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(
+                    "$name",
+                    style: TextStyle(
 //                    fontSize: 15,
-                    fontWeight: FontWeight.w900,
+                      fontWeight: FontWeight.w900,
+                    ),
                   ),
-                ),
-                SizedBox(height: 10.0),
-                Row(
-                  children: <Widget>[
-                    Text(
-                      "Location",
-                      style: TextStyle(
-                        fontSize: 11.0,
-                        fontWeight: FontWeight.w500,
+                  SizedBox(height: 10.0),
+                  Row(
+                    children: <Widget>[
+                      Text(
+                        "Date of established",
+                        style: TextStyle(
+                          fontSize: 11.0,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
-                    ),
-                    SizedBox(width: 10.0),
-                    Text(
-                      "$location",
-                      style: TextStyle(
-                        fontSize: 11.0,
-                        // fontWeight: FontWeight.w900,
-                        color: Theme.of(context).accentColor,
+                      SizedBox(width: 10.0),
+                      Text(
+                        DateFormat('dd-MM-yyyy').format(establishedDate),
+                        style: TextStyle(
+                          fontSize: 11.0,
+                          // fontWeight: FontWeight.w900,
+                          color: Theme.of(context).accentColor,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: <Widget>[
-                    Text(
-                      "Number of member: ",
-                      style: TextStyle(
-                        fontSize: 11.0,
-                        fontWeight: FontWeight.w500,
+                    ],
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Text(
+                        "Number of member: ",
+                        style: TextStyle(
+                          fontSize: 11.0,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
-                    ),
-                    SizedBox(width: 10.0),
-                    Text(
-                      "$member",
-                      style: TextStyle(
-                        fontSize: 11.0,
-                        // fontWeight: FontWeight.w900,
-                        color: Colors.green,
+                      SizedBox(width: 10.0),
+                      Text(
+                        "$totalMembers",
+                        style: TextStyle(
+                          fontSize: 11.0,
+                          // fontWeight: FontWeight.w900,
+                          color: Colors.green,
+                        ),
                       ),
-                    ),
-                  ],
-                )
-              ],
-            ),
+                    ],
+                  )
+                ],
+              ),
+            )
           ],
         ),
       ),
