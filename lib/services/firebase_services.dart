@@ -51,6 +51,9 @@ class FirebaseServices {
         await http.post(Uri.parse(url), body: body, headers: headers);
     final responseData = json.decode(response.body);
     print('responseData: $responseData');
+    final accessToken = responseData['access_token'];
+    final idStudent = responseData['data']['id'];
+    print("id Stu: $idStudent");
   }
 
   signOut() async {

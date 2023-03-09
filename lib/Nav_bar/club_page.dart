@@ -20,8 +20,12 @@ class ClubPage extends StatefulWidget {
 }
 
 class _ClubPageState extends State<ClubPage> {
-  List<String> listCampus = ["HCM", "HN", "DN"];
-  String? selectedVal = "HCM";
+  Map<String, String> listCampus = {
+    "1": "HCM",
+    "2": "HN",
+    "3": "DN",
+  };
+  String? selectedVal = "1";
   List<Club> clubList = [];
 
   @override
@@ -43,10 +47,10 @@ class _ClubPageState extends State<ClubPage> {
                       borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide(width: 3, color: Colors.blue))),
               value: selectedVal,
-              items: listCampus
-                  .map((campus) => DropdownMenuItem<String>(
-                        child: Text(campus),
-                        value: campus,
+              items: listCampus.entries
+                  .map((entry) => DropdownMenuItem<String>(
+                        child: Text(entry.value),
+                        value: entry.key,
                       ))
                   .toList(),
               onChanged: (campus) {
@@ -56,15 +60,16 @@ class _ClubPageState extends State<ClubPage> {
               },
             ),
           ),
-          Expanded(child: getClubGridView()),
+          Expanded(
+              child: getClubGridView(int.tryParse(selectedVal ?? '0') ?? 0)),
         ],
       ),
     );
   }
 
-  Widget getClubGridView() {
+  Widget getClubGridView(int selectedVal) {
     return FutureBuilder<List<Club>>(
-      future: fetchClubs(),
+      future: fetchClubs(selectedVal),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           List<Club> clubs = snapshot.data!;
@@ -91,14 +96,18 @@ class _ClubPageState extends State<ClubPage> {
     );
   }
 
-  Future<List<Club>> fetchClubs() async {
-    var response = await http
-        .get(Uri.parse("https://event-project.herokuapp.com/api/club/1"));
-    print(response.body);
+  Future<List<Club>> fetchClubs(int campusID) async {
+    final response = await http.get(Uri.parse(
+        "https://event-project.herokuapp.com/api/club/campus/$campusID"));
+
+    final responseData = json.decode(response.body) as List;
+    print('responseData: $responseData');
+    // final campusId = responseData['campus_id'];
+    // print("campusID: $campusId");
+    // campusId = selectedVal;
+    // print(response.body);
     if (response.statusCode == 200) {
-      return (json.decode(response.body) as List)
-          .map((e) => Club.fromJson(e))
-          .toList();
+      return responseData.map((e) => Club.fromJson(e)).toList();
     } else {
       throw Exception("Fail to fetch");
     }
