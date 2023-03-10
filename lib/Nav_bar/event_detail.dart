@@ -41,13 +41,10 @@ Future<void> registerStudentForEvent(
 
 class _EventDetailState extends State<EventDetail> {
   List<Map> events = [
-    {"img": "assets/images/macbook-air.png", "name": "Event 1"},
-    {"img": "assets/images/14-promax.png", "name": "Event 2"},
-    {
-      "img": "assets/images/macbook-air.png",
-      "name": "Event 1 going aroung vietnam from coc sg"
-    },
-    {"img": "assets/images/14-promax.png", "name": "Event 2"},
+    {"img": "assets/images/fpt_logo.png", "name": "Event 1"},
+    {"img": "assets/images/fpt_logo.png", "name": "Event 2"},
+    {"img": "assets/images/fpt_logo.png", "name": "Event 3"},
+    {"img": "assets/images/fpt_logo.png", "name": "Event 4"},
   ];
 
   @override

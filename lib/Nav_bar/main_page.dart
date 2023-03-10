@@ -110,7 +110,7 @@ class _MainPageState extends State<MainPage> {
     HomePage(),
     ClubPage(),
     // BlogPage(),
-    HomePage(),
+    MyHomePage(),
     ProfilePage()
   ];
   int currentIndex = 0;

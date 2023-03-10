@@ -18,18 +18,15 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List imagesList = [
-    {"id": 1, "image_path": "assets/images/macbook-air.png"},
-    {"id": 2, "image_path": 'assets/images/14-promax.png'},
+    {"id": 1, "image_path": "assets/images/fpt_logo.png"},
+    {"id": 2, "image_path": 'assets/images/fpt_logo.png'},
   ];
 
   List<Map> events = [
-    {"img": "assets/images/macbook-air.png", "name": "Event 1"},
-    {"img": "assets/images/14-promax.png", "name": "Event 2"},
-    {
-      "img": "assets/images/macbook-air.png",
-      "name": "Event 1 going aroung vietnam from coc sg"
-    },
-    {"img": "assets/images/14-promax.png", "name": "Event 2"},
+    {"img": "assets/images/fpt_logo.png", "name": "Event 1"},
+    {"img": "assets/images/fpt_logo.png", "name": "Event 2"},
+    {"img": "assets/images/fpt_logo.png", "name": "Event 3"},
+    {"img": "assets/images/fpt_logo.png", "name": "Event 4"},
   ];
 
   final CarouselController carouselController = CarouselController();
