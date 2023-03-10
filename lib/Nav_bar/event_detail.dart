@@ -4,7 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:intl/intl.dart';
 import '../model/event.dart';
 import '../services/firebase_services.dart';
 
@@ -18,9 +18,17 @@ class EventDetail extends StatefulWidget {
 
 final accessToken = AccessTokenMiddleware.getAccessToken();
 String authToken = accessToken;
+// final studentId = AccessTokenMiddleware().getStudentId();
 
-Future<void> registerStudentForEvent(
-    int eventId, int studentId, String registrationDate) async {
+// createRegisDate() {
+//   final DateTime registrationDate = DateTime.now();
+//   print("regis Date: $registrationDate");
+// }
+
+Future<void> registerStudentForEvent(int eventId) async {
+  // final Event eventId;
+  final DateTime registrationDate = DateTime.now();
+  print("regis Date: $registrationDate");
   final url = Uri.parse('https://event-project.herokuapp.com/api/event/join');
   final response = await http.post(
     url,
@@ -30,7 +38,7 @@ Future<void> registerStudentForEvent(
     },
     body: jsonEncode(<String, dynamic>{
       'event_id': eventId,
-      'student_id': studentId,
+      // 'student_id': studentId,
       'registration_date': registrationDate,
     }),
   );
@@ -139,6 +147,7 @@ class _EventDetailState extends State<EventDetail> {
             ),
             Row(
               children: <Widget>[
+                SizedBox(height: 20),
                 Text(
                   "Location:",
                   style: TextStyle(
@@ -146,7 +155,7 @@ class _EventDetailState extends State<EventDetail> {
                     fontWeight: FontWeight.w300,
                   ),
                 ),
-                SizedBox(width: 10.0),
+                SizedBox(width: 20.0),
                 Expanded(
                   child: Text(
                     widget.event.location,
@@ -187,7 +196,8 @@ class _EventDetailState extends State<EventDetail> {
         child: ElevatedButton(
           onPressed: () async {
             // await FirebaseMessaging.instance.getInitialMessage();
-            // registerStudentForEvent(eventI, studentId, registrationDate);
+            // createRegisDate();
+            registerStudentForEvent(widget.event.eventId);
           },
           child: Text(
             "JOIN EVENT",

@@ -65,6 +65,7 @@ class FirebaseServices {
 
 class AccessTokenMiddleware {
   static String? _accessToken;
+  // static String? _studentId;
 
   static void setAccessToken(String accessToken) {
     _accessToken = accessToken;
@@ -73,4 +74,12 @@ class AccessTokenMiddleware {
   static String getAccessToken() {
     return _accessToken!;
   }
+
+  // static void setStudentId(String studentId) {
+  //   _studentId = studentId;
+  // }
+
+  // static String getStudentId() {
+  //   return _studentId!;
+  // }
 }
