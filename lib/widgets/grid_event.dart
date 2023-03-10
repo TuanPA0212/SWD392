@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:swd_project/Nav_bar/event_detail.dart';
+
+import '../model/event.dart';
 // import 'package:restaurant_ui_kit/screens/details.dart';
 // import 'package:restaurant_ui_kit/util/const.dart';
 // import 'package:restaurant_ui_kit/widgets/smooth_star_rating.dart';
 
 class GridEvents extends StatelessWidget {
-  final String name;
-  final String img;
+  final Event event;
+  // final int eventId;
+  // final String name;
+  // final String img;
 
   const GridEvents({
     Key? key,
-    required this.name,
-    required this.img,
+    required this.event,
+    // required this.name,
+    // required this.img,
   }) : super(key: key);
 
   @override
@@ -23,17 +28,18 @@ class GridEvents extends StatelessWidget {
         children: <Widget>[
           Stack(
             children: <Widget>[
-              Container(
-                height: MediaQuery.of(context).size.height / 3.6,
-                width: MediaQuery.of(context).size.width / 2.2,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: Image.network(
-                    "$img",
-                    fit: BoxFit.contain,
-                  ),
-                ),
-              ),
+              // Container(
+              //   height: MediaQuery.of(context).size.height / 3.6,
+              //   width: MediaQuery.of(context).size.width / 2.2,
+              //   child: ClipRRect(
+              //     borderRadius: BorderRadius.circular(8.0),
+              //     child: Image.network(
+              //       "$img",
+              //       fit: BoxFit.contain,
+              //     ),
+              //   ),
+              // ),
+              // ---------------
               // Positioned(
               //   right: -10.0,
               //   bottom: 3.0,
@@ -58,7 +64,7 @@ class GridEvents extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(bottom: 2.0, top: 8.0),
             child: Text(
-              "$name",
+              event.eventName,
               style: TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.w900,
@@ -95,7 +101,7 @@ class GridEvents extends StatelessWidget {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (BuildContext context) {
-              return EventDetail();
+              return EventDetail(event: event);
             },
           ),
         );

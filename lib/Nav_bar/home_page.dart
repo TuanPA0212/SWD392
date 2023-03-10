@@ -123,10 +123,11 @@ class _HomePageState extends State<HomePage> {
               ),
               itemCount: events == null ? 0 : events.length,
               itemBuilder: (BuildContext context, int index) {
-//
+                final event = events[index];
                 return GridEvents(
-                  img: events[index].img,
-                  name: events[index].clubName,
+                  event: event,
+                  // eventId: events[index].eventId,
+                  // name: events[index].clubName,
                 );
               },
             ),

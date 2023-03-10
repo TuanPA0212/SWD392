@@ -5,9 +5,13 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../model/event.dart';
 import '../services/firebase_services.dart';
 
 class EventDetail extends StatefulWidget {
+  final Event event;
+
+  EventDetail({Key? key, required this.event});
   @override
   _EventDetailState createState() => _EventDetailState();
 }
@@ -40,13 +44,6 @@ Future<void> registerStudentForEvent(
 }
 
 class _EventDetailState extends State<EventDetail> {
-  List<Map> events = [
-    {"img": "assets/images/fpt_logo.png", "name": "Event 1"},
-    {"img": "assets/images/fpt_logo.png", "name": "Event 2"},
-    {"img": "assets/images/fpt_logo.png", "name": "Event 3"},
-    {"img": "assets/images/fpt_logo.png", "name": "Event 4"},
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,31 +60,31 @@ class _EventDetailState extends State<EventDetail> {
           "Event Details",
         ),
         elevation: 0.0,
-        actions: <Widget>[],
+        actions: <Widget>[
+          Container(
+            height: MediaQuery.of(context).size.height / 2,
+            width: MediaQuery.of(context).size.width,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8.0),
+              // child: Image.asset(
+              //   "${events[1]['img']}",
+              //   fit: BoxFit.contain,
+              // ),
+            ),
+          ),
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
         child: ListView(
           children: <Widget>[
             SizedBox(height: 10.0),
-            Stack(
-              children: <Widget>[
-                Container(
-                  height: MediaQuery.of(context).size.height / 2,
-                  width: MediaQuery.of(context).size.width,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8.0),
-                    child: Image.asset(
-                      "${events[1]['img']}",
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            // Stack(
+            //   children: <Widget>[],
+            // ),
             SizedBox(height: 10.0),
             Text(
-              "${events[1]['name']}",
+              widget.event.eventName,
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w800,
@@ -111,7 +108,7 @@ class _EventDetailState extends State<EventDetail> {
                   ),
                   SizedBox(width: 10.0),
                   Text(
-                    r"12h 12/12/2023",
+                    widget.event.startDate,
                     style: TextStyle(
                       fontSize: 14.0,
                       fontWeight: FontWeight.w300,
@@ -122,22 +119,22 @@ class _EventDetailState extends State<EventDetail> {
             ),
             Row(
               children: <Widget>[
-                Text(
-                  "Participants",
-                  style: TextStyle(
-                    fontSize: 15.0,
-                    fontWeight: FontWeight.w300,
-                  ),
-                ),
-                SizedBox(width: 10.0),
-                Text(
-                  r"100",
-                  style: TextStyle(
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.green[300],
-                  ),
-                ),
+                // Text(
+                //   "Location",
+                //   style: TextStyle(
+                //     fontSize: 15.0,
+                //     fontWeight: FontWeight.w300,
+                //   ),
+                // ),
+                // SizedBox(width: 10.0),
+                // Text(
+                //   event.location,
+                //   style: TextStyle(
+                //     fontSize: 14.0,
+                //     fontWeight: FontWeight.w500,
+                //     color: Colors.green[300],
+                //   ),
+                // ),
               ],
             ),
             Row(
@@ -150,14 +147,16 @@ class _EventDetailState extends State<EventDetail> {
                   ),
                 ),
                 SizedBox(width: 10.0),
-                Text(
-                  r"100",
-                  style: TextStyle(
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.w300,
-                    // color: Colors.green[300],
+                Expanded(
+                  child: Text(
+                    widget.event.location,
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.w300,
+                      // color: Colors.green[300],
+                    ),
                   ),
-                ),
+                )
               ],
             ),
             SizedBox(height: 20.0),
@@ -170,21 +169,13 @@ class _EventDetailState extends State<EventDetail> {
               maxLines: 2,
             ),
             SizedBox(height: 10.0),
-            Text(
-              "Nulla quis lorem ut libero malesuada feugiat. Lorem ipsum dolor "
-              "sit amet, consectetur adipiscing elit. Curabitur aliquet quam "
-              "id dui posuere blandit. Pellentesque in ipsum id orci porta "
-              "dapibus. Vestibulum ante ipsum primis in faucibus orci luctus "
-              "et ultrices posuere cubilia Curae; Donec velit neque, auctor "
-              "sit amet aliquam vel, ullamcorper sit amet ligula. Donec"
-              " rutrum congue leo eget malesuada. Vivamus magna justo,"
-              " lacinia eget consectetur sed, convallis at tellus."
-              " Vivamus suscipit tortor eget felis porttitor volutpat."
-              " Donec rutrum congue leo eget malesuada."
-              " Pellentesque in ipsum id orci porta dapibus.",
-              style: TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.w300,
+            Expanded(
+              child: Text(
+                widget.event.description,
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w300,
+                ),
               ),
             ),
             SizedBox(height: 10.0),
