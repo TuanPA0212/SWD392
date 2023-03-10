@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:swd_project/widgets/upload.dart';
+import '../login.dart';
+import 'package:swd_project/services/firebase_services.dart';
 
 class ProfilePage extends StatelessWidget {
   @override
@@ -17,7 +19,8 @@ class ProfilePage extends StatelessWidget {
             Center(
               child: CircleAvatar(
                 radius: 50.0,
-                // backgroundImage: AssetImage('assets/images/profile.jpg'),
+                backgroundImage: NetworkImage(
+                    "${FirebaseAuth.instance.currentUser!.photoURL}"),
               ),
             ),
             SizedBox(height: 16.0),
@@ -87,7 +90,16 @@ class ProfilePage extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.logout),
               title: Text('Logout'),
-              onTap: () {},
+              onTap: () async {
+                await FirebaseServices().signOut();
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) {
+                      return LoginScreen();
+                    },
+                  ),
+                );
+              },
             ),
             Upload()
           ],
