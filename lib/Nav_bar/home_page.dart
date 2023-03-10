@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +10,8 @@ import 'package:swd_project/login.dart';
 import 'package:swd_project/services/firebase_services.dart';
 import 'package:swd_project/widgets/badge.dart';
 import 'package:swd_project/widgets/grid_event.dart';
+import 'package:http/http.dart' as http;
+import '../model/event.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -17,6 +21,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  List<Event> eventList = [];
+
   List imagesList = [
     {"id": 1, "image_path": "assets/images/fpt_logo.png"},
     {"id": 2, "image_path": 'assets/images/fpt_logo.png'},
@@ -91,34 +97,20 @@ class _HomePageState extends State<HomePage> {
               )
             ],
           ),
-          Padding(
+          getAllEventGridView()
+        ],
+      ),
+    );
+  }
+
+  Widget getAllEventGridView() {
+    return FutureBuilder<List<Event>>(
+      future: fetchAllEvents(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          List<Event> events = snapshot.data!;
+          return Padding(
             padding: EdgeInsets.only(top: 20, left: 10, right: 10),
-            // child: GridView.count(
-            //   crossAxisCount: 2, // Số lượng cột
-            //   mainAxisSpacing: 30,
-            //   childAspectRatio: 1,
-            //   crossAxisSpacing: 20,
-            //   shrinkWrap: true,
-            //   physics: NeverScrollableScrollPhysics(),
-            //   children: [
-            //     // ListView(
-            //     //   children: imagesList.map((img) {
-            //     //     return Container()
-            //     //   }),
-            //     // ),
-            //     Container(
-            //       color: Colors.green,
-            //     ),
-            //     Container(
-            //       color: Colors.blue,
-            //     ),
-            //     Container(
-            //       color: Colors.yellow,
-            //     ),
-            //     for (var i = 0; i < 10; i++)
-            //       Image.network("https://picsum.photos/250?image=$i")
-            //   ],
-            // ),
             child: GridView.builder(
               shrinkWrap: true,
               primary: false,
@@ -131,22 +123,31 @@ class _HomePageState extends State<HomePage> {
               ),
               itemCount: events == null ? 0 : events.length,
               itemBuilder: (BuildContext context, int index) {
-//                Food food = Food.fromJson(foods[index]);
-                Map event = events[index];
-//                print(foods);
-//                print(foods.length);
+//
                 return GridEvents(
-                  img: event['img'],
-
-                  name: event['name'],
-                  // rating: 5.0,
-                  // raters: 23,
+                  img: events[index].img,
+                  name: events[index].clubName,
                 );
               },
             ),
-          ),
-        ],
-      ),
+          );
+        } else {
+          return Center(child: CircularProgressIndicator());
+        }
+      },
     );
+  }
+
+  Future<List<Event>> fetchAllEvents() async {
+    final response = await http.get(
+        Uri.parse("https://event-project.herokuapp.com/api/event/?status=0"));
+
+    final responseData = json.decode(response.body) as List;
+    print('responseData: $responseData');
+    if (response.statusCode == 200) {
+      return responseData.map((e) => Event.fromJson(e)).toList();
+    } else {
+      throw Exception("Fail to fetch");
+    }
   }
 }

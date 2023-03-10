@@ -103,10 +103,6 @@ class _ClubPageState extends State<ClubPage> {
 
     final responseData = json.decode(response.body) as List;
     print('responseData: $responseData');
-    // final campusId = responseData['campus_id'];
-    // print("campusID: $campusId");
-    // campusId = selectedVal;
-    // print(response.body);
     if (response.statusCode == 200) {
       return responseData.map((e) => Club.fromJson(e)).toList();
     } else {

@@ -28,7 +28,7 @@ class GridEvents extends StatelessWidget {
                 width: MediaQuery.of(context).size.width / 2.2,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
-                  child: Image.asset(
+                  child: Image.network(
                     "$img",
                     fit: BoxFit.contain,
                   ),
