@@ -27,10 +27,10 @@ class FirebaseServices {
         if (firebaseUser != null) {
           String token = await firebaseUser.getIdToken();
           print('Get token from firebase: $token');
-          await sendTokenApi(token);
+          // await sendTokenApi(token);
+          String accessToken = await sendTokenApi(token);
+          AccessTokenMiddleware.setAccessToken(accessToken);
         }
-        print('object');
-        print(googleSignInAuthentication.idToken);
       }
     } on FirebaseAuthException catch (e) {
       print(e.message);
@@ -38,7 +38,7 @@ class FirebaseServices {
     }
   }
 
-  Future<void> sendTokenApi(String token) async {
+  Future<String> sendTokenApi(String token) async {
     final url = 'https://event-project.herokuapp.com/api/login';
     final headers = {
       'Content-Type': 'application/json',
@@ -51,10 +51,26 @@ class FirebaseServices {
         await http.post(Uri.parse(url), body: body, headers: headers);
     final responseData = json.decode(response.body);
     print('responseData: $responseData');
+    final accessToken = responseData['access_token'];
+    final idStudent = responseData['data']['id'];
+    print(idStudent);
+    return accessToken;
   }
 
   signOut() async {
     await _auth.signOut();
     await _googleSignIn.signOut();
+  }
+}
+
+class AccessTokenMiddleware {
+  static String? _accessToken;
+
+  static void setAccessToken(String accessToken) {
+    _accessToken = accessToken;
+  }
+
+  static String getAccessToken() {
+    return _accessToken!;
   }
 }

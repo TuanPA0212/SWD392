@@ -1,10 +1,42 @@
+import 'dart:convert';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+import '../services/firebase_services.dart';
 
 class EventDetail extends StatefulWidget {
   @override
   _EventDetailState createState() => _EventDetailState();
+}
+
+final accessToken = AccessTokenMiddleware.getAccessToken();
+String authToken = accessToken;
+
+Future<void> registerStudentForEvent(
+    int eventId, int studentId, String registrationDate) async {
+  final url = Uri.parse('https://event-project.herokuapp.com/api/event/join');
+  final response = await http.post(
+    url,
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer $authToken',
+    },
+    body: jsonEncode(<String, dynamic>{
+      'event_id': eventId,
+      'student_id': studentId,
+      'registration_date': registrationDate,
+    }),
+  );
+
+  if (response.statusCode == 200) {
+    print('Student successfully registered for event!');
+  } else {
+    print(
+        'Failed to register student for event. Error code: ${response.statusCode}');
+  }
 }
 
 class _EventDetailState extends State<EventDetail> {
@@ -166,7 +198,8 @@ class _EventDetailState extends State<EventDetail> {
         height: 50.0,
         child: ElevatedButton(
           onPressed: () async {
-            await FirebaseMessaging.instance.getInitialMessage();
+            // await FirebaseMessaging.instance.getInitialMessage();
+            // registerStudentForEvent(eventI, studentId, registrationDate);
           },
           child: Text(
             "JOIN EVENT",
