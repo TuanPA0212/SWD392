@@ -106,7 +106,13 @@ class _MainPageState extends State<MainPage> {
   }
 
 // Nav-bar here
-  List pages = [HomePage(), ClubPage(), BlogPage(), ProfilePage()];
+  List pages = [
+    HomePage(),
+    ClubPage(),
+    // BlogPage(),
+    MyHomePage(),
+    ProfilePage()
+  ];
   int currentIndex = 0;
 
   @override
@@ -130,7 +136,7 @@ class _MainPageState extends State<MainPage> {
                 backgroundColor: Colors.blue),
             BottomNavigationBarItem(
                 icon: Icon(Icons.article),
-                label: 'Blog',
+                label: 'Event',
                 backgroundColor: Colors.blue),
             BottomNavigationBarItem(
                 icon: Icon(Icons.person),
