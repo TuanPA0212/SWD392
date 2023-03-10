@@ -45,7 +45,8 @@ class _ClubPageState extends State<ClubPage> {
               decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(width: 3, color: Colors.blue))),
+                      borderSide:
+                          const BorderSide(width: 3, color: Colors.blue))),
               value: selectedVal,
               items: listCampus.entries
                   .map((entry) => DropdownMenuItem<String>(

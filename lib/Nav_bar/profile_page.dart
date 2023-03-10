@@ -81,11 +81,11 @@ class ProfilePage extends StatelessWidget {
               style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 16.0),
-            ListTile(
-              leading: Icon(Icons.image),
-              title: Text('Upload Image'),
-              onTap: () {},
-            ),
+            // ListTile(
+            //   leading: Icon(Icons.image),
+            //   title: Text('Upload Image'),
+            //   onTap: () {},
+            // ),
             Divider(),
             ListTile(
               leading: Icon(Icons.logout),

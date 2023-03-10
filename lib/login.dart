@@ -19,14 +19,14 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
-        padding: EdgeInsets.fromLTRB(20.0, 0, 20, 0),
+        padding: const EdgeInsets.fromLTRB(20.0, 0, 20, 0),
         child: ListView(
           shrinkWrap: true,
           children: <Widget>[
-            SizedBox(height: 10.0),
+            const SizedBox(height: 10.0),
             Container(
               alignment: Alignment.center,
-              margin: EdgeInsets.only(
+              margin: const EdgeInsets.only(
                 top: 25.0,
               ),
               child: Text(
@@ -38,41 +38,41 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 30.0),
+            const SizedBox(height: 30.0),
             Card(
               elevation: 3.0,
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(
                     Radius.circular(5.0),
                   ),
                 ),
                 child: TextField(
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 15.0,
                     color: Colors.black,
                   ),
                   decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(10.0),
+                    contentPadding: const EdgeInsets.all(10.0),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Colors.white,
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Colors.white,
                       ),
                       borderRadius: BorderRadius.circular(5.0),
                     ),
                     hintText: "Username",
-                    hintStyle: TextStyle(
+                    hintStyle: const TextStyle(
                       fontSize: 15.0,
                       color: Colors.black,
                     ),
-                    prefixIcon: Icon(
+                    prefixIcon: const Icon(
                       Icons.perm_identity,
                       color: Colors.black,
                     ),
@@ -82,41 +82,41 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 10.0),
+            const SizedBox(height: 10.0),
             Card(
               elevation: 3.0,
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(
                     Radius.circular(5.0),
                   ),
                 ),
                 child: TextField(
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 15.0,
                     color: Colors.black,
                   ),
                   decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(10.0),
+                    contentPadding: const EdgeInsets.all(10.0),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Colors.white,
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Colors.white,
                       ),
                       borderRadius: BorderRadius.circular(5.0),
                     ),
                     hintText: "Password",
-                    prefixIcon: Icon(
+                    prefixIcon: const Icon(
                       Icons.lock_outline,
                       color: Colors.black,
                     ),
-                    hintStyle: TextStyle(
+                    hintStyle: const TextStyle(
                       fontSize: 15.0,
                       color: Colors.black,
                     ),
@@ -127,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 10.0),
+            const SizedBox(height: 10.0),
             Container(
               alignment: Alignment.centerRight,
               child: TextButton(
@@ -142,13 +142,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 onPressed: () {},
               ),
             ),
-            SizedBox(height: 30.0),
+            const SizedBox(height: 30.0),
             Container(
               height: 50.0,
               child: ElevatedButton(
                 child: Text(
                   "LOGIN".toUpperCase(),
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                   ),
                 ),
@@ -157,7 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (BuildContext context) {
-                        return MainPage();
+                        return const MainPage();
                       },
                     ),
                   );
@@ -167,11 +167,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 10.0),
+            const SizedBox(height: 10.0),
             Divider(
               color: Theme.of(context).accentColor,
             ),
-            SizedBox(height: 10.0),
+            const SizedBox(height: 10.0),
             Center(
               child: Container(
                 width: MediaQuery.of(context).size.width / 2,
@@ -180,9 +180,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     RawMaterialButton(
                       onPressed: () {},
                       fillColor: Colors.blue[800],
-                      shape: CircleBorder(),
+                      shape: const CircleBorder(),
                       elevation: 4.0,
-                      child: Padding(
+                      child: const Padding(
                         padding: EdgeInsets.all(15),
                         child: Icon(
                           FontAwesomeIcons.facebookF,
@@ -197,13 +197,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => MainPage()));
+                                builder: (context) => const MainPage()));
                       },
                       fillColor: Colors.white,
-                      shape: CircleBorder(),
+                      shape: const CircleBorder(),
                       elevation: 4.0,
                       child: Padding(
-                        padding: EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(15),
                         child: Icon(
                           FontAwesomeIcons.google,
                           color: Colors.blue[800],
@@ -215,7 +215,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
           ],
         ),
       ),
