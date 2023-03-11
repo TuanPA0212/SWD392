@@ -44,10 +44,10 @@ class GridClubs extends StatelessWidget {
                 width: MediaQuery.of(context).size.width / 3,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
-                  // child: Image.asset(
-                  //   "$img",
-                  //   fit: BoxFit.cover,
-                  // ),
+                  child: Image.asset(
+                    "./assets/images/fpt_logo.png",
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
             ),

@@ -2,9 +2,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:swd_project/Nav_bar/notification_page.dart';
-
+import 'package:swd_project/Nav_bar/event_detail.dart';
 import '../widgets/badge.dart';
-import 'event_detail.dart';
 
 class Event {
   int? eventId;
@@ -169,34 +168,26 @@ class _MyHomePageState extends State<MyHomePage> {
                   return ListView.builder(
                     itemCount: snapshot.data!.length,
                     itemBuilder: (BuildContext context, int index) {
+                      List<Event> events = snapshot.data!;
+                      final event = events[index];
                       return ListTile(
                         // leading: Image.network((snapshot.data![index].img!)),
-                        // leading: Image.network(
-                        //     'https://upload.wikimedia.org/wikipedia/vi/1/1d/Logo_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_FPT.png'),
+                        leading: Image.network(
+                            'https://upload.wikimedia.org/wikipedia/vi/1/1d/Logo_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_FPT.png'),
                         title: Text(snapshot.data![index].name!),
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text('Location: ' +
-                                (snapshot.data![index].location ?? '')),
+                            Text('Location: ' + (event.location ?? '')),
 
                             // Text('Email: ' + snapshot.data![index].email!),
-                            Text('Start Date: ' +
-                                (snapshot.data![index].startDate ?? '')),
-                            Text('End Date: ' +
-                                (snapshot.data![index].endDate ?? '')),
+                            Text('Start Date: ' + (event.startDate ?? '')),
+                            Text('End Date: ' + (event.endDate ?? '')),
                           ],
                         ),
 
                         onTap: () {
                           // DetailEvent();
-                          // `Navigator.of(context).push(
-                          //   MaterialPageRoute(
-                          //     builder: (BuildContext context) {
-                          //       return EventDetail(event: );
-                          //     },
-                          //   ),
-                          // ) 1`1    1
                           print('Tap on listTile');
                         },
                       );

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -10,7 +12,7 @@ import 'package:swd_project/Nav_bar/home_page.dart';
 import 'package:swd_project/Nav_bar/blog_page.dart';
 import 'package:swd_project/Nav_bar/profile_page.dart';
 import 'package:swd_project/Nav_bar/club_page.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../widgets/badge.dart';
 import 'club_page.dart';
 
@@ -44,6 +46,14 @@ class _MainPageState extends State<MainPage> {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       print("Message: ${message.notification?.title}");
       print("Message body: ${message.notification?.body}");
+
+      final notiTitle = message.notification?.title;
+      final notiContent = message.notification?.body;
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      SharedPreferences prefs2 = await SharedPreferences.getInstance();
+      await prefs2.setString('notiTitle', notiTitle ?? '');
+      await prefs.setString('notiContent', notiContent ?? '');
+      // print(prefs2.getString('notiContent'));
       BigTextStyleInformation bigTextStyleInformation = BigTextStyleInformation(
         message.notification!.body.toString(),
         htmlFormatBigText: true,
