@@ -39,11 +39,14 @@ class _ProfilePageState extends State<ProfilePage> {
               child: CircleAvatar(
                 radius: 50.0,
                 backgroundImage: NetworkImage(
-                    // "${FirebaseAuth.instance.currentUser!.photoURL}"
-                    "${imgState.isNotEmpty ? imgState : FirebaseAuth.instance.currentUser!.photoURL!}"),
+                    "${FirebaseAuth.instance.currentUser!.photoURL}"
+                    // "${imgState.isNotEmpty ? imgState : FirebaseAuth.instance.currentUser!.photoURL!}"
+
+                    ),
               ),
             ),
             SizedBox(height: 16.0),
+            Upload(),
             Text(
               'Name',
               style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
@@ -121,7 +124,6 @@ class _ProfilePageState extends State<ProfilePage> {
                 );
               },
             ),
-            Upload()
           ],
         ),
       ),
