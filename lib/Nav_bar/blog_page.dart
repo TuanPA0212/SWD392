@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:swd_project/Nav_bar/notification_page.dart';
 
 import '../widgets/badge.dart';
+import 'event_detail.dart';
 
 class Event {
   int? eventId;
@@ -53,6 +54,8 @@ class Event {
     return data;
   }
 }
+
+// final Event event;
 
 Future<List<Event>> searchEvents(String keyword) async {
   if (keyword.isEmpty) {
@@ -168,8 +171,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     itemBuilder: (BuildContext context, int index) {
                       return ListTile(
                         // leading: Image.network((snapshot.data![index].img!)),
-                        leading: Image.network(
-                            'https://upload.wikimedia.org/wikipedia/vi/1/1d/Logo_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_FPT.png'),
+                        // leading: Image.network(
+                        //     'https://upload.wikimedia.org/wikipedia/vi/1/1d/Logo_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_FPT.png'),
                         title: Text(snapshot.data![index].name!),
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -187,6 +190,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
                         onTap: () {
                           // DetailEvent();
+                          // `Navigator.of(context).push(
+                          //   MaterialPageRoute(
+                          //     builder: (BuildContext context) {
+                          //       return EventDetail(event: );
+                          //     },
+                          //   ),
+                          // ) 1`1    1
                           print('Tap on listTile');
                         },
                       );
