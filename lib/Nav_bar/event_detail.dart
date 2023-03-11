@@ -69,6 +69,12 @@ class _EventDetailState extends State<EventDetail> {
     } else {
       print(
           'Failed to register student for event. Error code: ${response.statusCode}');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('You have already registered for this event'),
+          duration: Duration(seconds: 2),
+        ),
+      );
     }
   }
 

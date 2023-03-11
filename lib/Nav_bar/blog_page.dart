@@ -4,8 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:swd_project/Nav_bar/notification_page.dart';
 import 'package:swd_project/Nav_bar/event_detail.dart';
 import '../widgets/badge.dart';
-import '../widgets/grid_event_search.dart';
-import '../model/event.dart';
 
 class Event {
   int? eventId;
@@ -55,6 +53,8 @@ class Event {
     return data;
   }
 }
+
+// final Event event;
 
 Future<List<Event>> searchEvents(String keyword) async {
   if (keyword.isEmpty) {
@@ -170,31 +170,27 @@ class _MyHomePageState extends State<MyHomePage> {
                     itemBuilder: (BuildContext context, int index) {
                       List<Event> events = snapshot.data!;
                       final event = events[index];
+                      print('event: ' + event.img!);
+                      String imgE = event.img!;
                       return ListTile(
                         // leading: Image.network((snapshot.data![index].img!)),
+                        // leading: Image.network('$imgE'),
                         leading: Image.network(
                             'https://upload.wikimedia.org/wikipedia/vi/1/1d/Logo_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_FPT.png'),
-                        title: Text(event.name!),
+                        title: Text(snapshot.data![index].name!),
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text('Location: ' + (event.location ?? '')),
-
-                            // Text('Email: ' + snapshot.data![index].email!),
                             Text('Start Date: ' + (event.startDate ?? '')),
                             Text('End Date: ' + (event.endDate ?? '')),
                           ],
                         ),
 
-                        // onTap: () {
-                        //   Navigator.of(context).push(
-                        //     MaterialPageRoute(
-                        //       builder: (BuildContext context) {
-                        //         return EventDetail(event: event[index]);
-                        //       },
-                        //     ),
-                        //   );
-                        // },
+                        onTap: () {
+                          // DetailEvent();
+                          print('Tap on listTile');
+                        },
                       );
                     },
                   );
