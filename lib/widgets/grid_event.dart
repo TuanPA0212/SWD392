@@ -26,41 +26,6 @@ class GridEvents extends StatelessWidget {
         shrinkWrap: true,
         primary: false,
         children: <Widget>[
-          Stack(
-            children: <Widget>[
-              // Container(
-              //   height: MediaQuery.of(context).size.height / 3.6,
-              //   width: MediaQuery.of(context).size.width / 2.2,
-              //   child: ClipRRect(
-              //     borderRadius: BorderRadius.circular(8.0),
-              //     child: Image.network(
-              //       "$img",
-              //       fit: BoxFit.contain,
-              //     ),
-              //   ),
-              // ),
-              // ---------------
-              // Positioned(
-              //   right: -10.0,
-              //   bottom: 3.0,
-              //   child: RawMaterialButton(
-              //     onPressed: () {},
-              //     fillColor: Colors.white,
-              //     shape: CircleBorder(),
-              //     elevation: 4.0,
-              //     child: Padding(
-              //       padding: EdgeInsets.all(5),
-              //       // child: Icon(
-              //       //   isFav ? Icons.favorite : Icons.favorite_border,
-              //       //   color: Colors.red,
-              //       //   size: 17,
-              //       // ),
-              //     ),
-              //   ),
-              // ),
-            ],
-          ),
-
           Padding(
             padding: EdgeInsets.only(bottom: 2.0, top: 8.0),
             child: Text(
@@ -71,6 +36,21 @@ class GridEvents extends StatelessWidget {
               ),
               maxLines: 2,
             ),
+          ),
+          Stack(
+            children: <Widget>[
+              Container(
+                height: MediaQuery.of(context).size.height / 3.6,
+                width: MediaQuery.of(context).size.width / 2.2,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: Image.asset(
+                    "./assets/images/fpt_logo.png",
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+            ],
           ),
 
           // Padding(

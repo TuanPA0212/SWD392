@@ -88,29 +88,41 @@ class _EventDetailState extends State<EventDetail> {
           "Event Details",
         ),
         elevation: 0.0,
-        actions: <Widget>[
-          Container(
-            height: MediaQuery.of(context).size.height / 2,
-            width: MediaQuery.of(context).size.width,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8.0),
-              // child: Image.asset(
-              //   "${events[1]['img']}",
-              //   fit: BoxFit.contain,
-              // ),
-            ),
-          ),
-        ],
+        // actions: <Widget>[
+        //   Container(
+        //     height: MediaQuery.of(context).size.height / 2,
+        //     width: MediaQuery.of(context).size.width,
+        //     child: ClipRRect(
+        //       borderRadius: BorderRadius.circular(8.0),
+        //       child: Image.asset(
+        //         "assets/images/fpt_logo.png",
+        //         fit: BoxFit.contain,
+        //       ),
+        //     ),
+        //   ),
+        // ],
       ),
       body: Padding(
-        padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
+        padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
         child: ListView(
           children: <Widget>[
-            SizedBox(height: 10.0),
-            // Stack(
-            //   children: <Widget>[],
-            // ),
-            SizedBox(height: 10.0),
+            // SizedBox(height: 10.0),
+            Stack(
+              children: <Widget>[
+                Container(
+                  height: MediaQuery.of(context).size.height / 2,
+                  width: MediaQuery.of(context).size.width,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: Image.asset(
+                      "assets/images/fpt_logo.png",
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            // SizedBox(height: 10.0),
             Text(
               widget.event.eventName,
               style: TextStyle(
@@ -119,10 +131,10 @@ class _EventDetailState extends State<EventDetail> {
               ),
               maxLines: 2,
             ),
-            Padding(
-              padding: EdgeInsets.only(bottom: 5.0, top: 2.0),
-              child: Row(),
-            ),
+            // Padding(
+            //   padding: EdgeInsets.only(bottom: 5.0, top: 2.0),
+            //   child: Row(),
+            // ),
             Padding(
               padding: EdgeInsets.only(bottom: 5.0, top: 2.0),
               child: Row(
