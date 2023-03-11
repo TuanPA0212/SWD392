@@ -44,8 +44,9 @@ class GridEvents extends StatelessWidget {
                 width: MediaQuery.of(context).size.width / 2.2,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
-                  child: Image.asset(
-                    "./assets/images/fpt_logo.png",
+                  child: Image.network(
+                    // "./assets/images/fpt_logo.png",
+                    event.img,
                     fit: BoxFit.contain,
                   ),
                 ),

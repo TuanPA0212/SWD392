@@ -114,15 +114,15 @@ class _EventDetailState extends State<EventDetail> {
                   width: MediaQuery.of(context).size.width,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
-                    child: Image.asset(
-                      "assets/images/fpt_logo.png",
+                    child: Image.network(
+                      widget.event.img,
                       fit: BoxFit.contain,
                     ),
                   ),
                 ),
               ],
             ),
-            // SizedBox(height: 10.0),
+            SizedBox(height: 10.0),
             Text(
               widget.event.eventName,
               style: TextStyle(
@@ -216,7 +216,7 @@ class _EventDetailState extends State<EventDetail> {
             SizedBox(height: 10.0),
             Expanded(
               child: Text(
-                widget.event.description,
+                widget.event.description!,
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w300,

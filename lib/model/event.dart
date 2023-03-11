@@ -4,7 +4,7 @@ class Event {
   final String email;
   final String location;
   final String img;
-  final String description;
+  final String? description;
   final String startDate;
   final String endDate;
   final int clubId;
@@ -18,7 +18,7 @@ class Event {
       required this.email,
       required this.location,
       required this.img,
-      required this.description,
+      this.description,
       required this.startDate,
       required this.endDate,
       required this.clubId,
@@ -60,11 +60,11 @@ class Event {
 
   factory Event.fromJson(Map<String, dynamic> json) {
     return Event(
-      eventId: json['event_id'] ?? 0,
+      eventId: json['event_id'],
       eventName: json['event_name'] ?? "",
       email: json['email'] ?? "",
       location: json['location'] ?? "",
-      img: json['img'] ?? "",
+      img: json['img'],
       description: json['description'] ?? "",
       startDate: json['start_date'] ?? "",
       endDate: json['end_date'] ?? "",

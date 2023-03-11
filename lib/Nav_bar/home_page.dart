@@ -121,7 +121,7 @@ class _HomePageState extends State<HomePage> {
                 childAspectRatio: MediaQuery.of(context).size.width /
                     (MediaQuery.of(context).size.height / 1.25),
               ),
-              itemCount: events == null ? 0 : events.length,
+              itemCount: events.length,
               itemBuilder: (BuildContext context, int index) {
                 final event = events[index];
                 return GridEvents(
@@ -141,7 +141,7 @@ class _HomePageState extends State<HomePage> {
 
   Future<List<Event>> fetchAllEvents() async {
     final response = await http.get(
-        Uri.parse("https://event-project.herokuapp.com/api/event/?status=0"));
+        Uri.parse("https://event-project.herokuapp.com/api/event/?status=1"));
 
     final responseData = json.decode(response.body) as List;
     print('responseData: $responseData');
