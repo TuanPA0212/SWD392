@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FirebaseServices {
   final _auth = FirebaseAuth.instance;
@@ -50,10 +52,13 @@ class FirebaseServices {
     final response =
         await http.post(Uri.parse(url), body: body, headers: headers);
     final responseData = json.decode(response.body);
-    print('responseData: $responseData');
+    print('responseData in login : $responseData');
     final accessToken = responseData['access_token'];
     final idStudent = responseData['data']['id'];
-    print(idStudent);
+    print('id của sinh viên: $idStudent');
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('idStudent', idStudent);
+
     return accessToken;
   }
 

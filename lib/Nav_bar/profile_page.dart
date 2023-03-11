@@ -1,10 +1,29 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swd_project/widgets/upload.dart';
 import '../login.dart';
 import 'package:swd_project/services/firebase_services.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  String imgState = '';
+  @override
+  void initState() {
+    super.initState();
+    SharedPreferences.getInstance().then((prefs) {
+      setState(() {
+        imgState = prefs.getString('imgState') ?? '';
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +39,8 @@ class ProfilePage extends StatelessWidget {
               child: CircleAvatar(
                 radius: 50.0,
                 backgroundImage: NetworkImage(
-                    "${FirebaseAuth.instance.currentUser!.photoURL}"),
+                    // "${FirebaseAuth.instance.currentUser!.photoURL}"
+                    "${imgState.isNotEmpty ? imgState : FirebaseAuth.instance.currentUser!.photoURL!}"),
               ),
             ),
             SizedBox(height: 16.0),
@@ -108,6 +128,7 @@ class ProfilePage extends StatelessWidget {
     );
   }
 }
+
 
 // class ProfilePage extends StatelessWidget {
 //   const ProfilePage({super.key});

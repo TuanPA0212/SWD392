@@ -5,6 +5,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../model/event.dart';
 import '../services/firebase_services.dart';
 
@@ -25,33 +26,52 @@ String authToken = accessToken;
 //   print("regis Date: $registrationDate");
 // }
 
-Future<void> registerStudentForEvent(int eventId) async {
-  // final Event eventId;
-  final DateTime registrationDate = DateTime.now();
-  print("regis Date: $registrationDate");
-  final url = Uri.parse('https://event-project.herokuapp.com/api/event/join');
-  final response = await http.post(
-    url,
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-      'Authorization': 'Bearer $authToken',
-    },
-    body: jsonEncode(<String, dynamic>{
-      'event_id': eventId,
-      // 'student_id': studentId,
-      'registration_date': registrationDate,
-    }),
-  );
-
-  if (response.statusCode == 200) {
-    print('Student successfully registered for event!');
-  } else {
-    print(
-        'Failed to register student for event. Error code: ${response.statusCode}');
-  }
-}
-
 class _EventDetailState extends State<EventDetail> {
+  int? idStudent;
+  @override
+  void initState() {
+    super.initState();
+    SharedPreferences.getInstance().then((prefs) {
+      setState(() {
+        idStudent = prefs.getInt('idStudent') ?? null;
+      });
+    });
+  }
+
+  Future<void> registerStudentForEvent(int eventId) async {
+    // final Event eventId;
+    final DateTime registrationDate = DateTime.now();
+    print("regis Date: $registrationDate");
+    final url = Uri.parse('https://event-project.herokuapp.com/api/event/join');
+    final response = await http.post(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        // 'Authorization': 'Bearer $authToken',
+      },
+      body: jsonEncode(<String, dynamic>{
+        'event_id': eventId,
+        'student_id': idStudent,
+        'registration_date': registrationDate.toIso8601String(),
+      }),
+    );
+
+    await Future.delayed(Duration(seconds: 2));
+
+    if (response.statusCode == 200) {
+      print('Student successfully registered for event!');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Join successfully'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    } else {
+      print(
+          'Failed to register student for event. Error code: ${response.statusCode}');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -143,6 +163,10 @@ class _EventDetailState extends State<EventDetail> {
                 //     color: Colors.green[300],
                 //   ),
                 // ),
+                // Image.network(
+                //   'https://upload.wikimedia.org/wikipedia/vi/1/1d/Logo_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_FPT.png',
+                //   // fit: BoxFit.contain,
+                // ),
               ],
             ),
             Row(
@@ -195,9 +219,34 @@ class _EventDetailState extends State<EventDetail> {
         height: 50.0,
         child: ElevatedButton(
           onPressed: () async {
+            await showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Confirmation'),
+                  content: Text('Are you sure you want to join this event?'),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text('Cancel'),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        // do something when the user confirms
+                        registerStudentForEvent(widget.event.eventId);
+                      },
+                      child: Text('Join'),
+                    ),
+                  ],
+                );
+              },
+            );
             // await FirebaseMessaging.instance.getInitialMessage();
             // createRegisDate();
-            registerStudentForEvent(widget.event.eventId);
+            // registerStudentForEvent(widget.event.eventId);
           },
           child: Text(
             "JOIN EVENT",

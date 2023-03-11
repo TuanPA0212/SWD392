@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 // import 'package:swd_project/services/storage_service.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Upload extends StatefulWidget {
   // const UploadScreen({Key? key}) : super(key: key);
@@ -47,10 +50,16 @@ class _UploadState extends State<Upload> {
             final response = await request.send();
 
             // Listen for response and get result
-            final responseBodyBytes = await response.stream.toBytes();
-            final responseBodyString = String.fromCharCodes(responseBodyBytes);
-            print(responseBodyString);
-
+            final responseBodyBytes = await response.stream.bytesToString();
+            // final responseBodyString = String.fromCharCodes(responseBodyBytes);
+            // print(responseBodyString);
+            print('data: ' + responseBodyBytes);
+            final responseData = json.decode(responseBodyBytes);
+            final imgState = responseData['data'];
+            print(imgState);
+            final prefs = await SharedPreferences.getInstance();
+            await prefs.setString('imgState', imgState);
+            // return imgstate;
             // storage.uploadFile(path, fileName).then((value) => print('Done'));
           },
           child: Text('Upload file'),
