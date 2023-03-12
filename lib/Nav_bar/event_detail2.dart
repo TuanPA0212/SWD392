@@ -6,21 +6,27 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../model/event.dart';
+import '../model/event2.dart';
 import '../services/firebase_services.dart';
 
-class EventDetail extends StatefulWidget {
-  final Event event;
+class EventDetail2 extends StatefulWidget {
+  final Event2 event;
 
-  EventDetail({Key? key, required this.event});
+  EventDetail2({Key? key, required this.event});
   @override
-  _EventDetailState createState() => _EventDetailState();
+  _EventDetail2State createState() => _EventDetail2State();
 }
 
 final accessToken = AccessTokenMiddleware.getAccessToken();
 String authToken = accessToken;
+// final studentId = AccessTokenMiddleware().getStudentId();
 
-class _EventDetailState extends State<EventDetail> {
+// createRegisDate() {
+//   final DateTime registrationDate = DateTime.now();
+//   print("regis Date: $registrationDate");
+// }
+
+class _EventDetail2State extends State<EventDetail2> {
   int? idStudent;
   @override
   void initState() {
@@ -118,7 +124,7 @@ class _EventDetailState extends State<EventDetail> {
             ),
             SizedBox(height: 10.0),
             Text(
-              widget.event.eventName,
+              widget.event.name,
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w800,

@@ -2,61 +2,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:swd_project/Nav_bar/notification_page.dart';
-import 'package:swd_project/Nav_bar/event_detail.dart';
+
 import '../widgets/badge.dart';
+import '../model/event2.dart';
+import 'event_detail.dart';
+import 'event_detail2.dart';
 
-class Event {
-  int? eventId;
-  String? name;
-  String? email;
-  String? location;
-  int? point;
-  String? img;
-  String? description;
-  String? startDate;
-  String? endDate;
-
-  Event(
-      {this.eventId,
-      this.name,
-      this.email,
-      this.location,
-      this.point,
-      this.img,
-      this.description,
-      this.startDate,
-      this.endDate});
-
-  Event.fromJson(Map<String, dynamic> json) {
-    eventId = json['event_id'];
-    name = json['name'];
-    email = json['email'];
-    location = json['location'];
-    point = json['point'];
-    img = json['img'];
-    description = json['description'];
-    startDate = json['start_date'];
-    endDate = json['end_date'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['event_id'] = this.eventId;
-    data['name'] = this.name;
-    data['email'] = this.email;
-    data['location'] = this.location;
-    data['point'] = this.point;
-    data['img'] = this.img;
-    data['description'] = this.description;
-    data['start_date'] = this.startDate;
-    data['end_date'] = this.endDate;
-    return data;
-  }
-}
-
-// final Event event;
-
-Future<List<Event>> searchEvents(String keyword) async {
+Future<List<Event2>> searchEvents(String keyword) async {
   if (keyword.isEmpty) {
     [];
   }
@@ -65,7 +17,7 @@ Future<List<Event>> searchEvents(String keyword) async {
 
   if (response.statusCode == 200) {
     Iterable list = json.decode(response.body);
-    return list.map((model) => Event.fromJson(model)).toList();
+    return list.map((model) => Event2.fromJson(model)).toList();
   } else {
     throw Exception('Failed to search events');
   }
@@ -78,7 +30,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final TextEditingController _searchController = TextEditingController();
-  late Future<List<Event>> futureEvents;
+  late Future<List<Event2>> futureEvents;
 
   @override
   void initState() {
@@ -152,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
           Expanded(
-            child: FutureBuilder<List<Event>>(
+            child: FutureBuilder<List<Event2>>(
               future: futureEvents,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -168,13 +120,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   return ListView.builder(
                     itemCount: snapshot.data!.length,
                     itemBuilder: (BuildContext context, int index) {
-                      List<Event> events = snapshot.data!;
+                      List<Event2> events = snapshot.data!;
                       final event = events[index];
                       print('event: ' + event.img!);
                       String imgE = event.img!;
                       return ListTile(
-                        // leading: Image.network((snapshot.data![index].img!)),
-                        // leading: Image.network('$imgE'),
                         leading: Image.network(
                             'https://upload.wikimedia.org/wikipedia/vi/1/1d/Logo_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_FPT.png'),
                         title: Text(snapshot.data![index].name!),
@@ -186,10 +136,14 @@ class _MyHomePageState extends State<MyHomePage> {
                             Text('End Date: ' + (event.endDate ?? '')),
                           ],
                         ),
-
                         onTap: () {
-                          // DetailEvent();
-                          print('Tap on listTile');
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (BuildContext context) {
+                                return EventDetail2(event: event);
+                              },
+                            ),
+                          );
                         },
                       );
                     },
@@ -198,7 +152,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   return Text('${snapshot.error}');
                 }
                 return const Center(
-                  // child: CircularProgressIndicator(),
                   child: Text('Search for events'),
                 );
               },

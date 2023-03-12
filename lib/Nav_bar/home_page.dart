@@ -69,7 +69,7 @@ class _HomePageState extends State<HomePage> {
             children: [
               InkWell(
                 onTap: () {
-                  print(currentIndex);
+                  // print(currentIndex);
                 },
                 child: CarouselSlider(
                   items: imagesList
@@ -144,7 +144,7 @@ class _HomePageState extends State<HomePage> {
         Uri.parse("https://event-project.herokuapp.com/api/event/?status=1"));
 
     final responseData = json.decode(response.body) as List;
-    print('responseData: $responseData');
+    // print('responseData: $responseData');
     if (response.statusCode == 200) {
       return responseData.map((e) => Event.fromJson(e)).toList();
     } else {

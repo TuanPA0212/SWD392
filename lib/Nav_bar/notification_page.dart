@@ -16,62 +16,68 @@ class NotificationPage extends StatefulWidget {
 }
 
 class _NotificationPageState extends State<NotificationPage> {
-  late SharedPreferences prefs;
-  String? notiTitle;
-  String? notiContent;
+// Model
 
+  // late SharedPreferences prefs;
   // String? notiTitle;
   // String? notiContent;
 
-  void fetchNoti() async {
-    // SharedPreferences prefs = await SharedPreferences.getInstance();
-    // String? title = prefs.getString('notiTitle');
-    // String? content = prefs.getString('notiContent');
-    // setState(() {
-    //   notiTitle = title;
-    //   notiContent = content;
-    // });
-    // print(notiTitle);
-    // print(notiContent);
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-      final notiTitle = message.notification?.title;
-      final notiContent = message.notification?.body;
+  // void fetchNoti() async {
+  //   FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+  //     final notiTitle = message.notification?.title;
+  //     final notiContent = message.notification?.body;
 
-      await prefs.setString('notiTitle', notiTitle ?? '');
-      await prefs.setString('notiContent', notiContent ?? '');
+  //     await prefs.setString('notiTitle', notiTitle ?? '');
+  //     await prefs.setString('notiContent', notiContent ?? '');
 
-      setState(() {
-        this.notiTitle = notiTitle;
-        this.notiContent = notiContent;
-      });
-    });
-  }
+  //     final newNoti =
+  //         NotificationModel(title: notiTitle ?? '', content: notiContent ?? '');
+  //     setState(() {
+  //       notifications.insert(0, newNoti);
+  //     });
+  //   });
+  // }
+
+  // void fetchNoti() async {
+  //   FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+  //     final notiTitle = message.notification?.title;
+  //     final notiContent = message.notification?.body;
+
+  //     await prefs.setString('notiTitle', notiTitle ?? '');
+  //     await prefs.setString('notiContent', notiContent ?? '');
+
+  //     setState(() {
+  //       this.notiTitle = notiTitle;
+  //       this.notiContent = notiContent;
+  //     });
+  //   });
+  // }
 
   @override
-  void initState() {
-    super.initState();
-    fetchNoti();
-    SharedPreferences.getInstance().then((sharedPrefs) {
-      prefs = sharedPrefs;
-      setState(() {
-        notiTitle = prefs.getString('notiTitle') ?? null;
-        notiContent = prefs.getString('notiContent') ?? null;
-      });
-    });
+  // void initState() {
+  //   super.initState();
+  //   fetchNoti();
+  //   SharedPreferences.getInstance().then((sharedPrefs) {
+  //     prefs = sharedPrefs;
+  //     setState(() {
+  //       notiTitle = prefs.getString('notiTitle') ?? null;
+  //       notiContent = prefs.getString('notiContent') ?? null;
+  //     });
+  //   });
 
-    print(notiTitle);
-    print(notiContent);
-    // SharedPreferences.getInstance().then((prefs) {
-    //   setState(() {
-    //     notiTitle = prefs.getString('notiTitle') ?? null;
-    //   });
-    // });
-    // SharedPreferences.getInstance().then((prefs2) {
-    //   setState(() {
-    //     notiContent = prefs2.getString('notiContent') ?? null;
-    //   });
-    // });
-  }
+  //   print("title $notiTitle");
+  //   print("content $notiContent");
+  //   // SharedPreferences.getInstance().then((prefs) {
+  //   //   setState(() {
+  //   //     notiTitle = prefs.getString('notiTitle') ?? null;
+  //   //   });
+  //   // });
+  //   // SharedPreferences.getInstance().then((prefs2) {
+  //   //   setState(() {
+  //   //     notiContent = prefs2.getString('notiContent') ?? null;
+  //   //   });
+  //   // });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -83,8 +89,10 @@ class _NotificationPageState extends State<NotificationPage> {
       body: ListView(
         children: [
           _buildNotificationItem(
-            notiTitle ?? '',
-            notiContent ?? '',
+            // notiTitle ?? '',
+            // notiContent ?? '',
+            "title",
+            "content",
             Icons.event,
           ),
         ],
@@ -108,17 +116,4 @@ class _NotificationPageState extends State<NotificationPage> {
       ),
     );
   }
-
-  // Future<void> fetchNoti() async {
-  //   final url = "https://event-project.herokuapp.com/notifications";
-  //   final uri = Uri.parse(url);
-  //   final response = await http.get(uri);
-  //   print(response.body);
-  //   print(response.statusCode);
-  //   // final body = response.body;
-  //   // final json = jsonDecode(body);
-  //   // setState(() {
-  //   //   notifications = json['']
-  //   // });
-  // }
 }

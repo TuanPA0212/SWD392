@@ -102,7 +102,7 @@ class _ClubPageState extends State<ClubPage> {
         "https://event-project.herokuapp.com/api/club/campus/$campusID"));
 
     final responseData = json.decode(response.body) as List;
-    print('responseData: $responseData');
+    // print('responseData: $responseData');
     if (response.statusCode == 200) {
       return responseData.map((e) => Club.fromJson(e)).toList();
     } else {
