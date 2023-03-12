@@ -17,8 +17,8 @@ class EventDetail2 extends StatefulWidget {
   _EventDetail2State createState() => _EventDetail2State();
 }
 
-final accessToken = AccessTokenMiddleware.getAccessToken();
-String authToken = accessToken;
+// final accessToken = AccessTokenMiddleware.getAccessToken();
+// String authToken = accessToken;
 // final studentId = AccessTokenMiddleware().getStudentId();
 
 // createRegisDate() {

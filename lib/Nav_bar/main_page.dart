@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:swd_project/Nav_bar/notification_page.dart';
 import 'package:swd_project/Nav_bar/home_page.dart';
 import 'package:swd_project/Nav_bar/blog_page.dart';
@@ -81,13 +82,17 @@ class _MainPageState extends State<MainPage> {
     await FirebaseMessaging.instance.getToken().then((token) {
       setState(() {
         mtoken = token;
-        print("My device token is $mtoken");
+        // print("My device token is $mtoken");
       });
       saveDeviceToken(token!);
     });
   }
 
+  final storage = FlutterSecureStorage();
   void saveDeviceToken(String token) async {
+    await storage.write(key: 'device_token', value: token);
+    final dtoken = await storage.read(key: 'device_token');
+    print('dtoken $dtoken');
     await FirebaseFirestore.instance.collection("UserTokens").doc("User2").set({
       'token': token,
     });

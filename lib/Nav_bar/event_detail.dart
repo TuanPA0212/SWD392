@@ -17,8 +17,8 @@ class EventDetail extends StatefulWidget {
   _EventDetailState createState() => _EventDetailState();
 }
 
-final accessToken = AccessTokenMiddleware.getAccessToken();
-String authToken = accessToken;
+// final accessToken = AccessTokenMiddleware.getAccessToken();
+// String authToken = accessToken;
 
 class _EventDetailState extends State<EventDetail> {
   int? idStudent;

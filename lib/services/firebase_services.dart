@@ -4,81 +4,11 @@ import 'dart:ffi';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-// class FirebaseServices extends StatefulWidget {
-//   const FirebaseServices({super.key});
-
-//   @override
-//   State<FirebaseServices> createState() => _FirebaseServicesState();
-// }
-
-// class _FirebaseServicesState extends State<FirebaseServices> {
-//   final _auth = FirebaseAuth.instance;
-//   final _googleSignIn = GoogleSignIn();
-
-//   signInWithGoogle() async {
-//     try {
-//       final GoogleSignInAccount? googleSignInAccount =
-//           await _googleSignIn.signIn();
-//       if (googleSignInAccount != null) {
-//         final GoogleSignInAuthentication googleSignInAuthentication =
-//             await googleSignInAccount.authentication;
-//         final AuthCredential authCredential = GoogleAuthProvider.credential(
-//             accessToken: googleSignInAuthentication.accessToken,
-//             idToken: googleSignInAuthentication.idToken);
-//         await _auth.signInWithCredential(authCredential);
-//         FirebaseAuth fAuth = FirebaseAuth.instance;
-//         final User? firebaseUser = (await fAuth
-//                 .signInWithCredential(authCredential)
-//                 .catchError((msg) {}))
-//             .user;
-//         if (firebaseUser != null) {
-//           String token = await firebaseUser.getIdToken();
-//           print('Get token from firebase: $token');
-//           // await sendTokenApi(token);
-//           String accessToken = await sendTokenApi(token);
-//           AccessTokenMiddleware.setAccessToken(accessToken);
-//         }
-//       }
-//     } on FirebaseAuthException catch (e) {
-//       print(e.message);
-//       throw e;
-//     }
-//   }
-
-//   Future<String> sendTokenApi(String token) async {
-//     final url = 'https://event-project.herokuapp.com/api/login';
-//     final headers = {
-//       'Content-Type': 'application/json',
-//     };
-//     final body =
-//         json.encode({'token': token, 'role': 'members', 'deviceToken': ""});
-//     final response =
-//         await http.post(Uri.parse(url), body: body, headers: headers);
-//     final responseData = json.decode(response.body);
-//     print('responseData in login : $responseData');
-//     final accessToken = responseData['access_token'];
-//     final idStudent = responseData['data']['id'];
-//     print('id của sinh viên: $idStudent');
-//     SharedPreferences prefs = await SharedPreferences.getInstance();
-//     await prefs.setInt('idStudent', idStudent);
-
-//     return accessToken;
-//   }
-
-//   signOut() async {
-//     await _auth.signOut();
-//     await _googleSignIn.signOut();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return const Placeholder();
-//   }
-// }
 class FirebaseServices {
   final _auth = FirebaseAuth.instance;
   final _googleSignIn = GoogleSignIn();
@@ -103,8 +33,8 @@ class FirebaseServices {
           String token = await firebaseUser.getIdToken();
           print('Get token from firebase: $token');
           // await sendTokenApi(token);
-          String accessToken = await sendTokenApi(token);
-          AccessTokenMiddleware.setAccessToken(accessToken);
+          // String accessToken = await sendTokenApi(token);
+          // AccessTokenMiddleware.setAccessToken(accessToken);
         }
       }
     } on FirebaseAuthException catch (e) {
@@ -113,16 +43,17 @@ class FirebaseServices {
     }
   }
 
-  Future<String> sendTokenApi(String token) async {
+  Future<void> sendTokenApi(String token) async {
     final url = 'https://event-project.herokuapp.com/api/login';
     final headers = {
       'Content-Type': 'application/json',
     };
+    final storage = FlutterSecureStorage();
+    String? deviceToken = await storage.read(key: 'deviceToken');
     final body = json.encode({
       'token': token,
       'role': 'members',
-      'deviceToken':
-          "cSiD4AbYQ3uWb7TRnggXfI:APA91bEcYehbQavcp3WMFnT6sbQFxYGiwNpY-wzVBND5gkyZM2ojlrvWNpUQFPl--k8K9-Lzj4-Tm2ADxyp1twjYBYo3kI-3fuK9XAkbP6CvuyfJmARwz5N8RvTnBJH51w5BAPngaTiU"
+      'deviceToken': deviceToken,
     });
     final response =
         await http.post(Uri.parse(url), body: body, headers: headers);
@@ -134,7 +65,7 @@ class FirebaseServices {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setInt('idStudent', idStudent);
 
-    return accessToken;
+    // return accessToken;
   }
 
   signOut() async {
@@ -143,17 +74,44 @@ class FirebaseServices {
   }
 }
 
-class AccessTokenMiddleware {
-  static String? _accessToken;
-  // static String? _studentId;
+// class SaveDeviceToken extends StatefulWidget {
+//   const SaveDeviceToken({super.key});
 
-  static void setAccessToken(String accessToken) {
-    _accessToken = accessToken;
-  }
+//   @override
+//   State<SaveDeviceToken> createState() => _SaveDeviceTokenState();
+// }
 
-  static String getAccessToken() {
-    return _accessToken!;
-  }
+// class _SaveDeviceTokenState extends State<SaveDeviceToken> {
+//    String? deviceToken;
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     // Lấy giá trị của biến deviceToken từ storage trong initState
+//     storage.read(key: 'device_token').then((value) {
+//       setState(() {
+//         deviceToken = value;
+//       });
+//     });
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return const Placeholder();
+//   }
+// }
+
+// class AccessTokenMiddleware {
+//   static String? _accessToken;
+//   // static String? _studentId;
+
+//   static void setAccessToken(String accessToken) {
+//     _accessToken = accessToken;
+//   }
+
+//   static String getAccessToken() {
+//     return _accessToken!;
+//   }
 
   // static void setStudentId(String studentId) {
   //   _studentId = studentId;
@@ -162,4 +120,4 @@ class AccessTokenMiddleware {
   // static String getStudentId() {
   //   return _studentId!;
   // }
-}
+// }
