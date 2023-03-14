@@ -8,6 +8,7 @@ class Club {
   final String name;
   final String abbreviation;
   final DateTime establishedDate;
+  final String? img;
   final int totalMembers;
 
   Club(
@@ -16,7 +17,8 @@ class Club {
       required this.name,
       required this.abbreviation,
       required this.establishedDate,
-      required this.totalMembers});
+      required this.totalMembers,
+      required this.img});
 
   factory Club.fromJson(Map<String, dynamic> json) {
     print(json['establishedDate']);
@@ -28,8 +30,9 @@ class Club {
       establishedDate: json['established_date'] != null
           ? DateTime.parse(json['established_date'])
           : DateTime.now(),
-      abbreviation: json['abbreviation'],
-      totalMembers: json['totalMembers'],
+      img: json['img']?? "",
+      abbreviation: json['abbreviation'] ?? "",
+      totalMembers: json['totalMembers']?? "",
     );
   }
 }

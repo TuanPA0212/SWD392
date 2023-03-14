@@ -14,6 +14,7 @@ Future<List<Event2>> searchEvents(String keyword) async {
   }
   final response = await http.get(Uri.parse(
       'https://event-project.herokuapp.com/api/event/search?name=$keyword&status=0'));
+  // print("device token is :");
 
   if (response.statusCode == 200) {
     Iterable list = json.decode(response.body);
@@ -43,12 +44,6 @@ class _MyHomePageState extends State<MyHomePage> {
     _searchController.dispose();
     super.dispose();
   }
-
-  // void _onSearchSubmitted(String keyword) {
-  //   setState(() {
-  //     futureEvents = searchEvents(keyword);
-  //   });
-  // }
 
   void _onSearchSubmitted(String keyword) {
     if (keyword.isEmpty) {
@@ -122,11 +117,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     itemBuilder: (BuildContext context, int index) {
                       List<Event2> events = snapshot.data!;
                       final event = events[index];
-                      print('event: ' + event.img!);
-                      String imgE = event.img!;
+
                       return ListTile(
-                        leading: Image.network(
-                            'https://upload.wikimedia.org/wikipedia/vi/1/1d/Logo_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_FPT.png'),
+                        // leading: Image.network(snapshot.data![index].img),
                         title: Text(snapshot.data![index].name!),
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

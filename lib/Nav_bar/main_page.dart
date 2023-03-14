@@ -91,8 +91,8 @@ class _MainPageState extends State<MainPage> {
   final storage = FlutterSecureStorage();
   void saveDeviceToken(String token) async {
     await storage.write(key: 'device_token', value: token);
-    final dtoken = await storage.read(key: 'device_token');
-    print('dtoken $dtoken');
+    // final dtoken = await storage.read(key: 'device_token');
+    // print('dtoken $dtoken');
     await FirebaseFirestore.instance.collection("UserTokens").doc("User2").set({
       'token': token,
     });

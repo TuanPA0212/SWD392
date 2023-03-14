@@ -32,9 +32,10 @@ class FirebaseServices {
         if (firebaseUser != null) {
           String token = await firebaseUser.getIdToken();
           print('Get token from firebase: $token');
-          // await sendTokenApi(token);
+          await sendTokenApi(token);
           // String accessToken = await sendTokenApi(token);
           // AccessTokenMiddleware.setAccessToken(accessToken);
+          // print("device token is :");
         }
       }
     } on FirebaseAuthException catch (e) {
@@ -44,12 +45,14 @@ class FirebaseServices {
   }
 
   Future<void> sendTokenApi(String token) async {
+    // print("device token is :");
     final url = 'https://event-project.herokuapp.com/api/login';
     final headers = {
       'Content-Type': 'application/json',
     };
     final storage = FlutterSecureStorage();
-    String? deviceToken = await storage.read(key: 'deviceToken');
+    String? deviceToken = await storage.read(key: 'device_token');
+    print("device token is : $deviceToken");
     final body = json.encode({
       'token': token,
       'role': 'members',
