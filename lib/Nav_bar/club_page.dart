@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter/widgets.dart';
+import 'package:swd_project/Nav_bar/club_detail.dart';
 import 'package:swd_project/Nav_bar/notification_page.dart';
 import 'package:swd_project/widgets/badge.dart';
 import 'package:swd_project/widgets/grid_clubs.dart';
@@ -13,7 +14,13 @@ import 'package:flutter/material.dart';
 import '../model//club.dart';
 
 class ClubPage extends StatefulWidget {
-  const ClubPage({super.key});
+  // const ClubPage({super.key});
+  // final Club club;
+
+  // const ClubPage({
+  //   Key? key,
+  //   required this.club,
+  // }) : super(key: key);
 
   @override
   State<ClubPage> createState() => _ClubPageState();
@@ -74,11 +81,25 @@ class _ClubPageState extends State<ClubPage> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           List<Club> clubs = snapshot.data!;
-          return Padding(
-            padding: const EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
+          // return Padding(
+          //   padding: const EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
+          return InkWell(
+            // onTap: () {
+            //   Navigator.of(context).push(
+            //     MaterialPageRoute(
+            //       builder: (BuildContext context) {
+            //         return ClubDetail(club: club);
+            //       },
+            //     ),
+            //   );
+            // },
             child: ListView.builder(
               itemCount: clubs.length,
               itemBuilder: (BuildContext context, int index) {
+                onTap:
+                () {
+                  // Your onTap logic here
+                };
                 return GridClubs(
                   name: clubs[index].name,
                   clubId: clubs[index].clubId,
