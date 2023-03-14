@@ -32,9 +32,10 @@ class FirebaseServices {
         if (firebaseUser != null) {
           String token = await firebaseUser.getIdToken();
           print('Get token from firebase: $token');
+
           // await sendTokenApi(token);
-          // String accessToken = await sendTokenApi(token);
-          // AccessTokenMiddleware.setAccessToken(accessToken);
+          String accessToken = await sendTokenApi(token);
+          AccessTokenMiddleware.setAccessToken(accessToken);
         }
       }
     } on FirebaseAuthException catch (e) {
@@ -43,13 +44,14 @@ class FirebaseServices {
     }
   }
 
-  Future<void> sendTokenApi(String token) async {
+  Future<String> sendTokenApi(String token) async {
     final url = 'https://event-project.herokuapp.com/api/login';
     final headers = {
       'Content-Type': 'application/json',
     };
     final storage = FlutterSecureStorage();
-    String? deviceToken = await storage.read(key: 'deviceToken');
+    String? deviceToken = await storage.read(key: 'device_token');
+    print("device token: $deviceToken");
     final body = json.encode({
       'token': token,
       'role': 'members',
@@ -65,7 +67,7 @@ class FirebaseServices {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setInt('idStudent', idStudent);
 
-    // return accessToken;
+    return accessToken;
   }
 
   signOut() async {
@@ -101,17 +103,17 @@ class FirebaseServices {
 //   }
 // }
 
-// class AccessTokenMiddleware {
-//   static String? _accessToken;
-//   // static String? _studentId;
+class AccessTokenMiddleware {
+  static String? _accessToken;
+  // static String? _studentId;
 
-//   static void setAccessToken(String accessToken) {
-//     _accessToken = accessToken;
-//   }
+  static void setAccessToken(String accessToken) {
+    _accessToken = accessToken;
+  }
 
-//   static String getAccessToken() {
-//     return _accessToken!;
-//   }
+  static String getAccessToken() {
+    return _accessToken!;
+  }
 
   // static void setStudentId(String studentId) {
   //   _studentId = studentId;
@@ -120,4 +122,4 @@ class FirebaseServices {
   // static String getStudentId() {
   //   return _studentId!;
   // }
-// }
+}

@@ -35,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Text(
                       "Welcome to event management",
                       style: TextStyle(
-                        fontSize: 25.0,
+                        fontSize: 22.0,
                         fontWeight: FontWeight.w700,
                         color: Colors.white,
                       ),
