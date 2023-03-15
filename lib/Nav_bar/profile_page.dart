@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:swd_project/common_widget/color.dart';
 import 'package:swd_project/widgets/upload.dart';
 import '../login.dart';
 import 'package:swd_project/services/firebase_services.dart';
@@ -29,6 +30,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Profile'),
+        backgroundColor: mainTheme,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

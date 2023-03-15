@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:swd_project/Nav_bar/notification_page.dart';
+import 'package:swd_project/common_widget/color.dart';
 
 import '../widgets/badge.dart';
 import '../model/event2.dart';
@@ -61,6 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: mainTheme,
         automaticallyImplyLeading: false,
         title: const Text("Events Page"),
         centerTitle: true,

@@ -14,6 +14,7 @@ import 'package:swd_project/Nav_bar/blog_page.dart';
 import 'package:swd_project/Nav_bar/profile_page.dart';
 import 'package:swd_project/Nav_bar/club_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:swd_project/common_widget/color.dart';
 import '../widgets/badge.dart';
 import 'club_page.dart';
 
@@ -146,19 +147,19 @@ class _MainPageState extends State<MainPage> {
             BottomNavigationBarItem(
                 icon: Icon(Icons.home),
                 label: 'Home',
-                backgroundColor: Colors.blue),
+                backgroundColor: mainTheme),
             BottomNavigationBarItem(
                 icon: Icon(Icons.copyright_outlined),
                 label: 'Club',
-                backgroundColor: Colors.blue),
+                backgroundColor: mainTheme),
             BottomNavigationBarItem(
                 icon: Icon(Icons.article),
                 label: 'Event',
-                backgroundColor: Colors.blue),
+                backgroundColor: mainTheme),
             BottomNavigationBarItem(
                 icon: Icon(Icons.person),
                 label: 'Profile',
-                backgroundColor: Colors.blue),
+                backgroundColor: mainTheme),
           ]),
     );
   }

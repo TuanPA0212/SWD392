@@ -6,6 +6,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:swd_project/common_widget/color.dart';
 import '../model/notification.dart';
 
 class NotificationPage extends StatefulWidget {
@@ -84,6 +85,7 @@ class _NotificationPageState extends State<NotificationPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Notifications'),
+        backgroundColor: mainTheme,
       ),
       // List<>
       body: ListView(

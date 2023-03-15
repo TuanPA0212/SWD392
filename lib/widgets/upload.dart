@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 // import 'package:swd_project/services/storage_service.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:swd_project/common_widget/color.dart';
 
 class Upload extends StatefulWidget {
   // const UploadScreen({Key? key}) : super(key: key);
@@ -62,6 +63,9 @@ class _UploadState extends State<Upload> {
             // return imgstate;
             // storage.uploadFile(path, fileName).then((value) => print('Done'));
           },
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(mainTheme),
+          ),
           child: Text('Upload file'),
         ))
       ]),
