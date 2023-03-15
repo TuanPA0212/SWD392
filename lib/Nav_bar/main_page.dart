@@ -44,6 +44,8 @@ class _MainPageState extends State<MainPage> {
     var initializationSettings =
         InitializationSettings(android: androidInitialize);
     flutterLocalNotificationsPlugin.initialize(initializationSettings);
+    // subscribe to topic on each app start-up
+
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       print("Message: ${message.notification?.title}");
       print("Message body: ${message.notification?.body}");
@@ -109,7 +111,7 @@ class _MainPageState extends State<MainPage> {
       provisional: false,
       sound: true,
     );
-
+    await FirebaseMessaging.instance.subscribeToTopic('topic');
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       print("User granted permission");
     } else if (settings.authorizationStatus ==

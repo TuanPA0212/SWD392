@@ -76,7 +76,7 @@ class _HomePageState extends State<HomePage> {
                       .map(
                         (item) => Image.asset(
                           item['image_path'],
-                          fit: BoxFit.contain,
+                          fit: BoxFit.fill,
                           width: double.infinity,
                         ),
                       )

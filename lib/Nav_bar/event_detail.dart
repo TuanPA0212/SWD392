@@ -116,7 +116,7 @@ class _EventDetailState extends State<EventDetail> {
                     borderRadius: BorderRadius.circular(8.0),
                     child: Image.network(
                       widget.event.img,
-                      fit: BoxFit.contain,
+                      fit: BoxFit.fill,
                     ),
                   ),
                 ),
