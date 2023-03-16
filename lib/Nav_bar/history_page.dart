@@ -20,17 +20,11 @@ class _HistoryPageState extends State<HistoryPage> {
   List<History> historyList = [];
   List historyItem = [
     {
-      "img": "assets/images/event1_carousel.png",
+      "img": "assets/images/fpt_logo.png",
       "name": "camus tour",
       "startDate": "10/2/2023",
       "endDate": "10/3/2023"
     },
-    {
-      "img": "assets/images/event1_carousel.png",
-      "name": "camus tour",
-      "startDate": "10/2/2023",
-      "endDate": "10/3/2023"
-    }
   ];
 
   @override
@@ -58,7 +52,7 @@ class _HistoryPageState extends State<HistoryPage> {
           return ListView.builder(
             itemCount: histories.length,
             itemBuilder: (BuildContext context, int index) {
-              final item = historyItem[index];
+              // final item = historyItem[index];
               return Card(
                 child: Row(
                   children: [
@@ -67,7 +61,7 @@ class _HistoryPageState extends State<HistoryPage> {
                       width: 100,
                       height: 100, // Điều chỉnh độ rộng của cột hình ảnh
                       child: Image.asset(
-                        item['img'],
+                        historyItem[0]["img"],
                         fit: BoxFit.contain,
                       ),
                     ),
