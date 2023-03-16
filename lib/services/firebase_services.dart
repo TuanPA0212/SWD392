@@ -61,8 +61,10 @@ class FirebaseServices {
         await http.post(Uri.parse(url), body: body, headers: headers);
     final responseData = json.decode(response.body);
     print('responseData in login : $responseData');
+
     final accessToken = responseData['access_token'];
     final idStudent = responseData['data']['id'];
+    await storage.write(key: 'idStudent', value: idStudent.toString());
     print('id của sinh viên: $idStudent');
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setInt('idStudent', idStudent);

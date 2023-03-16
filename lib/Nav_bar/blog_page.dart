@@ -119,27 +119,32 @@ class _MyHomePageState extends State<MyHomePage> {
                     itemBuilder: (BuildContext context, int index) {
                       List<Event2> events = snapshot.data!;
                       final event = events[index];
+                      return Card(
+                        elevation: 2,
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 16),
+                        child: ListTile(
+                          // leading: Image.network(snapshot.data![index].img),
 
-                      return ListTile(
-                        // leading: Image.network(snapshot.data![index].img),
-                        title: Text(snapshot.data![index].name!),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text('Location: ' + (event.location ?? '')),
-                            Text('Start Date: ' + (event.startDate ?? '')),
-                            Text('End Date: ' + (event.endDate ?? '')),
-                          ],
+                          title: Text(snapshot.data![index].name),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text('Location: ' + (event.location)),
+                              Text('Start Date: ' + (event.startDate)),
+                              Text('End Date: ' + (event.endDate)),
+                            ],
+                          ),
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (BuildContext context) {
+                                  return EventDetail2(event: event);
+                                },
+                              ),
+                            );
+                          },
                         ),
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (BuildContext context) {
-                                return EventDetail2(event: event);
-                              },
-                            ),
-                          );
-                        },
                       );
                     },
                   );

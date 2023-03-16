@@ -6,6 +6,8 @@ import 'package:swd_project/widgets/upload.dart';
 import '../login.dart';
 import 'package:swd_project/services/firebase_services.dart';
 
+import 'history_page.dart';
+
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
@@ -31,6 +33,8 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: AppBar(
         title: Text('Profile'),
         backgroundColor: mainTheme,
+        automaticallyImplyLeading: false,
+        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -81,23 +85,6 @@ class _ProfilePageState extends State<ProfilePage> {
                     ],
                   ),
                 ),
-                // Expanded(
-                //   child: Column(
-                //     crossAxisAlignment: CrossAxisAlignment.start,
-                //     children: [
-                //       Text(
-                //         'Phone',
-                //         style:
-                //             TextStyle(fontSize: 16.0, color: Colors.grey[600]),
-                //       ),
-                //       SizedBox(height: 8.0),
-                //       Text(
-                //         '+1 123-456-7890',
-                //         style: TextStyle(fontSize: 16.0),
-                //       ),
-                //     ],
-                //   ),
-                // ),
               ],
             ),
             SizedBox(height: 16.0),
@@ -126,6 +113,22 @@ class _ProfilePageState extends State<ProfilePage> {
                 );
               },
             ),
+            Divider(),
+            ListTile(
+              leading: Icon(Icons.history),
+              title: Text('History'),
+              onTap: () async {
+                await FirebaseServices().signOut();
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) {
+                      return HistoryPage();
+                    },
+                  ),
+                );
+              },
+            ),
+            Divider(),
           ],
         ),
       ),
