@@ -7,7 +7,7 @@ class History {
   final String name;
   final String location;
   final String img;
-  final Null description;
+  final String description;
   final DateTime startDate;
   final DateTime endDate;
   final DateTime registrationDate;
@@ -31,7 +31,7 @@ class History {
         name: json["name"],
         location: json["location"],
         img: json["img"],
-        description: json["description"],
+        description: json["description"] ?? "",
         startDate: json['start_date'] != null
             ? DateTime.parse(json["start_date"])
             : DateTime.now(),
