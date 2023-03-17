@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
-
+import 'package:swd_project/common_widget/color.dart';
 import '../model/club.dart';
 
 class ClubDetail extends StatefulWidget {
@@ -17,6 +17,7 @@ class _ClubDetailState extends State<ClubDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: mainTheme,
         automaticallyImplyLeading: false,
         leading: IconButton(
           icon: Icon(

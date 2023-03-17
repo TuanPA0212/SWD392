@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:swd_project/common_widget/color.dart';
 import '../model/event2.dart';
 import '../services/firebase_services.dart';
 
@@ -76,6 +77,7 @@ class _EventDetail2State extends State<EventDetail2> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: mainTheme,
         automaticallyImplyLeading: false,
         leading: IconButton(
           icon: Icon(
@@ -265,6 +267,9 @@ class _EventDetail2State extends State<EventDetail2> {
             style: TextStyle(
               color: Colors.white,
             ),
+          ),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: mainTheme, // set the background color here
           ),
           // color: Theme.of(context).accentColor,
         ),
