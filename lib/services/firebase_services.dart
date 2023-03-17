@@ -32,10 +32,10 @@ class FirebaseServices {
         if (firebaseUser != null) {
           String token = await firebaseUser.getIdToken();
           print('Get token from firebase: $token');
-          await sendTokenApi(token);
-          // String accessToken = await sendTokenApi(token);
-          // AccessTokenMiddleware.setAccessToken(accessToken);
-          // print("device token is :");
+
+          // await sendTokenApi(token);
+          String accessToken = await sendTokenApi(token);
+          AccessTokenMiddleware.setAccessToken(accessToken);
         }
       }
     } on FirebaseAuthException catch (e) {
@@ -44,15 +44,16 @@ class FirebaseServices {
     }
   }
 
-  Future<void> sendTokenApi(String token) async {
-    // print("device token is :");
+  final storage = const FlutterSecureStorage();
+
+  Future<String> sendTokenApi(String token) async {
     final url = 'https://event-project.herokuapp.com/api/login';
     final headers = {
       'Content-Type': 'application/json',
     };
     final storage = FlutterSecureStorage();
     String? deviceToken = await storage.read(key: 'device_token');
-    print("device token is : $deviceToken");
+    print("device token: $deviceToken");
     final body = json.encode({
       'token': token,
       'role': 'members',
@@ -62,13 +63,16 @@ class FirebaseServices {
         await http.post(Uri.parse(url), body: body, headers: headers);
     final responseData = json.decode(response.body);
     print('responseData in login : $responseData');
+
     final accessToken = responseData['access_token'];
     final idStudent = responseData['data']['id'];
+    final email = responseData['data']['email'];
+    await storage.write(key: 'idStudent', value: idStudent.toString());
     print('id của sinh viên: $idStudent');
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setInt('idStudent', idStudent);
-
-    // return accessToken;
+    await storage.write(key: 'email', value: email);
+    return accessToken;
   }
 
   signOut() async {
@@ -104,17 +108,17 @@ class FirebaseServices {
 //   }
 // }
 
-// class AccessTokenMiddleware {
-//   static String? _accessToken;
-//   // static String? _studentId;
+class AccessTokenMiddleware {
+  static String? _accessToken;
+  // static String? _studentId;
 
-//   static void setAccessToken(String accessToken) {
-//     _accessToken = accessToken;
-//   }
+  static void setAccessToken(String accessToken) {
+    _accessToken = accessToken;
+  }
 
-//   static String getAccessToken() {
-//     return _accessToken!;
-//   }
+  static String getAccessToken() {
+    return _accessToken!;
+  }
 
   // static void setStudentId(String studentId) {
   //   _studentId = studentId;
@@ -123,4 +127,4 @@ class FirebaseServices {
   // static String getStudentId() {
   //   return _studentId!;
   // }
-// }
+}

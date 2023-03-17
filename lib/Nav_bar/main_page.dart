@@ -14,6 +14,7 @@ import 'package:swd_project/Nav_bar/blog_page.dart';
 import 'package:swd_project/Nav_bar/profile_page.dart';
 import 'package:swd_project/Nav_bar/club_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:swd_project/common_widget/color.dart';
 import '../widgets/badge.dart';
 import 'club_page.dart';
 
@@ -44,6 +45,8 @@ class _MainPageState extends State<MainPage> {
     var initializationSettings =
         InitializationSettings(android: androidInitialize);
     flutterLocalNotificationsPlugin.initialize(initializationSettings);
+    // subscribe to topic on each app start-up
+
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       print("Message: ${message.notification?.title}");
       print("Message body: ${message.notification?.body}");
@@ -109,7 +112,7 @@ class _MainPageState extends State<MainPage> {
       provisional: false,
       sound: true,
     );
-
+    await FirebaseMessaging.instance.subscribeToTopic('topic');
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       print("User granted permission");
     } else if (settings.authorizationStatus ==
@@ -144,19 +147,19 @@ class _MainPageState extends State<MainPage> {
             BottomNavigationBarItem(
                 icon: Icon(Icons.home),
                 label: 'Home',
-                backgroundColor: Colors.blue),
+                backgroundColor: mainTheme),
             BottomNavigationBarItem(
                 icon: Icon(Icons.copyright_outlined),
                 label: 'Club',
-                backgroundColor: Colors.blue),
+                backgroundColor: mainTheme),
             BottomNavigationBarItem(
                 icon: Icon(Icons.article),
                 label: 'Event',
-                backgroundColor: Colors.blue),
+                backgroundColor: mainTheme),
             BottomNavigationBarItem(
                 icon: Icon(Icons.person),
                 label: 'Profile',
-                backgroundColor: Colors.blue),
+                backgroundColor: mainTheme),
           ]),
     );
   }

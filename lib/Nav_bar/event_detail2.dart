@@ -216,7 +216,7 @@ class _EventDetail2State extends State<EventDetail2> {
             SizedBox(height: 10.0),
             Expanded(
               child: Text(
-                widget.event.description!,
+                widget.event.description,
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w300,

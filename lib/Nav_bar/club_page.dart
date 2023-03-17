@@ -6,6 +6,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter/widgets.dart';
 import 'package:swd_project/Nav_bar/club_detail.dart';
 import 'package:swd_project/Nav_bar/notification_page.dart';
+import 'package:swd_project/common_widget/color.dart';
 import 'package:swd_project/widgets/badge.dart';
 import 'package:swd_project/widgets/grid_clubs.dart';
 import 'package:http/http.dart' as http;
@@ -39,6 +40,7 @@ class _ClubPageState extends State<ClubPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: mainTheme,
         automaticallyImplyLeading: false,
         title: Text("Club Page"),
         centerTitle: true,
@@ -52,8 +54,8 @@ class _ClubPageState extends State<ClubPage> {
               decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide:
-                          const BorderSide(width: 3, color: Colors.blue))),
+                      borderSide: const BorderSide(
+                          width: 3, color: Color.fromRGBO(183, 147, 219, 24)))),
               value: selectedVal,
               items: listCampus.entries
                   .map((entry) => DropdownMenuItem<String>(

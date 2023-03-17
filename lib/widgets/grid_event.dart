@@ -47,7 +47,7 @@ class GridEvents extends StatelessWidget {
                   child: Image.network(
                     // "./assets/images/fpt_logo.png",
                     event.img,
-                    fit: BoxFit.contain,
+                    fit: BoxFit.fill,
                   ),
                 ),
               ),
