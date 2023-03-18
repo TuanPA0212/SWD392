@@ -36,6 +36,10 @@ class FirebaseServices {
           // await sendTokenApi(token);
           String accessToken = await sendTokenApi(token);
           AccessTokenMiddleware.setAccessToken(accessToken);
+
+          // await sendTokenApi(token);
+          String accessToken = await sendTokenApi(token);
+          AccessTokenMiddleware.setAccessToken(accessToken);
         }
       }
     } on FirebaseAuthException catch (e) {
@@ -108,6 +112,9 @@ class FirebaseServices {
 //   }
 // }
 
+class AccessTokenMiddleware {
+  static String? _accessToken;
+  // static String? _studentId;
 class AccessTokenMiddleware {
   static String? _accessToken;
   // static String? _studentId;

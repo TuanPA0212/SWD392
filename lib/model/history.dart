@@ -31,7 +31,7 @@ class History {
         name: json["name"],
         location: json["location"],
         img: json["img"],
-        description: json["description"] ?? "",
+        description: json["description"] ?? '',
         startDate: json['start_date'] != null
             ? DateTime.parse(json["start_date"])
             : DateTime.now(),
