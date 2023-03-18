@@ -280,9 +280,6 @@ class _EventDetailState extends State<EventDetail> {
               color: Colors.white,
             ),
           ),
-          style: ElevatedButton.styleFrom(
-            backgroundColor: mainTheme, // set the background color here
-          ),
         ),
       ),
     );
