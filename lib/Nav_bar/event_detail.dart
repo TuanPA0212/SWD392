@@ -23,6 +23,7 @@ class EventDetail extends StatefulWidget {
 
 class _EventDetailState extends State<EventDetail> {
   int? idStudent;
+  bool isJoined = false;
   @override
   void initState() {
     super.initState();
@@ -68,6 +69,9 @@ class _EventDetailState extends State<EventDetail> {
           duration: Duration(seconds: 2),
         ),
       );
+      setState(() {
+        isJoined = true;
+      });
       print(
           'Failed to register student for event. Error code: ${response.statusCode}');
     }
@@ -251,6 +255,9 @@ class _EventDetailState extends State<EventDetail> {
                         Navigator.of(context).pop();
                         // do something when the user confirms
                         registerStudentForEvent(widget.event.eventId);
+                        setState(() {
+                          isJoined = true;
+                        });
                       },
                       child: Text('Join'),
                     ),
@@ -262,14 +269,16 @@ class _EventDetailState extends State<EventDetail> {
             // createRegisDate();
             // registerStudentForEvent(widget.event.eventId);
           },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: isJoined
+                ? Color.fromARGB(255, 67, 193, 71)
+                : Theme.of(context).colorScheme.secondary,
+          ),
           child: Text(
-            "JOIN EVENT",
-            style: TextStyle(
+            isJoined ? "JOINED" : "JOIN EVENT",
+            style: const TextStyle(
               color: Colors.white,
             ),
-          ),
-          style: ElevatedButton.styleFrom(
-            backgroundColor: mainTheme, // set the background color here
           ),
         ),
       ),

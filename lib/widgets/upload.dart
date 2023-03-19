@@ -20,7 +20,8 @@ class _UploadState extends State<Upload> {
     // final Storage storage = Storage();
     return Padding(
       padding: const EdgeInsets.only(bottom: 16.0),
-      child: Column(children: [
+      child: Column(
+        children: [
         Center(
             child: ElevatedButton(
           onPressed: () async {
