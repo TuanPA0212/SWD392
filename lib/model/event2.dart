@@ -5,8 +5,8 @@ class Event2 {
   final String location;
   final String img;
   final String description;
-  final String startDate;
-  final String endDate;
+  final DateTime startDate;
+  final DateTime endDate;
   final int clubId;
   final String clubName;
   final int studentId;
@@ -34,8 +34,12 @@ class Event2 {
       location: json['location'] ?? "",
       img: json['img'] ?? "",
       description: json['description'] ?? "",
-      startDate: json['start_date'] ?? "",
-      endDate: json['end_date'] ?? "",
+      startDate: json['start_date'] != null
+          ? DateTime.parse(json['start_date'])
+          : DateTime.now(),
+      endDate: json['end_date'] != null
+          ? DateTime.parse(json['end_date'])
+          : DateTime.now(),
       clubId: json['club_id'] ?? 0,
       clubName: json['club_name'] ?? "",
       studentId: json['student_id'] ?? 0,

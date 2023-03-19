@@ -150,7 +150,7 @@ class _EventDetail2State extends State<EventDetail2> {
                   ),
                   SizedBox(width: 10.0),
                   Text(
-                    widget.event.startDate,
+                    DateFormat('dd-MM-yyyy').format(widget.event.startDate),
                     style: TextStyle(
                       fontSize: 14.0,
                       fontWeight: FontWeight.w300,

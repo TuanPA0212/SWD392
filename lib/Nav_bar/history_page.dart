@@ -60,8 +60,9 @@ class _HistoryPageState extends State<HistoryPage> {
                     Container(
                       width: 100,
                       height: 100, // Điều chỉnh độ rộng của cột hình ảnh
-                      child: Image.asset(
-                        historyItem[0]["img"],
+                      child: Image.network(
+                        // historyItem[0]["img"],
+                        histories[index].img,
                         fit: BoxFit.contain,
                       ),
                     ),

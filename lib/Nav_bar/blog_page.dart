@@ -8,13 +8,14 @@ import '../widgets/badge.dart';
 import '../model/event2.dart';
 import 'event_detail.dart';
 import 'event_detail2.dart';
+import 'package:intl/intl.dart';
 
 Future<List<Event2>> searchEvents(String keyword) async {
   if (keyword.isEmpty) {
     [];
   }
   final response = await http.get(Uri.parse(
-      'https://event-project.herokuapp.com/api/event/search?name=$keyword&status=0'));
+      'https://event-project.herokuapp.com/api/event/search?name=$keyword&status=1'));
   // print("device token is :");
 
   if (response.statusCode == 200) {
@@ -124,15 +125,18 @@ class _MyHomePageState extends State<MyHomePage> {
                         margin: const EdgeInsets.symmetric(
                             vertical: 10, horizontal: 16),
                         child: ListTile(
-                          // leading: Image.network(snapshot.data![index].img),
-
+                          leading: Image.network(event.img),
                           title: Text(snapshot.data![index].name),
                           subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text('Location: ' + (event.location)),
-                              Text('Start Date: ' + (event.startDate)),
-                              Text('End Date: ' + (event.endDate)),
+                              Text('Start Date: ' +
+                                  DateFormat('dd-MM-yyyy')
+                                      .format(event.startDate)),
+                              Text('End Date: ' +
+                                  DateFormat('dd-MM-yyyy')
+                                      .format(event.endDate)),
                             ],
                           ),
                           onTap: () {

@@ -270,9 +270,8 @@ class _EventDetailState extends State<EventDetail> {
             // registerStudentForEvent(widget.event.eventId);
           },
           style: ElevatedButton.styleFrom(
-            backgroundColor: isJoined
-                ? Color.fromARGB(255, 67, 193, 71)
-                : Theme.of(context).colorScheme.secondary,
+            backgroundColor:
+                isJoined ? Color.fromARGB(255, 67, 193, 71) : mainTheme,
           ),
           child: Text(
             isJoined ? "JOINED" : "JOIN EVENT",

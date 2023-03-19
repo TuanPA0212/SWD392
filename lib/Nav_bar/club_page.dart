@@ -29,9 +29,9 @@ class ClubPage extends StatefulWidget {
 
 class _ClubPageState extends State<ClubPage> {
   Map<String, String> listCampus = {
-    "1": "HCM",
-    "2": "HN",
-    "3": "DN",
+    "1": "Hồ Chí Minh",
+    "2": "Hà Nội",
+    "3": "Đà Nẵng",
   };
   String? selectedVal = "1";
   List<Club> clubList = [];

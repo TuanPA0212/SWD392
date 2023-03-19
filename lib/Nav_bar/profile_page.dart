@@ -47,6 +47,7 @@ class _ProfilePageState extends State<ProfilePage> {
         child: Scaffold(
             resizeToAvoidBottomInset: false,
             appBar: AppBar(
+              backgroundColor: mainTheme,
               automaticallyImplyLeading: false,
               title: const Text("Profile"),
               centerTitle: true,
@@ -258,33 +259,3 @@ class _ProfilePageState extends State<ProfilePage> {
             )));
   }
 }
-
-
-// class ProfilePage extends StatelessWidget {
-//   const ProfilePage({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       child: Center(
-//         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-//           Image.network("${FirebaseAuth.instance.currentUser!.photoURL}"),
-//           Text("${FirebaseAuth.instance.currentUser!.displayName}"),
-//           Text("${FirebaseAuth.instance.currentUser!.email}"),
-//           ElevatedButton(
-//               onPressed: () async {
-//                 await FirebaseServices().signOut();
-//                 Navigator.of(context).push(
-//                   MaterialPageRoute(
-//                     builder: (BuildContext context) {
-//                       return LoginScreen();
-//                     },
-//                   ),
-//                 );
-//               },
-//               child: Text('Logout')),
-//         ]),
-//       ),
-//     );
-//   }
-// }

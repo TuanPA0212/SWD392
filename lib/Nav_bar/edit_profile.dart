@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swd_project/Nav_bar/notification_page.dart';
 import 'package:swd_project/widgets/badge.dart';
 import 'package:swd_project/widgets/upload.dart';
+import 'package:swd_project/common_widget/color.dart';
 
 class EditProfile extends StatefulWidget {
   @override
@@ -90,7 +91,8 @@ class _EditProfileState extends State<EditProfile> {
         child: Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        backgroundColor: mainTheme,
+        automaticallyImplyLeading: true,
         title: const Text("Edit Profile"),
         centerTitle: true,
         actions: <Widget>[
