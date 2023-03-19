@@ -95,6 +95,26 @@ class _ProfilePageState extends State<ProfilePage> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const SizedBox(height: 16.0),
+                              Text(
+                                "Point: ",
+                                style: const TextStyle(
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                "100",
+                                style: const TextStyle(
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color.fromARGB(255, 1, 168, 12)),
+                              ),
+                            ],
+                          )
                         ],
                       ),
                     ),
@@ -181,6 +201,20 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ],
                     ),
+                    // const SizedBox(height: 16.0),
+                    // const Text(
+                    //   'Point',
+                    //   style: TextStyle(
+                    //       fontSize: 16.0,
+                    //       fontWeight: FontWeight.bold,
+                    //       color: Colors.black),
+                    // ),
+                    // const SizedBox(height: 8.0),
+                    // Text("1000",
+                    //     style: TextStyle(
+                    //       fontSize: 16.0,
+                    //       color: Color.fromARGB(255, 1, 168, 12),
+                    //     )),
                     const SizedBox(height: 16.0),
                     const Divider(height: 20, color: Colors.black),
                     const SizedBox(height: 16.0),

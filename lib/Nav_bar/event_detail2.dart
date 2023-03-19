@@ -145,7 +145,7 @@ class _EventDetail2State extends State<EventDetail2> {
                     "Time: ",
                     style: TextStyle(
                       fontSize: 15.0,
-                      fontWeight: FontWeight.w300,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                   SizedBox(width: 10.0),
@@ -153,35 +153,11 @@ class _EventDetail2State extends State<EventDetail2> {
                     DateFormat('dd-MM-yyyy').format(widget.event.startDate),
                     style: TextStyle(
                       fontSize: 14.0,
-                      fontWeight: FontWeight.w300,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ],
               ),
-            ),
-            Row(
-              children: <Widget>[
-                // Text(
-                //   "Location",
-                //   style: TextStyle(
-                //     fontSize: 15.0,
-                //     fontWeight: FontWeight.w300,
-                //   ),
-                // ),
-                // SizedBox(width: 10.0),
-                // Text(
-                //   event.location,
-                //   style: TextStyle(
-                //     fontSize: 14.0,
-                //     fontWeight: FontWeight.w500,
-                //     color: Colors.green[300],
-                //   ),
-                // ),
-                // Image.network(
-                //   'https://upload.wikimedia.org/wikipedia/vi/1/1d/Logo_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_FPT.png',
-                //   // fit: BoxFit.contain,
-                // ),
-              ],
             ),
             Row(
               children: <Widget>[
@@ -190,7 +166,7 @@ class _EventDetail2State extends State<EventDetail2> {
                   "Location:",
                   style: TextStyle(
                     fontSize: 15.0,
-                    fontWeight: FontWeight.w300,
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
                 SizedBox(width: 20.0),
@@ -199,11 +175,31 @@ class _EventDetail2State extends State<EventDetail2> {
                     widget.event.location,
                     style: TextStyle(
                       fontSize: 14.0,
-                      fontWeight: FontWeight.w300,
+                      fontWeight: FontWeight.w400,
                       // color: Colors.green[300],
                     ),
                   ),
                 )
+              ],
+            ),
+            Row(
+              children: <Widget>[
+                Text(
+                  "Point: ",
+                  style: TextStyle(
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                SizedBox(width: 5.0),
+                Text(
+                  widget.event.point.toString(),
+                  style: TextStyle(
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.w400,
+                    color: Color.fromARGB(255, 1, 168, 12),
+                  ),
+                ),
               ],
             ),
             SizedBox(height: 20.0),
@@ -221,7 +217,7 @@ class _EventDetail2State extends State<EventDetail2> {
                 widget.event.description,
                 style: TextStyle(
                   fontSize: 13,
-                  fontWeight: FontWeight.w300,
+                  fontWeight: FontWeight.w400,
                 ),
               ),
             ),

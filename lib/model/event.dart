@@ -3,6 +3,7 @@ class Event {
   final String eventName;
   final String email;
   final String location;
+  final int point;
   final String img;
   final String? description;
   final DateTime startDate;
@@ -17,6 +18,7 @@ class Event {
       required this.eventName,
       required this.email,
       required this.location,
+      required this.point,
       required this.img,
       this.description,
       required this.startDate,
@@ -64,6 +66,7 @@ class Event {
       eventName: json['event_name'] ?? "",
       email: json['email'] ?? "",
       location: json['location'] ?? "",
+      point: json['point'] ?? 0,
       img: json['img'],
       description: json['description'] ?? "",
       startDate: json['start_date'] != null

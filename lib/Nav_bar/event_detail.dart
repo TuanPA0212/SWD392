@@ -129,7 +129,10 @@ class _EventDetailState extends State<EventDetail> {
                 ),
               ],
             ),
-            SizedBox(height: 10.0),
+            SizedBox(
+              height: 20.0,
+              width: 10,
+            ),
             Text(
               widget.event.eventName,
               style: TextStyle(
@@ -140,22 +143,22 @@ class _EventDetailState extends State<EventDetail> {
             ),
 
             Padding(
-              padding: EdgeInsets.only(bottom: 5.0, top: 2.0),
+              padding: EdgeInsets.only(bottom: 5.0, top: 5.0, left: 10.0),
               child: Row(
                 children: <Widget>[
                   Text(
                     "Time: ",
                     style: TextStyle(
                       fontSize: 15.0,
-                      fontWeight: FontWeight.w300,
+                      fontWeight: FontWeight.w400,
                     ),
                   ),
-                  SizedBox(width: 10.0),
+                  SizedBox(width: 5.0),
                   Text(
                     DateFormat('dd-MM-yyyy').format(widget.event.startDate),
                     style: TextStyle(
                       fontSize: 14.0,
-                      fontWeight: FontWeight.w300,
+                      fontWeight: FontWeight.w400,
                     ),
                   ),
                 ],
@@ -166,45 +169,81 @@ class _EventDetailState extends State<EventDetail> {
             ),
             Row(
               children: <Widget>[
-                SizedBox(height: 20),
+                SizedBox(
+                  height: 20,
+                  width: 10,
+                ),
                 Text(
                   "Location:",
                   style: TextStyle(
                     fontSize: 15.0,
-                    fontWeight: FontWeight.w300,
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
-                SizedBox(width: 20.0),
+                SizedBox(width: 10.0),
                 Expanded(
                   child: Text(
                     widget.event.location,
                     style: TextStyle(
                       fontSize: 14.0,
-                      fontWeight: FontWeight.w300,
+                      fontWeight: FontWeight.w400,
                       // color: Colors.green[300],
                     ),
                   ),
                 )
               ],
             ),
-            SizedBox(height: 20.0),
+            Row(
+              children: <Widget>[
+                SizedBox(
+                  height: 20,
+                  width: 10,
+                ),
+                Text(
+                  "Point:",
+                  style: TextStyle(
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                SizedBox(width: 10.0),
+                Expanded(
+                  child: Text(
+                    widget.event.point.toString(),
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.w400,
+                      color: Color.fromARGB(255, 1, 168, 12),
+                    ),
+                  ),
+                )
+              ],
+            ),
+            SizedBox(height: 10.0),
             Text(
               "Description",
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 20,
                 fontWeight: FontWeight.w800,
               ),
               maxLines: 2,
             ),
-            SizedBox(height: 10.0),
-            Expanded(
-              child: Text(
-                widget.event.description!,
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w300,
+            Row(
+              children: <Widget>[
+                SizedBox(
+                  height: 10.0,
+                  width: 10.0,
                 ),
-              ),
+                Expanded(
+                  child: Text(
+                    widget.event.description!,
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ),
+              ],
             ),
             SizedBox(height: 10.0),
           ],

@@ -4,6 +4,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swd_project/common_widget/color.dart';
@@ -43,7 +44,8 @@ class _NotificationPageState extends State<NotificationPage> {
         if (snapshot.hasData) {
           List<NotificationModel> notifications =
               snapshot.data!.reversed.toList();
-          return Container(
+          if (notifications.isNotEmpty) {
+            return Container(
               padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
               child: Flexible(
                 child: ListView.builder(
@@ -64,17 +66,27 @@ class _NotificationPageState extends State<NotificationPage> {
                     );
                   },
                 ),
-              ));
+              ),
+            );
+          } else {
+            return Center(
+              child: Text('There is no notification'),
+            );
+          }
         } else {
-          return Center(child: CircularProgressIndicator());
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         }
       },
     );
   }
 
   Future<List<NotificationModel>> fetchAllNoti() async {
+    final storage = new FlutterSecureStorage();
+    final idStudent = int.tryParse(await storage.read(key: 'idStudent') ?? '');
     final response = await http.get(Uri.parse(
-        "https://event-project.herokuapp.com/api/notifications/student/7"));
+        "https://event-project.herokuapp.com/api/notifications/student/$idStudent"));
 
     final responseData = json.decode(response.body) as List;
     // print('responseData: $responseData');

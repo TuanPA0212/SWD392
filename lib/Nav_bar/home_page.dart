@@ -115,7 +115,7 @@ class _HomePageState extends State<HomePage> {
       future: fetchAllEvents(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          List<Event> events = snapshot.data!;
+          List<Event> events = snapshot.data!.reversed.toList();
           return Padding(
             padding: EdgeInsets.only(top: 20, left: 10, right: 10),
             child: GridView.builder(
