@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swd_project/common_widget/color.dart';
 import '../model/event.dart';
 import '../services/firebase_services.dart';
+import 'package:intl/intl.dart';
 
 class EventDetail extends StatefulWidget {
   final Event event;
@@ -137,10 +138,7 @@ class _EventDetailState extends State<EventDetail> {
               ),
               maxLines: 2,
             ),
-            // Padding(
-            //   padding: EdgeInsets.only(bottom: 5.0, top: 2.0),
-            //   child: Row(),
-            // ),
+
             Padding(
               padding: EdgeInsets.only(bottom: 5.0, top: 2.0),
               child: Row(
@@ -154,7 +152,7 @@ class _EventDetailState extends State<EventDetail> {
                   ),
                   SizedBox(width: 10.0),
                   Text(
-                    widget.event.startDate,
+                    DateFormat('dd-MM-yyyy').format(widget.event.startDate),
                     style: TextStyle(
                       fontSize: 14.0,
                       fontWeight: FontWeight.w300,
@@ -164,28 +162,7 @@ class _EventDetailState extends State<EventDetail> {
               ),
             ),
             Row(
-              children: <Widget>[
-                // Text(
-                //   "Location",
-                //   style: TextStyle(
-                //     fontSize: 15.0,
-                //     fontWeight: FontWeight.w300,
-                //   ),
-                // ),
-                // SizedBox(width: 10.0),
-                // Text(
-                //   event.location,
-                //   style: TextStyle(
-                //     fontSize: 14.0,
-                //     fontWeight: FontWeight.w500,
-                //     color: Colors.green[300],
-                //   ),
-                // ),
-                // Image.network(
-                //   'https://upload.wikimedia.org/wikipedia/vi/1/1d/Logo_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_FPT.png',
-                //   // fit: BoxFit.contain,
-                // ),
-              ],
+              children: <Widget>[],
             ),
             Row(
               children: <Widget>[

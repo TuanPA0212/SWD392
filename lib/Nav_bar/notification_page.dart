@@ -17,68 +17,7 @@ class NotificationPage extends StatefulWidget {
 }
 
 class _NotificationPageState extends State<NotificationPage> {
-// Model
-
-  // late SharedPreferences prefs;
-  // String? notiTitle;
-  // String? notiContent;
-
-  // void fetchNoti() async {
-  //   FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-  //     final notiTitle = message.notification?.title;
-  //     final notiContent = message.notification?.body;
-
-  //     await prefs.setString('notiTitle', notiTitle ?? '');
-  //     await prefs.setString('notiContent', notiContent ?? '');
-
-  //     final newNoti =
-  //         NotificationModel(title: notiTitle ?? '', content: notiContent ?? '');
-  //     setState(() {
-  //       notifications.insert(0, newNoti);
-  //     });
-  //   });
-  // }
-
-  // void fetchNoti() async {
-  //   FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-  //     final notiTitle = message.notification?.title;
-  //     final notiContent = message.notification?.body;
-
-  //     await prefs.setString('notiTitle', notiTitle ?? '');
-  //     await prefs.setString('notiContent', notiContent ?? '');
-
-  //     setState(() {
-  //       this.notiTitle = notiTitle;
-  //       this.notiContent = notiContent;
-  //     });
-  //   });
-  // }
-
-  @override
-  // void initState() {
-  //   super.initState();
-  //   fetchNoti();
-  //   SharedPreferences.getInstance().then((sharedPrefs) {
-  //     prefs = sharedPrefs;
-  //     setState(() {
-  //       notiTitle = prefs.getString('notiTitle') ?? null;
-  //       notiContent = prefs.getString('notiContent') ?? null;
-  //     });
-  //   });
-
-  //   print("title $notiTitle");
-  //   print("content $notiContent");
-  //   // SharedPreferences.getInstance().then((prefs) {
-  //   //   setState(() {
-  //   //     notiTitle = prefs.getString('notiTitle') ?? null;
-  //   //   });
-  //   // });
-  //   // SharedPreferences.getInstance().then((prefs2) {
-  //   //   setState(() {
-  //   //     notiContent = prefs2.getString('notiContent') ?? null;
-  //   //   });
-  //   // });
-  // }
+  List<NotificationModel> notiList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -87,35 +26,62 @@ class _NotificationPageState extends State<NotificationPage> {
         title: Text('Notifications'),
         backgroundColor: mainTheme,
       ),
-      // List<>
-      body: ListView(
+      body: Column(
         children: [
-          _buildNotificationItem(
-            // notiTitle ?? '',
-            // notiContent ?? '',
-            "title",
-            "content",
-            Icons.event,
-          ),
+          Expanded(
+            child: _buildNotificationItem(),
+          )
         ],
       ),
     );
   }
 
-  Widget _buildNotificationItem(String title, String subtitle, IconData icon) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-      child: ListTile(
-        leading: Icon(icon),
-        title: Text(
-          title,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        subtitle: Text(subtitle),
-        trailing: Icon(Icons.arrow_forward_ios),
-      ),
+  Widget _buildNotificationItem() {
+    return FutureBuilder<List<NotificationModel>>(
+      future: fetchAllNoti(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          List<NotificationModel> notifications =
+              snapshot.data!.reversed.toList();
+          return Container(
+              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              child: Flexible(
+                child: ListView.builder(
+                  // reverse: true,
+                  itemCount: notifications.length,
+                  itemBuilder: (context, index) {
+                    final notificaiton = notifications[index];
+                    return ListTile(
+                      leading: Icon(Icons.event),
+                      title: Text(
+                        notificaiton.title,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      subtitle: Text(notificaiton.content),
+                      // trailing: Icon(Icons.arrow_forward_ios),
+                    );
+                  },
+                ),
+              ));
+        } else {
+          return Center(child: CircularProgressIndicator());
+        }
+      },
     );
+  }
+
+  Future<List<NotificationModel>> fetchAllNoti() async {
+    final response = await http.get(Uri.parse(
+        "https://event-project.herokuapp.com/api/notifications/student/7"));
+
+    final responseData = json.decode(response.body) as List;
+    // print('responseData: $responseData');
+    if (response.statusCode == 200) {
+      return responseData.map((e) => NotificationModel.fromJson(e)).toList();
+    } else {
+      throw Exception("Fail to fetch");
+    }
   }
 }
