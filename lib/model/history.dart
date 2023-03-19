@@ -27,10 +27,10 @@ class History {
       required this.checkout});
 
   factory History.fromJson(Map<String, dynamic> json) => History(
-        eventId: json["event_id"],
-        name: json["name"],
-        location: json["location"],
-        img: json["img"],
+        eventId: json["event_id"] ?? 0,
+        name: json["name"] ?? '',
+        location: json["location"] ?? '',
+        img: json["img"] ?? '',
         description: json["description"] ?? '',
         startDate: json['start_date'] != null
             ? DateTime.parse(json["start_date"])
@@ -44,6 +44,6 @@ class History {
         checkin: json['checkin'] != null
             ? DateTime.parse(json["checkin"])
             : DateTime.now(),
-        checkout: json["checkout"],
+        checkout: json["checkout"] ?? '',
       );
 }
