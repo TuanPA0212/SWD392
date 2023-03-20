@@ -22,9 +22,11 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
+  TextEditingController imgController = TextEditingController();
   TextEditingController addressController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController birthdayController = TextEditingController();
+  bool isEdit = false;
 
   final _formKey = GlobalKey<FormState>();
   File? _imageFile;
@@ -48,6 +50,17 @@ class _EditProfileState extends State<EditProfile> {
         imgState = prefs.getString('imgState') ?? '';
       });
     });
+    final student = widget.student;
+    if (student != null) {
+      isEdit = true;
+      // _imageFile = student.studentImg.toString();
+      _address = student.address ?? '';
+      _phoneNumber = student.phone ?? '';
+      _birthday = DateFormat('dd-MM-yyyy').format(student.birthday);
+      addressController.text = _address;
+      phoneController.text = _phoneNumber;
+      birthdayController.text = _birthday ?? '';
+    }
   }
 
   // Future<void> _saveProfile() async {
@@ -138,7 +151,9 @@ class _EditProfileState extends State<EditProfile> {
       appBar: AppBar(
         backgroundColor: mainTheme,
         automaticallyImplyLeading: true,
-        title: const Text("Edit Profile"),
+        title: Text(
+            // isEdit ? "Edit Profile" : "Create",
+            "Edit Profile"),
         centerTitle: true,
         actions: <Widget>[
           IconButton(
@@ -184,6 +199,7 @@ class _EditProfileState extends State<EditProfile> {
                 child: Text('Change Photo'),
               ),
               TextFormField(
+                controller: addressController,
                 decoration: const InputDecoration(
                   labelText: 'Address',
                   border: OutlineInputBorder(),
@@ -200,6 +216,7 @@ class _EditProfileState extends State<EditProfile> {
               ),
               const SizedBox(height: 16.0),
               TextFormField(
+                controller: phoneController,
                 decoration: const InputDecoration(
                   labelText: 'Phone Number',
                   border: OutlineInputBorder(),
