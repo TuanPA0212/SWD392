@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -7,8 +8,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swd_project/Nav_bar/notification_page.dart';
 import 'package:swd_project/model/student.dart';
 import 'package:swd_project/widgets/badge.dart';
-import 'package:swd_project/widgets/upload.dart';
+// import 'package:swd_project/widgets/upload.dart';
 import 'package:swd_project/common_widget/color.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart';
 
 class EditProfile extends StatefulWidget {
   final Student student;
@@ -23,7 +26,7 @@ class _EditProfileState extends State<EditProfile> {
   TextEditingController birthdayController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
-
+  File? _imageFile;
   late String _address;
   late String _phoneNumber;
   String? _birthday;
@@ -36,6 +39,7 @@ class _EditProfileState extends State<EditProfile> {
     SharedPreferences.getInstance().then((prefs) {
       setState(() {
         idStudent = prefs.getInt('idStudent');
+        print('idStudent in ediut profile: $idStudent');
       });
     });
     SharedPreferences.getInstance().then((prefs) {
@@ -45,36 +49,69 @@ class _EditProfileState extends State<EditProfile> {
     });
   }
 
+  // Future<void> _saveProfile() async {
+  //   final url =
+  //       Uri.parse('https://event-project.herokuapp.com/api/student/$idStudent');
+  //   final response = await http.put(
+  //     url,
+  //     headers: <String, String>{
+  //       'Content-Type': 'application/json; charset=UTF-8',
+  //     },
+  //     body: jsonEncode(<String, dynamic>{
+  //       'address': _address,
+  //       'phone': _phoneNumber,
+  //       'birthday': _birthday,
+  //     }),
+  //   );
+  //   if (response.statusCode == 200) {
+  //     // handle success
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       const SnackBar(
+  //         content: Text('Profile saved'),
+  //         duration: Duration(seconds: 3),
+  //       ),
+  //     );
+  //   } else {
+  //     // handle failure
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       const SnackBar(
+  //         content: Text('Failed to save profile'),
+  //         duration: Duration(seconds: 3),
+  //       ),
+  //     );
+  //   }
+  // }
+
   Future<void> _saveProfile() async {
     final url =
         Uri.parse('https://event-project.herokuapp.com/api/student/$idStudent');
-    final response = await http.put(
-      url,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, dynamic>{
-        'address': _address,
-        'phone': _phoneNumber,
-        'birthday': _birthday,
-      }),
-    );
+    final request = http.MultipartRequest('PUT', url)
+      ..fields['address'] = _address
+      ..fields['phone'] = _phoneNumber
+      ..fields['birthday'] = _birthday!;
+    if (_imageFile != null) {
+      request.files.add(http.MultipartFile('file',
+          _imageFile!.readAsBytes().asStream(), _imageFile!.lengthSync(),
+          filename: basename(_imageFile!.path)));
+    }
+    final response = await request.send();
     if (response.statusCode == 200) {
       // handle success
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Profile saved'),
-          duration: Duration(seconds: 3),
-        ),
-      );
+      // ScaffoldMessenger.of(context as BuildContext).showSnackBar(
+      //   const SnackBar(
+      //     content: Text('Profile saved'),
+      //     duration: Duration(seconds: 3),
+      //   ),
+      // );
+      print("uplode succes");
     } else {
       // handle failure
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Failed to save profile'),
-          duration: Duration(seconds: 3),
-        ),
-      );
+      // ScaffoldMessenger.of(context as BuildContext).showSnackBar(
+      //   const SnackBar(
+      //     content: Text('Failed to save profile'),
+      //     duration: Duration(seconds: 3),
+      //   ),
+      // );
     }
   }
 
@@ -130,15 +167,21 @@ class _EditProfileState extends State<EditProfile> {
               Center(
                 child: CircleAvatar(
                   radius: 50.0,
-                  backgroundImage: NetworkImage(
-                      // "${FirebaseAuth.instance.currentUser!.photoURL}"
-                      imgState.isNotEmpty
-                          ? imgState
-                          : FirebaseAuth.instance.currentUser!.photoURL!),
+                  // backgroundImage: NetworkImage(),
                 ),
               ),
               const SizedBox(height: 16.0),
-              Upload(),
+              ElevatedButton(
+                onPressed: () async {
+                  final pickedFile =
+                      await ImagePicker().getImage(source: ImageSource.gallery);
+                  setState(() {
+                    _imageFile =
+                        pickedFile != null ? File(pickedFile.path) : null;
+                  });
+                },
+                child: Text('Change Photo'),
+              ),
               TextFormField(
                 decoration: const InputDecoration(
                   labelText: 'Address',

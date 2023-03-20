@@ -36,7 +36,6 @@ class _EventDetailState extends State<EventDetail> {
   }
 
   Future<void> registerStudentForEvent(int eventId) async {
-    // final Event eventId;
     final DateTime registrationDate = DateTime.now();
     print("regis Date: $registrationDate");
     final url = Uri.parse('https://event-project.herokuapp.com/api/event/join');
@@ -44,7 +43,6 @@ class _EventDetailState extends State<EventDetail> {
       url,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-        // 'Authorization': 'Bearer $authToken',
       },
       body: jsonEncode(<String, dynamic>{
         'event_id': eventId,
@@ -52,20 +50,18 @@ class _EventDetailState extends State<EventDetail> {
         'registration_date': registrationDate.toIso8601String(),
       }),
     );
-
-    await Future.delayed(Duration(seconds: 2));
-
+    await Future.delayed(const Duration(seconds: 2));
     if (response.statusCode == 200) {
       print('Student successfully registered for event!');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Join successfully'),
           duration: Duration(seconds: 2),
         ),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('You were registered for event'),
           duration: Duration(seconds: 2),
         ),
@@ -85,13 +81,13 @@ class _EventDetailState extends State<EventDetail> {
         backgroundColor: mainTheme,
         automaticallyImplyLeading: false,
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.keyboard_backspace,
           ),
           onPressed: () => Navigator.pop(context),
         ),
         centerTitle: true,
-        title: Text(
+        title: const Text(
           "Event Details",
         ),
         elevation: 0.0,
@@ -110,7 +106,7 @@ class _EventDetailState extends State<EventDetail> {
         // ],
       ),
       body: Padding(
-        padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+        padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
         child: ListView(
           children: <Widget>[
             // SizedBox(height: 10.0),
@@ -129,13 +125,13 @@ class _EventDetailState extends State<EventDetail> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 20.0,
               width: 10,
             ),
             Text(
               widget.event.eventName,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w800,
               ),
@@ -143,20 +139,20 @@ class _EventDetailState extends State<EventDetail> {
             ),
 
             Padding(
-              padding: EdgeInsets.only(bottom: 5.0, top: 5.0, left: 10.0),
+              padding: const EdgeInsets.only(bottom: 5.0, top: 5.0, left: 10.0),
               child: Row(
                 children: <Widget>[
-                  Text(
+                  const Text(
                     "Time: ",
                     style: TextStyle(
                       fontSize: 15.0,
                       fontWeight: FontWeight.w400,
                     ),
                   ),
-                  SizedBox(width: 5.0),
+                  const SizedBox(width: 5.0),
                   Text(
                     DateFormat('dd-MM-yyyy').format(widget.event.startDate),
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 14.0,
                       fontWeight: FontWeight.w400,
                     ),
@@ -169,22 +165,22 @@ class _EventDetailState extends State<EventDetail> {
             ),
             Row(
               children: <Widget>[
-                SizedBox(
+                const SizedBox(
                   height: 20,
                   width: 10,
                 ),
-                Text(
+                const Text(
                   "Location:",
                   style: TextStyle(
                     fontSize: 15.0,
                     fontWeight: FontWeight.w400,
                   ),
                 ),
-                SizedBox(width: 10.0),
+                const SizedBox(width: 10.0),
                 Expanded(
                   child: Text(
                     widget.event.location,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 14.0,
                       fontWeight: FontWeight.w400,
                       // color: Colors.green[300],
@@ -195,22 +191,22 @@ class _EventDetailState extends State<EventDetail> {
             ),
             Row(
               children: <Widget>[
-                SizedBox(
+                const SizedBox(
                   height: 20,
                   width: 10,
                 ),
-                Text(
+                const Text(
                   "Point:",
                   style: TextStyle(
                     fontSize: 15.0,
                     fontWeight: FontWeight.w400,
                   ),
                 ),
-                SizedBox(width: 10.0),
+                const SizedBox(width: 10.0),
                 Expanded(
                   child: Text(
                     widget.event.point.toString(),
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 14.0,
                       fontWeight: FontWeight.w400,
                       color: Color.fromARGB(255, 1, 168, 12),
@@ -219,8 +215,8 @@ class _EventDetailState extends State<EventDetail> {
                 )
               ],
             ),
-            SizedBox(height: 10.0),
-            Text(
+            const SizedBox(height: 10.0),
+            const Text(
               "Description",
               style: TextStyle(
                 fontSize: 20,
@@ -230,14 +226,14 @@ class _EventDetailState extends State<EventDetail> {
             ),
             Row(
               children: <Widget>[
-                SizedBox(
+                const SizedBox(
                   height: 10.0,
                   width: 10.0,
                 ),
                 Expanded(
                   child: Text(
                     widget.event.description!,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w400,
                     ),
@@ -245,7 +241,7 @@ class _EventDetailState extends State<EventDetail> {
                 ),
               ],
             ),
-            SizedBox(height: 10.0),
+            const SizedBox(height: 10.0),
           ],
         ),
       ),
@@ -257,14 +253,14 @@ class _EventDetailState extends State<EventDetail> {
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  title: Text('Confirmation'),
-                  content: Text('Are you sure you want to join this event?'),
+                  title: const Text('Confirmation'),
+                  content: const Text('Are you sure you want to join this event?'),
                   actions: <Widget>[
                     TextButton(
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: Text('Cancel'),
+                      child: const Text('Cancel'),
                     ),
                     TextButton(
                       onPressed: () {
@@ -275,19 +271,17 @@ class _EventDetailState extends State<EventDetail> {
                           isJoined = true;
                         });
                       },
-                      child: Text('Join'),
+                      child: const Text('Join'),
                     ),
                   ],
                 );
               },
             );
-            // await FirebaseMessaging.instance.getInitialMessage();
-            // createRegisDate();
-            // registerStudentForEvent(widget.event.eventId);
+            
           },
           style: ElevatedButton.styleFrom(
             backgroundColor:
-                isJoined ? Color.fromARGB(255, 67, 193, 71) : mainTheme,
+                isJoined ? const Color.fromARGB(255, 67, 193, 71) : mainTheme,
           ),
           child: Text(
             isJoined ? "JOINED" : "JOIN EVENT",

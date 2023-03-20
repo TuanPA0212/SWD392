@@ -129,7 +129,7 @@ class _MainPageState extends State<MainPage> {
     ClubPage(),
     // BlogPage(),
     MyHomePage(),
-    ProfilePage()
+    ProfilePage(),
   ];
   int currentIndex = 0;
 
