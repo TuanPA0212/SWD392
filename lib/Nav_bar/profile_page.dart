@@ -27,7 +27,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   int? idStudent;
-  // String imgState = '';
+  String imgState = '';
 
   @override
   void initState() {
@@ -37,11 +37,11 @@ class _ProfilePageState extends State<ProfilePage> {
         idStudent = prefs.getInt('idStudent') ?? null;
       });
     });
-    // SharedPreferences.getInstance().then((prefs) {
-    //   setState(() {
-    //     imgState = prefs.getString('imgState') ?? '';
-    //   });
-    // });
+    SharedPreferences.getInstance().then((prefs) {
+      setState(() {
+        imgState = prefs.getString('imgState') ?? '';
+      });
+    });
   }
 
   @override
@@ -92,6 +92,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                         //     ? imgState
                                         //     : FirebaseAuth
                                         //         .instance.currentUser!.photoURL!,
+                                        // student.studentImg!.isEmpty
+                                        //     ? FirebaseAuth
+                                        //         .instance.currentUser!.photoURL!
+                                        //     :
                                         student.studentImg ?? ''),
                                   ),
                                   const SizedBox(height: 16.0),
