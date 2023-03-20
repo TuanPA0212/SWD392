@@ -66,12 +66,12 @@ class FirebaseServices {
 
     final accessToken = responseData['access_token'];
     final idStudent = responseData['data']['id'];
-    final email = responseData['data']['email'];
     await storage.write(key: 'idStudent', value: idStudent.toString());
     print('id của sinh viên: $idStudent');
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setInt('idStudent', idStudent);
-    await storage.write(key: 'email', value: email);
+    
+    
     return accessToken;
   }
 

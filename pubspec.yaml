@@ -68,6 +68,8 @@ dependencies:
     # format date
   intl: ^0.17.0
   
+  #image picker
+  image_picker: ^0.8.7
 
 dev_dependencies:
   flutter_test:
