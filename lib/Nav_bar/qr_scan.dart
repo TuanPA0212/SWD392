@@ -56,8 +56,9 @@ class _QRScanScreenState extends State<QRScanScreen> {
         // Send PUT request to check-in or check-out
         final eventID = qrData['event_id'];
         final status = qrData['status'];
+        print('status: $status , eventID: $eventID');
         final now = DateTime.now();
-        if (status == "0") {
+        if (status == 0) {
           final responseCheckin = await http.put(
             Uri.parse(
                 'https://event-project.herokuapp.com/api/event/join/$eventID/checkin'),
@@ -79,11 +80,12 @@ class _QRScanScreenState extends State<QRScanScreen> {
                 ),
               );
             });
-          } else {
+            print('success check in $idStudent');
+          } else if (status == 1) {
             setState(() {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                  content: Text('check in success'),
+                  content: Text('check in fail'),
                   duration: Duration(seconds: 3),
                 ),
               );
