@@ -72,256 +72,234 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ],
             ),
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    informationStudent(),
-                    // const SizedBox(height: 16.0),
-                    // const Text(
-                    //   'Point',
-                    //   style: TextStyle(
-                    //       fontSize: 16.0,
-                    //       fontWeight: FontWeight.bold,
-                    //       color: Colors.black),
-                    // ),
-                    // const SizedBox(height: 8.0),
-                    // Text("1000",
-                    //     style: TextStyle(
-                    //       fontSize: 16.0,
-                    //       color: Color.fromARGB(255, 1, 168, 12),
-                    //     )),
-                    const SizedBox(height: 16.0),
-                    const Divider(height: 20, color: Colors.black),
-                    const SizedBox(height: 16.0),
-                    const Text(
-                      'Settings',
-                      style: TextStyle(
-                          fontSize: 18.0, fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 16.0),
-                    // ListTile(
-                    //   leading: Icon(Icons.image),
-                    //   title: Text('Upload Image'),
-                    //   onTap: () {},
-                    // ),
-                    ListTile(
-                      leading: const Icon(Icons.edit,
-                          color: Color.fromARGB(255, 12, 97, 166)),
-                      title: const Text('Edit Profile'),
-                      onTap: () async {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => EditProfile()),
-                        );
-                      },
-                    ),
-
-                    ListTile(
-                      leading: const Icon(Icons.history,
-                          color: Color.fromARGB(255, 231, 155, 24)),
-                      title: const Text('History'),
-                      onTap: () async {
-                        // await FirebaseServices().signOut();
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (BuildContext context) {
-                              return const HistoryPage();
-                            },
-                          ),
-                        );
-                      },
-                    ),
-
-                    ListTile(
-                      leading: const Icon(
-                        Icons.qr_code,
-                        color: Color.fromARGB(255, 34, 186, 39),
+            body: FutureBuilder<Student>(
+                future: fetchStudent(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    final student = snapshot.data!;
+                    return SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Center(
+                                child: Column(children: [
+                                  CircleAvatar(
+                                    radius: 50.0,
+                                    backgroundImage: NetworkImage(
+                                      imgState.isNotEmpty
+                                          ? imgState
+                                          : FirebaseAuth
+                                              .instance.currentUser!.photoURL!,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 16.0),
+                                  Text(
+                                    // FirebaseAuth
+                                    //     .instance.currentUser!.displayName!,
+                                    student.name,
+                                    style: const TextStyle(
+                                      fontSize: 18.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const SizedBox(height: 16.0),
+                                      Text(
+                                        "Point: ",
+                                        style: const TextStyle(
+                                          fontSize: 18.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Text(
+                                        "100",
+                                        style: const TextStyle(
+                                            fontSize: 18.0,
+                                            fontWeight: FontWeight.bold,
+                                            color: Color.fromARGB(
+                                                255, 1, 168, 12)),
+                                      ),
+                                    ],
+                                  )
+                                ]),
+                              ),
+                              const SizedBox(height: 32.0),
+                              const Text(
+                                'Student Information',
+                                style: TextStyle(
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(height: 16.0),
+                              const Text(
+                                'Email',
+                                style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              ),
+                              const SizedBox(height: 8.0),
+                              Text(
+                                  // "${FirebaseAuth.instance.currentUser!.email}",
+                                  student.email,
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                    color: Colors.grey[600],
+                                  )),
+                              const SizedBox(height: 16.0),
+                              const Text(
+                                'Address',
+                                style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              ),
+                              const SizedBox(height: 8.0),
+                              Text(
+                                  // "${FirebaseAuth.instance.currentUser!.email}",
+                                  student.address!,
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                    color: Colors.grey[600],
+                                  )),
+                              const SizedBox(height: 16.0),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        const Text(
+                                          'Birthday',
+                                          style: TextStyle(
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black),
+                                        ),
+                                        const SizedBox(height: 8.0),
+                                        Text(
+                                            // "22/10/2001",
+                                            DateFormat('dd-MM-yyyy')
+                                                .format(student.birthday),
+                                            style: TextStyle(
+                                              fontSize: 16.0,
+                                              color: Colors.grey[600],
+                                            )),
+                                      ],
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        const Text(
+                                          'Phone Number',
+                                          style: TextStyle(
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black),
+                                        ),
+                                        const SizedBox(height: 8.0),
+                                        Text(
+                                            // "09999999",
+                                            student.phone!,
+                                            style: TextStyle(
+                                              fontSize: 16.0,
+                                              color: Colors.grey[600],
+                                            )),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 16.0),
+                              const Divider(height: 20, color: Colors.black),
+                              const SizedBox(height: 16.0),
+                              const Text(
+                                'Settings',
+                                style: TextStyle(
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(height: 16.0),
+                              ListTile(
+                                leading: const Icon(Icons.edit,
+                                    color: Color.fromARGB(255, 12, 97, 166)),
+                                title: const Text('Edit Profile'),
+                                onTap: () async {
+                                  navigateToEditProfile(student);
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //       builder: (context) => EditProfile()),
+                                  // );
+                                },
+                              ),
+                              ListTile(
+                                leading: const Icon(Icons.history,
+                                    color: Color.fromARGB(255, 231, 155, 24)),
+                                title: const Text('History'),
+                                onTap: () async {
+                                  // await FirebaseServices().signOut();
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) {
+                                        return const HistoryPage();
+                                      },
+                                    ),
+                                  );
+                                },
+                              ),
+                              ListTile(
+                                leading: const Icon(
+                                  Icons.qr_code,
+                                  color: Color.fromARGB(255, 34, 186, 39),
+                                ),
+                                title: const Text('Scan QR Code'),
+                                onTap: () async {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => QRScanScreen()),
+                                  );
+                                },
+                              ),
+                              ListTile(
+                                leading: Icon(Icons.logout, color: Colors.red),
+                                title: const Text('Logout'),
+                                onTap: () async {
+                                  await FirebaseServices().signOut();
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) {
+                                        return LoginScreen();
+                                      },
+                                    ),
+                                  );
+                                },
+                              ),
+                            ]),
                       ),
-                      title: const Text('Scan QR Code'),
-                      onTap: () async {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => QRScanScreen()),
-                        );
-                      },
-                    ),
-
-                    ListTile(
-                      leading: Icon(Icons.logout, color: Colors.red),
-                      title: const Text('Logout'),
-                      onTap: () async {
-                        await FirebaseServices().signOut();
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (BuildContext context) {
-                              return LoginScreen();
-                            },
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            )));
+                    );
+                  } else {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                })));
   }
 
-  Widget informationStudent() {
-    return FutureBuilder<Student>(
-      future: fetchStudent(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          final student = snapshot.data!;
-          return SingleChildScrollView(
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Center(
-                child: Column(
-                  children: [
-                    CircleAvatar(
-                      radius: 50.0,
-                      backgroundImage: NetworkImage(
-                        imgState.isNotEmpty
-                            ? imgState
-                            : FirebaseAuth.instance.currentUser!.photoURL!,
-                      ),
-                    ),
-                    const SizedBox(height: 16.0),
-                    Text(
-                      // FirebaseAuth.instance.currentUser!.displayName!,
-                      student.name,
-                      style: const TextStyle(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const SizedBox(height: 16.0),
-                        Text(
-                          "Point: ",
-                          style: const TextStyle(
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          "100",
-                          style: const TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 1, 168, 12)),
-                        ),
-                      ],
-                    ),
-                  ], // <-- add closing bracket here
-                ),
-              ),
-              const SizedBox(height: 32.0),
-              const Text(
-                'Student Information',
-                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 16.0),
-              // Upload(),
-
-              const Text(
-                'Email',
-                style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
-              ),
-              const SizedBox(height: 8.0),
-              Text(
-                  // "${FirebaseAuth.instance.currentUser!.email}",
-                  student.email,
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    color: Colors.grey[600],
-                  )),
-
-              const SizedBox(height: 16.0),
-              const Text(
-                'Address',
-                style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
-              ),
-              const SizedBox(height: 8.0),
-              Text(
-                  // "${FirebaseAuth.instance.currentUser!.email}",
-                  student.address!,
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    color: Colors.grey[600],
-                  )),
-              const SizedBox(height: 16.0),
-
-              Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        const Text(
-                          'Birthday',
-                          style: TextStyle(
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black),
-                        ),
-                        const SizedBox(height: 8.0),
-                        Text(
-                            // "22/10/2001",
-                            DateFormat('dd-MM-yyyy').format(student.birthday),
-                            style: TextStyle(
-                              fontSize: 16.0,
-                              color: Colors.grey[600],
-                            )),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        const Text(
-                          'Phone Number',
-                          style: TextStyle(
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black),
-                        ),
-                        const SizedBox(height: 8.0),
-                        Text(
-                            // "09999999",
-                            student.phone!,
-                            style: TextStyle(
-                              fontSize: 16.0,
-                              color: Colors.grey[600],
-                            )),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ]),
-          );
-        } else {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-      },
+  void navigateToEditProfile(Student student) {
+    final route = MaterialPageRoute(
+      builder: (context) => EditProfile(student: student),
     );
+    Navigator.push(context, route);
   }
 
   Future<Student> fetchStudent() async {

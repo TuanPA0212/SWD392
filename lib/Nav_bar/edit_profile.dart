@@ -5,16 +5,23 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swd_project/Nav_bar/notification_page.dart';
+import 'package:swd_project/model/student.dart';
 import 'package:swd_project/widgets/badge.dart';
 import 'package:swd_project/widgets/upload.dart';
 import 'package:swd_project/common_widget/color.dart';
 
 class EditProfile extends StatefulWidget {
+  final Student student;
+  EditProfile({Key? key, required this.student});
   @override
   _EditProfileState createState() => _EditProfileState();
 }
 
 class _EditProfileState extends State<EditProfile> {
+  TextEditingController addressController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController birthdayController = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
 
   late String _address;
