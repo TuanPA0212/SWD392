@@ -148,7 +148,7 @@ class _HomePageState extends State<HomePage> {
 
   Future<List<Event>> fetchAllEvents() async {
     final response = await http.get(Uri.parse(
-        "https://event-project.herokuapp.com/api/event/?status=1&is_approved=1"));
+        "https://event-project.herokuapp.com/api/event/?status=1&is_approved=0"));
 
     final responseData = json.decode(response.body) as List;
     // print('responseData: $responseData');
