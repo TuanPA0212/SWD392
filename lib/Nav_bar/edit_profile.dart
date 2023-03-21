@@ -35,6 +35,7 @@ class _EditProfileState extends State<EditProfile> {
   int? idStudent;
   String imgState = '';
   DateTime selectedDate = DateTime.now();
+
   @override
   void initState() {
     super.initState();
@@ -196,12 +197,20 @@ class _EditProfileState extends State<EditProfile> {
                   });
                 },
                 child: Text('Change Photo'),
+                style: ElevatedButton.styleFrom(backgroundColor: mainTheme),
               ),
+              const SizedBox(height: 16.0),
               TextFormField(
                 controller: addressController,
                 decoration: const InputDecoration(
                   labelText: 'Address',
+                  // labelStyle:
+                  //     TextStyle(color: Color.fromRGBO(183, 147, 219, 24)),
                   border: OutlineInputBorder(),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        width: 3, color: Color.fromRGBO(183, 147, 219, 24)),
+                  ),
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -219,6 +228,10 @@ class _EditProfileState extends State<EditProfile> {
                 decoration: const InputDecoration(
                   labelText: 'Phone Number',
                   border: OutlineInputBorder(),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        width: 3, color: Color.fromRGBO(183, 147, 219, 24)),
+                  ),
                 ),
                 keyboardType: TextInputType.phone,
                 validator: (value) {
@@ -240,6 +253,11 @@ class _EditProfileState extends State<EditProfile> {
                       decoration: const InputDecoration(
                         labelText: 'Birthday',
                         border: OutlineInputBorder(),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 3,
+                              color: Color.fromRGBO(183, 147, 219, 24)),
+                        ),
                       ),
                       controller: TextEditingController(text: _birthday),
                       keyboardType: TextInputType.datetime,
@@ -252,13 +270,14 @@ class _EditProfileState extends State<EditProfile> {
                       onSaved: (value) {
                         _birthday = value!;
                       },
+                      onTap: () => _selectDate(context),
                     ),
                   ),
-                  const SizedBox(width: 16),
-                  ElevatedButton(
-                    onPressed: () => _selectDate(context),
-                    child: Text('Select Birthday'),
-                  ),
+                  // const SizedBox(width: 16),
+                  // ElevatedButton(
+                  //   onPressed: () => _selectDate(context),
+                  //   child: Text('Select Birthday'),
+                  // ),
                 ],
               ),
               const SizedBox(height: 16.0),
@@ -271,6 +290,7 @@ class _EditProfileState extends State<EditProfile> {
                     }
                   },
                   child: const Text('Save Profile'),
+                  style: ElevatedButton.styleFrom(backgroundColor: mainTheme),
                 ),
               )
             ],
