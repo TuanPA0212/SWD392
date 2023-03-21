@@ -67,7 +67,42 @@ class _EventDetail2State extends State<EventDetail2> {
           duration: Duration(seconds: 2),
         ),
       );
+      // ignore: use_build_context_synchronously
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Student successfully registered for event!'),
+            content: const Text('Thanks for registered!'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('okay'),
+              ),
+            ],
+          );
+        },
+      );
     } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('You were registered for event'),
+            content: const Text('Thanks for registered!'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('okay'),
+              ),
+            ],
+          );
+        },
+      );
       print(
           'Failed to register student for event. Error code: ${response.statusCode}');
     }

@@ -6,12 +6,13 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swd_project/Nav_bar/notification_page.dart';
+import 'package:swd_project/Nav_bar/profile_page.dart';
 import 'package:swd_project/model/student.dart';
 import 'package:swd_project/widgets/badge.dart';
 // import 'package:swd_project/widgets/upload.dart';
 import 'package:swd_project/common_widget/color.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart';
+// import 'package:path/path.dart';
 
 class EditProfile extends StatefulWidget {
   final Student student;
@@ -106,26 +107,26 @@ class _EditProfileState extends State<EditProfile> {
     if (_imageFile != null) {
       request.files.add(http.MultipartFile('file',
           _imageFile!.readAsBytes().asStream(), _imageFile!.lengthSync(),
-          filename: basename(_imageFile!.path)));
+          filename: (_imageFile!.path)));
     }
     final response = await request.send();
     if (response.statusCode == 200) {
-      // handle success
-      // ScaffoldMessenger.of(context as BuildContext).showSnackBar(
-      //   const SnackBar(
-      //     content: Text('Profile saved'),
-      //     duration: Duration(seconds: 3),
-      //   ),
-      // );
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (BuildContext context) {
+            return ProfilePage();
+          },
+        ),
+      );
       print("uplode succes");
     } else {
       // handle failure
-      // ScaffoldMessenger.of(context as BuildContext).showSnackBar(
-      //   const SnackBar(
-      //     content: Text('Failed to save profile'),
-      //     duration: Duration(seconds: 3),
-      //   ),
-      // );
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Failed to save profile'),
+          duration: Duration(seconds: 5),
+        ),
+      );
     }
   }
 
@@ -138,7 +139,7 @@ class _EditProfileState extends State<EditProfile> {
     if (picked != null && picked != selectedDate) {
       setState(() {
         selectedDate = picked;
-        _birthday = DateFormat('dd/MM/yyyy').format(selectedDate);
+        _birthday = DateFormat('yyyy/MM/dd').format(selectedDate);
       });
     }
   }
@@ -181,24 +182,24 @@ class _EditProfileState extends State<EditProfile> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Center(
-                child: CircleAvatar(
+                  child: Column(children: [
+                CircleAvatar(
                   radius: 50.0,
                   // backgroundImage: NetworkImage(),
                 ),
-              ),
-              const SizedBox(height: 16.0),
-              ElevatedButton(
-                onPressed: () async {
-                  final pickedFile =
-                      await ImagePicker().getImage(source: ImageSource.gallery);
-                  setState(() {
-                    _imageFile =
-                        pickedFile != null ? File(pickedFile.path) : null;
-                  });
-                },
-                child: Text('Change Photo'),
-                style: ElevatedButton.styleFrom(backgroundColor: mainTheme),
-              ),
+                const SizedBox(height: 16.0),
+                ElevatedButton(
+                  onPressed: () async {
+                    final pickedFile = await ImagePicker()
+                        .getImage(source: ImageSource.gallery);
+                    setState(() {
+                      _imageFile =
+                          pickedFile != null ? File(pickedFile.path) : null;
+                    });
+                  },
+                  child: Text('Change Photo'),
+                ),
+              ])),
               const SizedBox(height: 16.0),
               TextFormField(
                 controller: addressController,

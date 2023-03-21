@@ -59,12 +59,48 @@ class _EventDetailState extends State<EventDetail> {
           duration: Duration(seconds: 2),
         ),
       );
+      // ignore: use_build_context_synchronously
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Student successfully registered for event!'),
+            content: const Text('Thanks for registered!'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('okay'),
+              ),
+            ],
+          );
+        },
+      );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('You were registered for event'),
           duration: Duration(seconds: 2),
         ),
+      );
+      // ignore: use_build_context_synchronously
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('You were registered for event'),
+            content: const Text('Thanks for registered!'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('okay'),
+              ),
+            ],
+          );
+        },
       );
       setState(() {
         isJoined = true;
@@ -254,7 +290,8 @@ class _EventDetailState extends State<EventDetail> {
               builder: (BuildContext context) {
                 return AlertDialog(
                   title: const Text('Confirmation'),
-                  content: const Text('Are you sure you want to join this event?'),
+                  content:
+                      const Text('Are you sure you want to join this event?'),
                   actions: <Widget>[
                     TextButton(
                       onPressed: () {
@@ -277,7 +314,6 @@ class _EventDetailState extends State<EventDetail> {
                 );
               },
             );
-            
           },
           style: ElevatedButton.styleFrom(
             backgroundColor:
