@@ -198,6 +198,10 @@ class _EditProfileState extends State<EditProfile> {
                     });
                   },
                   child: Text('Change Photo'),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        mainTheme), // Change the color to blue
+                  ),
                 ),
               ])),
               const SizedBox(height: 16.0),
