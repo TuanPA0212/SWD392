@@ -88,13 +88,7 @@ class _EditProfileState extends State<EditProfile> {
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return ProfilePage();
-                        },
-                      ),
-                    );
+                    Navigator.of(context).pop();
                   },
                   child: const Text('Okay'),
                 ),
