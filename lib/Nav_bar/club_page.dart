@@ -104,6 +104,7 @@ class _ClubPageState extends State<ClubPage> {
                 };
                 return GridClubs(
                   name: clubs[index].name,
+                  img: clubs[index].img ?? '',
                   clubId: clubs[index].clubId,
                   campusId: clubs[index].campusId,
                   abbreviation: clubs[index].abbreviation,

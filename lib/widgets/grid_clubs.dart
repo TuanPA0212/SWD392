@@ -4,7 +4,7 @@ import 'package:swd_project/Nav_bar/home_page.dart';
 
 class GridClubs extends StatelessWidget {
   final String name;
-  // final String img;
+  final String img;
   int clubId;
   int campusId;
   String abbreviation;
@@ -14,7 +14,7 @@ class GridClubs extends StatelessWidget {
   GridClubs({
     Key? key,
     required this.name,
-    // required this.img,
+    required this.img,
     required this.clubId,
     required this.campusId,
     required this.abbreviation,
@@ -43,12 +43,13 @@ class GridClubs extends StatelessWidget {
                 height: MediaQuery.of(context).size.width / 3.5,
                 width: MediaQuery.of(context).size.width / 3,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: Image.asset(
-                    "./assets/images/fpt_logo.png",
-                    fit: BoxFit.contain,
-                  ),
-                ),
+                    borderRadius: BorderRadius.circular(8.0),
+                    child:
+                        // Image.asset(
+                        //   "./assets/images/fpt_logo.png",
+                        //   fit: BoxFit.contain,
+                        // ),
+                        Image.network("$img", fit: BoxFit.fill)),
               ),
             ),
             Expanded(
