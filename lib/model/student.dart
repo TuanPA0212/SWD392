@@ -1,14 +1,14 @@
 class Student {
-  int studentId;
-  int? dpmId;
-  int? campusId;
-  String name;
-  String? address;
-  String? phone;
-  String email;
-  DateTime birthday;
-  String? studentImg;
-  int? point;
+  final int studentId;
+  final int? dpmId;
+  final int? campusId;
+  final String name;
+  final String? address;
+  final String? phone;
+  final String email;
+  final DateTime birthday;
+  final String? studentImg;
+  final int point;
 
   Student({
     required this.studentId,
@@ -19,8 +19,8 @@ class Student {
     required this.phone,
     required this.email,
     required this.birthday,
-    this.studentImg,
-    this.point,
+    required this.studentImg,
+    required this.point,
   });
 
   factory Student.fromJson(Map<String, dynamic> json) => Student(
@@ -35,6 +35,6 @@ class Student {
             ? DateTime.parse(json['birthday'])
             : DateTime.now(),
         studentImg: json["student_img"],
-        point: int.tryParse(json["point"]) ?? 0,
+        point: int.parse(json["point"] ?? "0"),
       );
 }

@@ -47,25 +47,23 @@ class _NotificationPageState extends State<NotificationPage> {
           if (notifications.isNotEmpty) {
             return Container(
               padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-              child: Flexible(
-                child: ListView.builder(
-                  // reverse: true,
-                  itemCount: notifications.length,
-                  itemBuilder: (context, index) {
-                    final notificaiton = notifications[index];
-                    return ListTile(
-                      leading: Icon(Icons.event),
-                      title: Text(
-                        notificaiton.title,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
+              child: ListView.builder(
+                // reverse: true,
+                itemCount: notifications.length,
+                itemBuilder: (context, index) {
+                  final notificaiton = notifications[index];
+                  return ListTile(
+                    leading: Icon(Icons.event),
+                    title: Text(
+                      notificaiton.title,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
                       ),
-                      subtitle: Text(notificaiton.content),
-                      // trailing: Icon(Icons.arrow_forward_ios),
-                    );
-                  },
-                ),
+                    ),
+                    subtitle: Text(notificaiton.content),
+                    // trailing: Icon(Icons.arrow_forward_ios),
+                  );
+                },
               ),
             );
           } else {
