@@ -12,7 +12,7 @@ class History {
   final DateTime endDate;
   final DateTime registrationDate;
   final DateTime checkin;
-  final Null? checkout;
+  final DateTime checkout;
 
   History(
       {required this.eventId,
@@ -44,6 +44,8 @@ class History {
         checkin: json['checkin'] != null
             ? DateTime.parse(json["checkin"])
             : DateTime.now(),
-        checkout: json["checkout"],
+        checkout: json["checkout"] != null
+            ? DateTime.parse(json["checkin"])
+            : DateTime.now(),
       );
 }

@@ -27,7 +27,7 @@ class _EditProfileState extends State<EditProfile> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController birthdayController = TextEditingController();
   bool isEdit = false;
-
+  // static String? imagePath;
   final _formKey = GlobalKey<FormState>();
   File? _imageFile;
   late String _address;
@@ -63,39 +63,6 @@ class _EditProfileState extends State<EditProfile> {
     }
   }
 
-  // Future<void> _saveProfile() async {
-  //   final url =
-  //       Uri.parse('https://event-project.herokuapp.com/api/student/$idStudent');
-  //   final response = await http.put(
-  //     url,
-  //     headers: <String, String>{
-  //       'Content-Type': 'application/json; charset=UTF-8',
-  //     },
-  //     body: jsonEncode(<String, dynamic>{
-  //       'address': _address,
-  //       'phone': _phoneNumber,
-  //       'birthday': _birthday,
-  //     }),
-  //   );
-  //   if (response.statusCode == 200) {
-  //     // handle success
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(
-  //         content: Text('Profile saved'),
-  //         duration: Duration(seconds: 3),
-  //       ),
-  //     );
-  //   } else {
-  //     // handle failure
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(
-  //         content: Text('Failed to save profile'),
-  //         duration: Duration(seconds: 3),
-  //       ),
-  //     );
-  //   }
-  // }
-
   Future<void> _saveProfile() async {
     final url =
         Uri.parse('https://event-project.herokuapp.com/api/student/$idStudent');
@@ -110,22 +77,58 @@ class _EditProfileState extends State<EditProfile> {
     }
     final response = await request.send();
     if (response.statusCode == 200) {
-      Navigator.of(context).push(
-        MaterialPageRoute(
+      setState(() {
+        showDialog(
+          context: context,
           builder: (BuildContext context) {
-            return ProfilePage();
+            return AlertDialog(
+              title: const Text('Save profile success !'),
+              content: const Text('Your profile has been changed !'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return ProfilePage();
+                        },
+                      ),
+                    );
+                  },
+                  child: const Text('Okay'),
+                ),
+              ],
+            );
           },
-        ),
-      );
-      print("uplode succes");
+        );
+      });
     } else {
       // handle failure
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Failed to save profile'),
-          duration: Duration(seconds: 5),
-        ),
-      );
+      setState(() {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Save profile fail !'),
+              content: const Text('Plz choice image to save success !'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Okay'),
+                ),
+              ],
+            );
+          },
+        );
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Failed to save profile'),
+            duration: Duration(seconds: 5),
+          ),
+        );
+      });
     }
   }
 
@@ -145,6 +148,8 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
+    // String imagePath = _imageFile!.path;
+
     return SafeArea(
         child: Scaffold(
       resizeToAvoidBottomInset: false,
@@ -182,10 +187,12 @@ class _EditProfileState extends State<EditProfile> {
             children: <Widget>[
               Center(
                   child: Column(children: [
-                CircleAvatar(
-                  radius: 50.0,
-                  // backgroundImage: NetworkImage(),
-                ),
+                // CircleAvatar(
+                //   radius: 50.0,
+                //   // backgroundImage: NetworkImage(imagePath != ''
+                //   //     ? imagePath
+                //   //     : 'https://static2.yan.vn/YanNews/2167221/202102/facebook-cap-nhat-avatar-doi-voi-tai-khoan-khong-su-dung-anh-dai-dien-e4abd14d.jpg'),
+                // ),
                 const SizedBox(height: 16.0),
                 ElevatedButton(
                   onPressed: () async {
@@ -194,6 +201,15 @@ class _EditProfileState extends State<EditProfile> {
                     setState(() {
                       _imageFile =
                           pickedFile != null ? File(pickedFile.path) : null;
+                    });
+                    setState(() {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content:
+                              Text('Your avatar has already been changed !'),
+                          duration: Duration(seconds: 5),
+                        ),
+                      );
                     });
                   },
                   child: Text('Change Photo'),
