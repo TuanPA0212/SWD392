@@ -292,7 +292,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     );
                   } else {
-                    return Center(
+                    return const Center(
                       child: CircularProgressIndicator(),
                     );
                   }

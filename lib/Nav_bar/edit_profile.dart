@@ -27,7 +27,7 @@ class _EditProfileState extends State<EditProfile> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController birthdayController = TextEditingController();
   bool isEdit = false;
-
+  // static String? imagePath;
   final _formKey = GlobalKey<FormState>();
   File? _imageFile;
   late String _address;
@@ -78,22 +78,58 @@ class _EditProfileState extends State<EditProfile> {
     }
     final response = await request.send();
     if (response.statusCode == 200) {
-      Navigator.of(context).push(
-        MaterialPageRoute(
+      setState(() {
+        showDialog(
+          context: context,
           builder: (BuildContext context) {
-            return ProfilePage();
+            return AlertDialog(
+              title: const Text('Save profile success !'),
+              content: const Text('Your profile has been changed !'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return ProfilePage();
+                        },
+                      ),
+                    );
+                  },
+                  child: const Text('Okay'),
+                ),
+              ],
+            );
           },
-        ),
-      );
-      print("uplode succes");
+        );
+      });
     } else {
       // handle failure
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Failed to save profile'),
-          duration: Duration(seconds: 5),
-        ),
-      );
+      setState(() {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Save profile fail !'),
+              content: const Text('Plz choice image to save success !'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Okay'),
+                ),
+              ],
+            );
+          },
+        );
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Failed to save profile'),
+            duration: Duration(seconds: 5),
+          ),
+        );
+      });
     }
   }
 
@@ -113,6 +149,8 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
+    // String imagePath = _imageFile!.path;
+
     return SafeArea(
         child: Scaffold(
       resizeToAvoidBottomInset: false,
@@ -163,6 +201,15 @@ class _EditProfileState extends State<EditProfile> {
                     setState(() {
                       _imageFile =
                           pickedFile != null ? File(pickedFile.path) : null;
+                    });
+                    setState(() {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content:
+                              Text('Your avatar has already been changed !'),
+                          duration: Duration(seconds: 5),
+                        ),
+                      );
                     });
                   },
                   child: Text('Change Photo'),
