@@ -35,6 +35,6 @@ class Student {
             ? DateTime.parse(json['birthday'])
             : DateTime.now(),
         studentImg: json["student_img"],
-        point: json["point"],
+        point: int.tryParse(json["point"]) ?? 0,
       );
 }
