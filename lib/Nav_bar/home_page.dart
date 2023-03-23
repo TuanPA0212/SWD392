@@ -115,7 +115,8 @@ class _HomePageState extends State<HomePage> {
       future: fetchAllEvents(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          List<Event> events = snapshot.data!.reversed.toList();
+          // List<Event> events = snapshot.data!.reversed.toList();
+          List<Event> events = snapshot.data!.toList();
           return Padding(
             padding: EdgeInsets.only(top: 20, left: 10, right: 10),
             child: GridView.builder(
@@ -148,7 +149,7 @@ class _HomePageState extends State<HomePage> {
 
   Future<List<Event>> fetchAllEvents() async {
     final response = await http.get(Uri.parse(
-        "https://event-project.herokuapp.com/api/event/?status=1&is_approved=0"));
+        "https://event-project.herokuapp.com/api/event/?status=1&is_approved=1"));
 
     final responseData = json.decode(response.body) as List;
     // print('responseData: $responseData');

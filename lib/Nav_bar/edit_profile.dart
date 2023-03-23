@@ -64,39 +64,6 @@ class _EditProfileState extends State<EditProfile> {
     }
   }
 
-  // Future<void> _saveProfile() async {
-  //   final url =
-  //       Uri.parse('https://event-project.herokuapp.com/api/student/$idStudent');
-  //   final response = await http.put(
-  //     url,
-  //     headers: <String, String>{
-  //       'Content-Type': 'application/json; charset=UTF-8',
-  //     },
-  //     body: jsonEncode(<String, dynamic>{
-  //       'address': _address,
-  //       'phone': _phoneNumber,
-  //       'birthday': _birthday,
-  //     }),
-  //   );
-  //   if (response.statusCode == 200) {
-  //     // handle success
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(
-  //         content: Text('Profile saved'),
-  //         duration: Duration(seconds: 3),
-  //       ),
-  //     );
-  //   } else {
-  //     // handle failure
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(
-  //         content: Text('Failed to save profile'),
-  //         duration: Duration(seconds: 3),
-  //       ),
-  //     );
-  //   }
-  // }
-
   Future<void> _saveProfile() async {
     final url =
         Uri.parse('https://event-project.herokuapp.com/api/student/$idStudent');
@@ -185,7 +152,8 @@ class _EditProfileState extends State<EditProfile> {
                   child: Column(children: [
                 CircleAvatar(
                   radius: 50.0,
-                  // backgroundImage: NetworkImage(),
+                  backgroundImage:
+                      NetworkImage(widget.student.studentImg ?? ''),
                 ),
                 const SizedBox(height: 16.0),
                 ElevatedButton(
