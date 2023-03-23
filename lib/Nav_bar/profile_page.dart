@@ -120,7 +120,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         ),
                                       ),
                                       Text(
-                                        "100",
+                                        student.point.toString(),
                                         style: const TextStyle(
                                             fontSize: 18.0,
                                             fontWeight: FontWeight.bold,
