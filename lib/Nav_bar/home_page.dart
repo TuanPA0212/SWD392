@@ -5,9 +5,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:swd_project/Nav_bar/cart_screen.dart';
 import 'package:swd_project/Nav_bar/notification_page.dart';
 import 'package:swd_project/common_widget/color.dart';
 import 'package:swd_project/login.dart';
+import 'package:swd_project/model/cartItem.dart';
 import 'package:swd_project/services/firebase_services.dart';
 import 'package:swd_project/widgets/badge.dart';
 import 'package:swd_project/widgets/grid_event.dart';
@@ -23,6 +25,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<Event> eventList = [];
+  List<EventCartItem> cartItems = [];
 
   List imagesList = [
     {"id": 1, "image_path": "assets/images/event1_carousel.png"},
@@ -58,9 +61,7 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (BuildContext context) {
-                    return NotificationPage();
-                  },
+                  builder: (context) => CartScreen(cartItems: cartItems),
                 ),
               );
             },
@@ -149,7 +150,7 @@ class _HomePageState extends State<HomePage> {
 
   Future<List<Event>> fetchAllEvents() async {
     final response = await http.get(Uri.parse(
-        "https://event-project.herokuapp.com/api/event/?status=1&is_approved=1"));
+        "https://evenu.herokuapp.com/api/event/?status=1&is_approved=1"));
 
     final responseData = json.decode(response.body) as List;
     // print('responseData: $responseData');

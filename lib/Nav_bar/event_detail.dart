@@ -6,10 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:swd_project/common_widget/color.dart';
 import '../model/event.dart';
 import '../services/firebase_services.dart';
 import 'package:intl/intl.dart';
+import '../model/cartItem.dart';
 
 class EventDetail extends StatefulWidget {
   final Event event;
@@ -25,6 +27,8 @@ class EventDetail extends StatefulWidget {
 class _EventDetailState extends State<EventDetail> {
   int? idStudent;
   bool isJoined = false;
+  bool addedToCart = false;
+
   @override
   void initState() {
     super.initState();
@@ -35,10 +39,32 @@ class _EventDetailState extends State<EventDetail> {
     });
   }
 
+  void addToCart() async {
+    final EventCartItem cartItem = EventCartItem(
+      eventId: widget.event.eventId,
+      eventName: widget.event.eventName,
+      eventImage: widget.event.img,
+      eventPoint: widget.event.point,
+    );
+
+    // Convert the cart item to JSON
+    final cartItemJson = cartItem.toJson();
+
+    // Lưu thông tin sự kiện vào giỏ hàng ở local
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> cartItems = prefs.getStringList('cartItems') ?? [];
+    cartItems.add(json.encode(cartItemJson));
+    prefs.setStringList('cartItems', cartItems);
+    print('cart: $cartItems');
+    setState(() {
+      addedToCart = true;
+    });
+  }
+
   Future<void> registerStudentForEvent(int eventId) async {
     final DateTime registrationDate = DateTime.now();
     print("regis Date: $registrationDate");
-    final url = Uri.parse('https://event-project.herokuapp.com/api/event/join');
+    final url = Uri.parse('https://evenu.herokuapp.com/api/event/join');
     final response = await http.post(
       url,
       headers: <String, String>{
@@ -284,43 +310,50 @@ class _EventDetailState extends State<EventDetail> {
       bottomNavigationBar: Container(
         height: 50.0,
         child: ElevatedButton(
-          onPressed: () async {
-            await showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: const Text('Confirmation'),
-                  content:
-                      const Text('Are you sure you want to join this event?'),
-                  actions: <Widget>[
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: const Text('Cancel'),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                        // do something when the user confirms
-                        registerStudentForEvent(widget.event.eventId);
-                        setState(() {
-                          isJoined = true;
-                        });
-                      },
-                      child: const Text('Join'),
-                    ),
-                  ],
-                );
-              },
-            );
-          },
+          onPressed: addToCart,
+          // onPressed: () async {
+          //   await showDialog(
+          //     context: context,
+          //     builder: (BuildContext context) {
+          //       return AlertDialog(
+          //         title: const Text('Confirmation'),
+          //         content:
+          //             const Text('Are you sure you want to join this event?'),
+          //         actions: <Widget>[
+          //           TextButton(
+          //             onPressed: () {
+          //               Navigator.of(context).pop();
+          //             },
+          //             child: const Text('Cancel'),
+          //           ),
+          //           TextButton(
+          //             onPressed: () {
+          //               Navigator.of(context).pop();
+          //               // do something when the user confirms
+          //               registerStudentForEvent(widget.event.eventId);
+          //               setState(() {
+          //                 isJoined = true;
+          //               });
+          //             },
+          //             child: const Text('Join'),
+          //           ),
+          //         ],
+          //       );
+          //     },
+          //   );
+          // },
           style: ElevatedButton.styleFrom(
             backgroundColor:
                 isJoined ? const Color.fromARGB(255, 67, 193, 71) : mainTheme,
           ),
+          // child: Text(
+          //   isJoined ? "JOINED" : "JOIN EVENT",
+          //   style: const TextStyle(
+          //     color: Colors.white,
+          //   ),
+          // ),
           child: Text(
-            isJoined ? "JOINED" : "JOIN EVENT",
+            addedToCart ? "Added to Cart" : "Add to Cart",
             style: const TextStyle(
               color: Colors.white,
             ),

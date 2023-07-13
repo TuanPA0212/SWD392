@@ -65,8 +65,7 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   Future<void> _saveProfile() async {
-    final url =
-        Uri.parse('https://event-project.herokuapp.com/api/student/$idStudent');
+    final url = Uri.parse('https://evenu.herokuapp.com/api/student/$idStudent');
     final request = http.MultipartRequest('PUT', url)
       ..fields['address'] = _address
       ..fields['phone'] = _phoneNumber

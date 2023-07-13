@@ -309,8 +309,8 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<Student> fetchStudent() async {
     final storage = new FlutterSecureStorage();
     final idStudent = int.tryParse(await storage.read(key: 'idStudent') ?? '');
-    final response = await http.get(Uri.parse(
-        "https://event-project.herokuapp.com/api/student/$idStudent"));
+    final response = await http
+        .get(Uri.parse("https://evenu.herokuapp.com/api/student/$idStudent"));
 
     if (response.statusCode == 200) {
       final responseData = json.decode(response.body) as Map<String, dynamic>;

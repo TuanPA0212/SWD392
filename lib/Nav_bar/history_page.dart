@@ -114,7 +114,7 @@ class _HistoryPageState extends State<HistoryPage> {
     final storage = new FlutterSecureStorage();
     final idStudent = int.tryParse(await storage.read(key: 'idStudent') ?? '');
     final response = await http.get(Uri.parse(
-        "https://event-project.herokuapp.com/api/event/join/student/$idStudent"));
+        "https://evenu.herokuapp.com/api/event/join/student/$idStudent"));
 
     final responseData = json.decode(response.body) as List;
     print('responseData: $responseData');

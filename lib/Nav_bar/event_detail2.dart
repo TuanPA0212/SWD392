@@ -43,7 +43,7 @@ class _EventDetail2State extends State<EventDetail2> {
     // final Event eventId;
     final DateTime registrationDate = DateTime.now();
     print("regis Date: $registrationDate");
-    final url = Uri.parse('https://event-project.herokuapp.com/api/event/join');
+    final url = Uri.parse('https://evenu.herokuapp.com/api/event/join');
     final response = await http.post(
       url,
       headers: <String, String>{

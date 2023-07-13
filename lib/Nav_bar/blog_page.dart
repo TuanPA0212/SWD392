@@ -15,7 +15,7 @@ Future<List<Event2>> searchEvents(String keyword) async {
     [];
   }
   final response = await http.get(Uri.parse(
-      'https://event-project.herokuapp.com/api/event/search?name=$keyword&status=1'));
+      'https://evenu.herokuapp.com/api/event/search?name=$keyword&status=1'));
   // print("device token is :");
 
   if (response.statusCode == 200) {

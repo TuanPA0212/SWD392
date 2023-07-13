@@ -47,7 +47,7 @@ class FirebaseServices {
   final storage = const FlutterSecureStorage();
 
   Future<String> sendTokenApi(String token) async {
-    final url = 'https://event-project.herokuapp.com/api/login';
+    final url = 'https://evenu.herokuapp.com/api/login';
     final headers = {
       'Content-Type': 'application/json',
     };
@@ -70,8 +70,7 @@ class FirebaseServices {
     print('id của sinh viên: $idStudent');
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setInt('idStudent', idStudent);
-    
-    
+
     return accessToken;
   }
 
@@ -107,7 +106,6 @@ class FirebaseServices {
 //     return const Placeholder();
 //   }
 // }
-
 
 class AccessTokenMiddleware {
   static String? _accessToken;

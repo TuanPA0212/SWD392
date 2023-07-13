@@ -84,7 +84,7 @@ class _NotificationPageState extends State<NotificationPage> {
     final storage = new FlutterSecureStorage();
     final idStudent = int.tryParse(await storage.read(key: 'idStudent') ?? '');
     final response = await http.get(Uri.parse(
-        "https://event-project.herokuapp.com/api/notifications/student/$idStudent"));
+        "https://evenu.herokuapp.com/api/notifications/student/$idStudent"));
 
     final responseData = json.decode(response.body) as List;
     // print('responseData: $responseData');

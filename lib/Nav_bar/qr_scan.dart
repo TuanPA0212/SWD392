@@ -87,7 +87,7 @@ class _QRScanScreenState extends State<QRScanScreen> {
             ? await http
                 .put(
                     Uri.parse(
-                        'https://event-project.herokuapp.com/api/event/join/$eventID/checkin'),
+                        'https://evenu.herokuapp.com/api/event/join/$eventID/checkin'),
                     headers: <String, String>{
                       'Content-Type': 'application/json; charset=UTF-8',
                     },
@@ -156,7 +156,7 @@ class _QRScanScreenState extends State<QRScanScreen> {
             : await http
                 .put(
                     Uri.parse(
-                        'https://event-project.herokuapp.com/api/event/join/$eventID/checkout'),
+                        'https://evenu.herokuapp.com/api/event/join/$eventID/checkout'),
                     headers: <String, String>{
                       'Content-Type': 'application/json; charset=UTF-8',
                     },

@@ -29,11 +29,11 @@ class ClubPage extends StatefulWidget {
 
 class _ClubPageState extends State<ClubPage> {
   Map<String, String> listCampus = {
-    "1": "Hồ Chí Minh",
-    "2": "Hà Nội",
-    "3": "Đà Nẵng",
+    "4": "Hồ Chí Minh",
+    "14": "Hà Nội",
+    "24": "Đà Nẵng",
   };
-  String? selectedVal = "1";
+  String? selectedVal = "4";
   List<Club> clubList = [];
 
   @override
@@ -122,8 +122,8 @@ class _ClubPageState extends State<ClubPage> {
   }
 
   Future<List<Club>> fetchClubs(int campusID) async {
-    final response = await http.get(Uri.parse(
-        "https://event-project.herokuapp.com/api/club/campus/$campusID"));
+    final response = await http.get(
+        Uri.parse("https://evenu.herokuapp.com/api/club/campus/$campusID"));
 
     final responseData = json.decode(response.body) as List;
     // print('responseData: $responseData');
