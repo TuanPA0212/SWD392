@@ -39,24 +39,18 @@ class _CartScreenState extends State<CartScreen> {
     });
   }
 
-  void increaseQuantity(int index) {
-    setState(() {
-      cartItems[index].quantity++;
-    });
+  Future<void> saveCartItems() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> cartItemsJson =
+        cartItems.map((item) => jsonEncode(item.toJson())).toList();
+    prefs.setStringList('cartItems', cartItemsJson);
   }
 
-  void decreaseQuantity(int index) {
-    if (cartItems[index].quantity > 1) {
-      setState(() {
-        cartItems[index].quantity--;
-      });
-    }
-  }
-
-  void removeItem(int index) {
+  void removeItem(int eventId) {
     setState(() {
-      cartItems.removeAt(index);
+      cartItems.removeWhere((item) => item.eventId == eventId);
     });
+    saveCartItems(); // Lưu danh sách cartItems vào SharedPreferences sau khi xóa mục
   }
 
   @override
@@ -85,7 +79,7 @@ class _CartScreenState extends State<CartScreen> {
                     children: [
                       Text(item.eventName),
                       Text(
-                        '\$${item.eventPoint.toStringAsFixed(2)}',
+                        '\$${item.eventPrice.toStringAsFixed(0)}',
                         style: TextStyle(color: Color(0xFF27AE60)),
                       ),
                     ],
@@ -94,16 +88,9 @@ class _CartScreenState extends State<CartScreen> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       IconButton(
-                        icon: Icon(Icons.remove),
+                        icon: Icon(Icons.delete),
                         onPressed: () {
-                          decreaseQuantity(itemIndex);
-                        },
-                      ),
-                      Text(item.quantity.toString()),
-                      IconButton(
-                        icon: Icon(Icons.add),
-                        onPressed: () {
-                          increaseQuantity(itemIndex);
+                          removeItem(item.eventId); // Xóa mục dựa trên eventId
                         },
                       ),
                     ],
@@ -121,7 +108,7 @@ class _CartScreenState extends State<CartScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Total: \$${calculateTotal().toStringAsFixed(2)}',
+                'Total: \$${calculateTotal().toStringAsFixed(0)}',
                 style: TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.bold,
@@ -153,7 +140,7 @@ class _CartScreenState extends State<CartScreen> {
   double calculateTotal() {
     double total = 0;
     for (var item in cartItems) {
-      total += item.eventPoint * item.quantity;
+      total += item.eventPrice * item.quantity;
     }
     return total;
   }

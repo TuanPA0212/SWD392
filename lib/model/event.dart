@@ -4,6 +4,7 @@ class Event {
   final String email;
   final String location;
   final int point;
+  final int price;
   final String img;
   final String? description;
   final DateTime startDate;
@@ -19,6 +20,7 @@ class Event {
       required this.email,
       required this.location,
       required this.point,
+      required this.price,
       required this.img,
       this.description,
       required this.startDate,
@@ -67,6 +69,7 @@ class Event {
       email: json['email'] ?? "",
       location: json['location'] ?? "",
       point: json['point'] ?? 0,
+      price: json['price'] ?? 0,
       img: json['img'],
       description: json['description'] ?? "",
       startDate: json['start_date'] != null

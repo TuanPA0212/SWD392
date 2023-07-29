@@ -15,6 +15,7 @@ import 'package:swd_project/widgets/badge.dart';
 import 'package:swd_project/widgets/grid_event.dart';
 import 'package:http/http.dart' as http;
 import '../model/event.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -26,6 +27,23 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<Event> eventList = [];
   List<EventCartItem> cartItems = [];
+  @override
+  void initState() {
+    super.initState();
+    _loadCartItemsFromPreferences();
+  }
+
+  Future<void> _loadCartItemsFromPreferences() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final List<String>? cartItemsJson = prefs.getStringList('cartItems');
+    if (cartItemsJson != null) {
+      setState(() {
+        cartItems = cartItemsJson
+            .map((json) => EventCartItem.fromJson(jsonDecode(json)))
+            .toList();
+      });
+    }
+  }
 
   List imagesList = [
     {"id": 1, "image_path": "assets/images/event1_carousel.png"},
@@ -55,8 +73,9 @@ class _HomePageState extends State<HomePage> {
         actions: <Widget>[
           IconButton(
             icon: IconBadge(
-              icon: Icons.notifications,
+              icon: Icons.shopping_cart,
               size: 22.0,
+              itemCount: cartItems.length,
             ),
             onPressed: () {
               Navigator.of(context).push(

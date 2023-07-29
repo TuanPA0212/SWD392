@@ -7,30 +7,38 @@ class History {
   final String name;
   final String location;
   final String img;
+  final int price;
   final String description;
   final DateTime startDate;
   final DateTime endDate;
   final DateTime registrationDate;
   final DateTime checkin;
   final DateTime checkout;
+  final int payment;
+  final String qrcode;
 
-  History(
-      {required this.eventId,
-      required this.name,
-      required this.location,
-      required this.img,
-      required this.description,
-      required this.startDate,
-      required this.endDate,
-      required this.registrationDate,
-      required this.checkin,
-      required this.checkout});
+  History({
+    required this.eventId,
+    required this.name,
+    required this.location,
+    required this.img,
+    required this.price,
+    required this.description,
+    required this.startDate,
+    required this.endDate,
+    required this.registrationDate,
+    required this.checkin,
+    required this.checkout,
+    required this.payment,
+    required this.qrcode,
+  });
 
   factory History.fromJson(Map<String, dynamic> json) => History(
         eventId: json["event_id"] ?? 0,
         name: json["name"] ?? '',
         location: json["location"] ?? '',
         img: json["img"] ?? '',
+        price: json["price"] ?? 0,
         description: json["description"] ?? '',
         startDate: json['start_date'] != null
             ? DateTime.parse(json["start_date"])
@@ -47,5 +55,7 @@ class History {
         checkout: json["checkout"] != null
             ? DateTime.parse(json["checkin"])
             : DateTime.now(),
+        payment: json["payment"] ?? 0,
+        qrcode: json["qrcode"] ?? '',
       );
 }

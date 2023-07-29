@@ -29,36 +29,77 @@ class _EventDetailState extends State<EventDetail> {
   bool isJoined = false;
   bool addedToCart = false;
 
+  Future<bool> isEventInCart(int eventId) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final List<String>? cartItemsJson = prefs.getStringList('cartItems');
+    if (cartItemsJson != null) {
+      final List<EventCartItem> cartItems = cartItemsJson
+          .map((json) => EventCartItem.fromJson(jsonDecode(json)))
+          .toList();
+      return cartItems.any((item) => item.eventId == eventId);
+    }
+    return false;
+  }
+
   @override
   void initState() {
     super.initState();
     SharedPreferences.getInstance().then((prefs) {
       setState(() {
         idStudent = prefs.getInt('idStudent') ?? null;
+        isEventAlreadyInCart().then((alreadyInCart) {
+          setState(() {
+            addedToCart = alreadyInCart;
+          });
+        });
       });
     });
   }
 
   void addToCart() async {
-    final EventCartItem cartItem = EventCartItem(
-      eventId: widget.event.eventId,
-      eventName: widget.event.eventName,
-      eventImage: widget.event.img,
-      eventPoint: widget.event.point,
-    );
+    final int eventId = widget.event.eventId;
+    final bool isEventAdded = await isEventInCart(eventId);
 
-    // Convert the cart item to JSON
-    final cartItemJson = cartItem.toJson();
+    if (isEventAdded) {
+      setState(() {
+        addedToCart = true;
+      });
+    } else {
+      final EventCartItem cartItem = EventCartItem(
+        eventId: eventId,
+        eventName: widget.event.eventName,
+        eventImage: widget.event.img,
+        // eventPoint: widget.event.point,
+        eventPrice: widget.event.price,
+      );
 
-    // Lưu thông tin sự kiện vào giỏ hàng ở local
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> cartItems = prefs.getStringList('cartItems') ?? [];
-    cartItems.add(json.encode(cartItemJson));
-    prefs.setStringList('cartItems', cartItems);
-    print('cart: $cartItems');
-    setState(() {
-      addedToCart = true;
-    });
+      // Convert the cart item to JSON
+      final cartItemJson = cartItem.toJson();
+
+      // Lưu thông tin sự kiện vào giỏ hàng ở local
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      List<String> cartItems = prefs.getStringList('cartItems') ?? [];
+      cartItems.add(json.encode(cartItemJson));
+      prefs.setStringList('cartItems', cartItems);
+      print('cart: $cartItems');
+      setState(() {
+        addedToCart = true;
+      });
+    }
+  }
+
+  // check có trong cart hay chưa
+  Future<bool> isEventAlreadyInCart() async {
+    final int eventId = widget.event.eventId;
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final List<String>? cartItemsJson = prefs.getStringList('cartItems');
+    if (cartItemsJson != null) {
+      final List<EventCartItem> cartItems = cartItemsJson
+          .map((json) => EventCartItem.fromJson(jsonDecode(json)))
+          .toList();
+      return cartItems.any((item) => item.eventId == eventId);
+    }
+    return false;
   }
 
   Future<void> registerStudentForEvent(int eventId) async {
@@ -258,7 +299,7 @@ class _EventDetailState extends State<EventDetail> {
                   width: 10,
                 ),
                 const Text(
-                  "Point:",
+                  "Price:",
                   style: TextStyle(
                     fontSize: 15.0,
                     fontWeight: FontWeight.w400,
@@ -267,7 +308,7 @@ class _EventDetailState extends State<EventDetail> {
                 const SizedBox(width: 10.0),
                 Expanded(
                   child: Text(
-                    widget.event.point.toString(),
+                    widget.event.price.toString(),
                     style: const TextStyle(
                       fontSize: 14.0,
                       fontWeight: FontWeight.w400,
@@ -308,58 +349,20 @@ class _EventDetailState extends State<EventDetail> {
         ),
       ),
       bottomNavigationBar: Container(
-        height: 50.0,
-        child: ElevatedButton(
-          onPressed: addToCart,
-          // onPressed: () async {
-          //   await showDialog(
-          //     context: context,
-          //     builder: (BuildContext context) {
-          //       return AlertDialog(
-          //         title: const Text('Confirmation'),
-          //         content:
-          //             const Text('Are you sure you want to join this event?'),
-          //         actions: <Widget>[
-          //           TextButton(
-          //             onPressed: () {
-          //               Navigator.of(context).pop();
-          //             },
-          //             child: const Text('Cancel'),
-          //           ),
-          //           TextButton(
-          //             onPressed: () {
-          //               Navigator.of(context).pop();
-          //               // do something when the user confirms
-          //               registerStudentForEvent(widget.event.eventId);
-          //               setState(() {
-          //                 isJoined = true;
-          //               });
-          //             },
-          //             child: const Text('Join'),
-          //           ),
-          //         ],
-          //       );
-          //     },
-          //   );
-          // },
-          style: ElevatedButton.styleFrom(
-            backgroundColor:
-                isJoined ? const Color.fromARGB(255, 67, 193, 71) : mainTheme,
-          ),
-          // child: Text(
-          //   isJoined ? "JOINED" : "JOIN EVENT",
-          //   style: const TextStyle(
-          //     color: Colors.white,
-          //   ),
-          // ),
-          child: Text(
-            addedToCart ? "Added to Cart" : "Add to Cart",
-            style: const TextStyle(
-              color: Colors.white,
+          height: 50.0,
+          child: ElevatedButton(
+            onPressed: addedToCart ? null : addToCart,
+            style: ElevatedButton.styleFrom(
+              backgroundColor:
+                  isJoined ? const Color.fromARGB(255, 67, 193, 71) : mainTheme,
             ),
-          ),
-        ),
-      ),
+            child: Text(
+              addedToCart ? "Already in Cart" : "Add to Cart",
+              style: const TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          )),
     );
   }
 }

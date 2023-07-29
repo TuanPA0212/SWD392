@@ -15,6 +15,7 @@ import 'package:swd_project/widgets/upload.dart';
 import '../login.dart';
 import 'package:swd_project/services/firebase_services.dart';
 
+import '../model/cartItem.dart';
 import 'history_page.dart';
 import 'package:http/http.dart' as http;
 
@@ -28,6 +29,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   int? idStudent;
   String imgState = '';
+  List<EventCartItem> cartItems = [];
 
   @override
   void initState() {
@@ -59,6 +61,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   icon: IconBadge(
                     icon: Icons.notifications,
                     size: 22.0,
+                    itemCount: cartItems.length,
                   ),
                   onPressed: () {
                     Navigator.of(context).push(

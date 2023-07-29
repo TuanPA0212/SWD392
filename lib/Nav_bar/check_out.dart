@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:swd_project/Nav_bar/home_page.dart';
+import 'package:swd_project/Nav_bar/main_page.dart';
 
 import '../common_widget/color.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CheckoutScreen extends StatelessWidget {
   final double total;
@@ -103,10 +105,12 @@ class CheckoutScreen extends StatelessWidget {
                   Color.fromRGBO(183, 147, 219, 1),
                 ),
               ),
-              onPressed: () {
+              onPressed: () async {
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                await prefs.clear();
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => HomePage(),
+                    builder: (context) => MainPage(),
                   ),
                 );
               },

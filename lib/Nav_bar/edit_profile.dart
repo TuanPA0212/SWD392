@@ -12,6 +12,8 @@ import 'package:swd_project/widgets/badge.dart';
 // import 'package:swd_project/widgets/upload.dart';
 import 'package:swd_project/common_widget/color.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../model/cartItem.dart';
 // import 'package:path/path.dart';
 
 class EditProfile extends StatefulWidget {
@@ -36,6 +38,7 @@ class _EditProfileState extends State<EditProfile> {
   int? idStudent;
   String imgState = '';
   DateTime selectedDate = DateTime.now();
+  List<EventCartItem> cartItems = [];
 
   @override
   void initState() {
@@ -159,6 +162,7 @@ class _EditProfileState extends State<EditProfile> {
             icon: IconBadge(
               icon: Icons.notifications,
               size: 22.0,
+              itemCount: cartItems.length,
             ),
             onPressed: () {
               Navigator.of(context).push(

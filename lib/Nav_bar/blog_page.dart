@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:swd_project/Nav_bar/notification_page.dart';
 import 'package:swd_project/common_widget/color.dart';
 
+import '../model/cartItem.dart';
 import '../widgets/badge.dart';
 import '../model/event2.dart';
 import 'event_detail.dart';
@@ -34,6 +35,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final TextEditingController _searchController = TextEditingController();
   late Future<List<Event2>> futureEvents;
+  List<EventCartItem> cartItems = [];
 
   @override
   void initState() {
@@ -72,6 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
             icon: IconBadge(
               icon: Icons.notifications,
               size: 22.0,
+              itemCount: cartItems.length,
             ),
             onPressed: () {
               Navigator.of(context).push(

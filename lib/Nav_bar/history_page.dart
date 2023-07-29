@@ -3,6 +3,7 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:swd_project/Nav_bar/history_detail.dart';
 
 import 'package:swd_project/common_widget/color.dart';
 import 'package:swd_project/model/history.dart';
@@ -53,52 +54,62 @@ class _HistoryPageState extends State<HistoryPage> {
             itemCount: histories.length,
             itemBuilder: (BuildContext context, int index) {
               // final item = historyItem[index];
-              return Card(
-                child: Row(
-                  children: [
-                    // Cột bên trái với hình ảnh
-                    Container(
-                      width: 100,
-                      height: 100, // Điều chỉnh độ rộng của cột hình ảnh
-                      child: Image.network(
-                        // historyItem[0]["img"],
-                        histories[index].img,
-                        fit: BoxFit.contain,
+              return InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return HistoryDetail(history: histories[index]);
+                        },
                       ),
-                    ),
-                    // Cột bên phải với thông tin
-                    Expanded(
-                      child: Padding(
-                          padding: EdgeInsets.all(16.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                histories[index].name,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w900,
-                                ),
-                              ),
-                              Row(
+                    );
+                  },
+                  child: Card(
+                    child: Row(
+                      children: [
+                        // Cột bên trái với hình ảnh
+                        Container(
+                          width: 100,
+                          height: 100, // Điều chỉnh độ rộng của cột hình ảnh
+                          child: Image.network(
+                            // historyItem[0]["img"],
+                            histories[index].img,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                        // Cột bên phải với thông tin
+                        Expanded(
+                          child: Padding(
+                              padding: EdgeInsets.all(16.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("Start Date: "),
-                                  Text(DateFormat('dd-MM-yyyy')
-                                      .format(histories[index].startDate))
+                                  Text(
+                                    histories[index].name,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w900,
+                                    ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text("Start Date: "),
+                                      Text(DateFormat('dd-MM-yyyy')
+                                          .format(histories[index].startDate))
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text("End Date: "),
+                                      Text(DateFormat('dd-MM-yyyy')
+                                          .format(histories[index].endDate)),
+                                    ],
+                                  )
                                 ],
-                              ),
-                              Row(
-                                children: [
-                                  Text("End Date: "),
-                                  Text(DateFormat('dd-MM-yyyy')
-                                      .format(histories[index].endDate)),
-                                ],
-                              )
-                            ],
-                          )),
+                              )),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              );
+                  ));
             },
           );
         } else if (snapshot.hasError) {

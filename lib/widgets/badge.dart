@@ -3,8 +3,13 @@ import 'package:flutter/material.dart';
 class IconBadge extends StatefulWidget {
   final IconData icon;
   final double size;
+  final int itemCount;
 
-  IconBadge({Key? key, required this.icon, required this.size})
+  IconBadge(
+      {Key? key,
+      required this.icon,
+      required this.size,
+      required this.itemCount})
       : super(key: key);
 
   @override
@@ -35,7 +40,7 @@ class _IconBadgeState extends State<IconBadge> {
             child: Padding(
               padding: EdgeInsets.only(top: 1),
               child: Text(
-                "3",
+                widget.itemCount.toString(),
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 8,
