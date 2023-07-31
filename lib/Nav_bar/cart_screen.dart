@@ -22,6 +22,7 @@ Future<List<EventCartItem>> fetchCartItems() async {
 class CartScreen extends StatefulWidget {
   final List<EventCartItem> cartItems;
   CartScreen({required this.cartItems});
+
   @override
   _CartScreenState createState() => _CartScreenState();
 }
@@ -37,6 +38,14 @@ class _CartScreenState extends State<CartScreen> {
         cartItems = items;
       });
     });
+  }
+
+  List<int> getEventIds() {
+    List<int> eventIds = [];
+    for (var item in cartItems) {
+      eventIds.add(item.eventId);
+    }
+    return eventIds;
   }
 
   Future<void> saveCartItems() async {
@@ -121,10 +130,14 @@ class _CartScreenState extends State<CartScreen> {
                   ),
                 ),
                 onPressed: () {
+                  List<int> eventIds = getEventIds();
+                  print('eventIds: ${eventIds}');
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) =>
-                          CheckoutScreen(total: calculateTotal()),
+                      builder: (context) => CheckoutScreen(
+                        total: calculateTotal(),
+                        eventIds: eventIds,
+                      ),
                     ),
                   );
                 },

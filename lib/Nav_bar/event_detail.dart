@@ -3,12 +3,14 @@ import 'dart:convert';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:swd_project/common_widget/color.dart';
 import '../model/event.dart';
+import '../model/history.dart';
 import '../services/firebase_services.dart';
 import 'package:intl/intl.dart';
 import '../model/cartItem.dart';
@@ -28,6 +30,29 @@ class _EventDetailState extends State<EventDetail> {
   int? idStudent;
   bool isJoined = false;
   bool addedToCart = false;
+
+  // fetch History
+  List<History> historyList = [];
+  Future<List<History>> fetchHistory() async {
+    final storage = new FlutterSecureStorage();
+    final idStudent = int.tryParse(await storage.read(key: 'idStudent') ?? '');
+    final response = await http.get(Uri.parse(
+        "https://evenu.herokuapp.com/api/event/join/student/$idStudent"));
+
+    final responseData = json.decode(response.body) as List;
+    print('history event id: $responseData');
+    if (response.statusCode == 200) {
+      return responseData.map((e) => History.fromJson(e)).toList();
+    } else {
+      throw Exception("Fail to fetch");
+    }
+  }
+
+  // Trả về true nếu event có trong danh sách history
+  bool isEventPurchased() {
+    final int eventId = widget.event.eventId;
+    return historyList.any((history) => history.eventId == eventId);
+  }
 
   Future<bool> isEventInCart(int eventId) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -52,6 +77,11 @@ class _EventDetailState extends State<EventDetail> {
             addedToCart = alreadyInCart;
           });
         });
+      });
+    });
+    fetchHistory().then((items) {
+      setState(() {
+        historyList = items;
       });
     });
   }
@@ -179,6 +209,7 @@ class _EventDetailState extends State<EventDetail> {
 
   @override
   Widget build(BuildContext context) {
+    bool purchased = isEventPurchased();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: mainTheme,
@@ -194,19 +225,6 @@ class _EventDetailState extends State<EventDetail> {
           "Event Details",
         ),
         elevation: 0.0,
-        // actions: <Widget>[
-        //   Container(
-        //     height: MediaQuery.of(context).size.height / 2,
-        //     width: MediaQuery.of(context).size.width,
-        //     child: ClipRRect(
-        //       borderRadius: BorderRadius.circular(8.0),
-        //       child: Image.asset(
-        //         "assets/images/fpt_logo.png",
-        //         fit: BoxFit.contain,
-        //       ),
-        //     ),
-        //   ),
-        // ],
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
@@ -351,13 +369,21 @@ class _EventDetailState extends State<EventDetail> {
       bottomNavigationBar: Container(
           height: 50.0,
           child: ElevatedButton(
-            onPressed: addedToCart ? null : addToCart,
+            onPressed: purchased
+                ? null
+                : addedToCart
+                    ? null
+                    : addToCart,
             style: ElevatedButton.styleFrom(
               backgroundColor:
                   isJoined ? const Color.fromARGB(255, 67, 193, 71) : mainTheme,
             ),
             child: Text(
-              addedToCart ? "Already in Cart" : "Add to Cart",
+              purchased
+                  ? "Already Purchased" // Đã mua vé
+                  : addedToCart
+                      ? "Already in Cart" // Đã thêm vào giỏ hàng
+                      : "Add to Cart",
               style: const TextStyle(
                 color: Colors.white,
               ),

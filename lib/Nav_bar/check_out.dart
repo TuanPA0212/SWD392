@@ -1,13 +1,60 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:swd_project/Nav_bar/home_page.dart';
 import 'package:swd_project/Nav_bar/main_page.dart';
-
+import 'package:http/http.dart' as http;
 import '../common_widget/color.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class CheckoutScreen extends StatelessWidget {
+import '../model/cartItem.dart';
+
+class CheckoutScreen extends StatefulWidget {
   final double total;
-  CheckoutScreen({required this.total});
+  final List<int> eventIds;
+  CheckoutScreen({required this.total, required this.eventIds});
+
+  @override
+  _CheckoutScreenState createState() => _CheckoutScreenState();
+}
+
+class _CheckoutScreenState extends State<CheckoutScreen> {
+  int? idStudent;
+
+  // send api
+  Future<void> checkOut(List<int> eventIds) async {
+    final DateTime registrationDate = DateTime.now();
+    final url = Uri.parse('https://evenu.herokuapp.com/api/event/join');
+    final storage = new FlutterSecureStorage();
+    final idStudent = int.tryParse(await storage.read(key: 'idStudent') ?? '');
+    print('student id: ' + idStudent.toString());
+    print('regis date: ' + registrationDate.toString());
+    print('event id : ' + widget.eventIds.toString());
+    try {
+      // Gửi yêu cầu POST với dữ liệu JSON
+      final response = await http.post(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, dynamic>{
+          'event_id': widget.eventIds,
+          'student_id': idStudent,
+          'registration_date': registrationDate.toIso8601String(),
+        }),
+      );
+      // print('response: ${response.statusCode}');
+      // if (response.statusCode == 200) {
+      //   print('API request success!');
+      //   print('Response: ${response.body}');
+      // } else {
+      //   print('API request failed with status code: ${response.statusCode}');
+      // }
+    } catch (error) {
+      print('API request error: $error');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +135,7 @@ class CheckoutScreen extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '\$$total',
+                      '\$${widget.total}',
                       style: TextStyle(
                           fontSize: 18.0,
                           fontWeight: FontWeight.bold,
@@ -106,15 +153,16 @@ class CheckoutScreen extends StatelessWidget {
                 ),
               ),
               onPressed: () async {
-                SharedPreferences prefs = await SharedPreferences.getInstance();
-                await prefs.clear();
+                await checkOut(widget.eventIds);
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => MainPage(),
                   ),
                 );
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                await prefs.clear();
               },
-              child: Text('Hoàn tất'),
+              child: Text('Done'),
             ),
           ],
         ),

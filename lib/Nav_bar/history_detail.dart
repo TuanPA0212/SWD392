@@ -3,6 +3,9 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:intl/intl.dart';
 import 'package:swd_project/model/history.dart';
+import 'package:qr_flutter/qr_flutter.dart';
+import 'dart:convert';
+import 'dart:typed_data';
 
 import '../common_widget/color.dart';
 
@@ -15,6 +18,13 @@ class HistoryDetail extends StatefulWidget {
 }
 
 class _HistoryDetailState extends State<HistoryDetail> {
+  Future<Uint8List> _generateQrCode() async {
+    String base64Data = widget.history.qrcode;
+    List<int> bytes = base64.decode(base64Data);
+    return Uint8List.fromList(bytes);
+  }
+
+  Color bgColor = Color(0xFF2D3436);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,161 +43,28 @@ class _HistoryDetailState extends State<HistoryDetail> {
         ),
         elevation: 0.0,
       ),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-        child: ListView(
-          children: <Widget>[
-            // SizedBox(height: 10.0),
-            Stack(
-              children: <Widget>[
-                Container(
-                  height: MediaQuery.of(context).size.height / 2,
-                  width: MediaQuery.of(context).size.width,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8.0),
-                    child: Image.network(
-                      widget.history.img,
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 20.0,
-              width: 10,
-            ),
-            Text(
-              widget.history.name,
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w800,
+      backgroundColor: bgColor,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          if (widget.history.payment == 1)
+            Center(
+              child: QrImageView(
+                data: widget.history.qrcode,
+                version: QrVersions.auto,
+                size: 300.0,
+                backgroundColor: Colors.white,
               ),
-              maxLines: 2,
-            ),
-
-            Padding(
-              padding: const EdgeInsets.only(bottom: 5.0, top: 5.0, left: 10.0),
-              child: Row(
-                children: <Widget>[
-                  const Text(
-                    "Time: ",
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  const SizedBox(width: 5.0),
-                  Text(
-                    DateFormat('dd-MM-yyyy').format(widget.history.startDate),
-                    style: const TextStyle(
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ],
+            )
+          else
+            Center(
+              child: Text(
+                "Please  check out first",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
-            Row(
-              children: <Widget>[],
-            ),
-            Row(
-              children: <Widget>[
-                const SizedBox(
-                  height: 20,
-                  width: 10,
-                ),
-                const Text(
-                  "Location:",
-                  style: TextStyle(
-                    fontSize: 15.0,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                const SizedBox(width: 10.0),
-                Expanded(
-                  child: Text(
-                    widget.history.location,
-                    style: const TextStyle(
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.w400,
-                      // color: Colors.green[300],
-                    ),
-                  ),
-                )
-              ],
-            ),
-            Row(
-              children: <Widget>[
-                const SizedBox(
-                  height: 20,
-                  width: 10,
-                ),
-                const Text(
-                  "Price:",
-                  style: TextStyle(
-                    fontSize: 15.0,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                const SizedBox(width: 10.0),
-                Expanded(
-                  child: Text(
-                    widget.history.price.toString(),
-                    style: const TextStyle(
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.w400,
-                      color: Color.fromARGB(255, 1, 168, 12),
-                    ),
-                  ),
-                )
-              ],
-            ),
-            const SizedBox(height: 10.0),
-            const Text(
-              "Description",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w800,
-              ),
-              maxLines: 2,
-            ),
-            Row(
-              children: <Widget>[
-                const SizedBox(
-                  height: 10.0,
-                  width: 10.0,
-                ),
-                Expanded(
-                  child: Text(
-                    widget.history.description!,
-                    style: const TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10.0),
-
-            Stack(
-              children: <Widget>[
-                Container(
-                  height: MediaQuery.of(context).size.height / 2,
-                  width: MediaQuery.of(context).size.width,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8.0),
-                    child: Image.network(
-                      widget.history.img,
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
+        ],
       ),
     );
   }

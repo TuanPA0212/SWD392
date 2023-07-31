@@ -80,7 +80,7 @@ class GridClubs extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 11.0,
                           // fontWeight: FontWeight.w900,
-                          color: Theme.of(context).accentColor,
+                          // color: Theme.of(context).accentColor,
                         ),
                       ),
                     ],
